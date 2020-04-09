@@ -19,8 +19,5 @@
     "url": "https://github.com/eslint/eslint/issues"
   },
   "homepage": "https://github.com/eslint/eslint#readme"
-}
-{
-  "scripts": {
-    "lint": "./node_modules/.bin/eslint ./"
+  "scripts": "lint": "./node_modules/.bin/eslint ./"
 }
