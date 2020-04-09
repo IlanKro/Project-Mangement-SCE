@@ -17,8 +17,8 @@ jobs:
            key: dependency-cache-{{ checksum "package-lock.json" }} #skipping npm installing in new tests    
            keys: dependency-cache-
       - run:
-          name: install-npm-wee
-          command: npm install
+          name: install-npm
+          command: npm install -g grunt-cli
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }} 
           paths: ./node_modules
