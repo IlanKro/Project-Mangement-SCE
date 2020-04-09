@@ -13,5 +13,6 @@ jobs:
         paths: 
           -node_modules
      - run: npm install eslint --save-dev
-     - run: ./node_modules/.bin/eslint ./
+     - run: npx eslint --init
+     #- run: ./node_modules/.bin/eslint ./
      #- run: npm run lint
