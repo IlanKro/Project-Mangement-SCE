@@ -4,9 +4,7 @@ orbs:
   win: circleci/windows@2.3.0
 jobs:
   build:  
-    working_directory: ~/mern-starter
-    #machine:
-    #  - image: ubuntu-1604:201903-01     
+    working_directory: ~/mern-starter       
     docker: 
       - image: circleci/node:10.16.3 
       - image: mongo:4.2.0
@@ -14,8 +12,18 @@ jobs:
       - checkout
       - run:
           name: Update npm
-          command: 'sudo npm install -g npm@latest'  
-#workflows:
-#   main:   
-#   jobs:      
-#    - build
+          command: 'sudo npm install -g npm@latest'
+          - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+workflows:
+   main:   
+    jobs:      
+      - build
