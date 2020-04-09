@@ -12,7 +12,6 @@ jobs:
         key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
         paths: 
           -node_modules
-     - run: npm install eslint --save-dev
-     - run: npx eslint --init
-     #- run: ./node_modules/.bin/eslint ./
-     #- run: npm run lint
+     - run: npm install eslint --save-dev     
+     - run: ./node_modules/.bin/eslint ./
+     
