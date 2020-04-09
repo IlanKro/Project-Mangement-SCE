@@ -1,6 +1,5 @@
 {
   "name": "project",
-  "dependencies": {
-    "somedep": "git+ssh://git@github.com/organization/repo.git"
+  "dependencies": {    
   }
 }
