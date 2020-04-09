@@ -4,13 +4,15 @@ orbs:
   win: circleci/windows@2.3.0
 jobs:
   build:  
-    #working_directory: ~/mern-starter       
+    working_directory: ~/mern-starter       
     docker: 
       - image: circleci/node:10.16.3 
       - image: mongo:4.2.0
     steps:
       - checkout
       - run:
+          name: npm init
+          command: 'npm init'
           name: Update npm
           command: 'sudo npm install -g npm@latest' #updating npm
       - restore_cache:          
@@ -18,7 +20,7 @@ jobs:
            keys: dependency-cache-
       - run:
           name: install-npm
-          command: npm install -g grunt-cli
+          command: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }} 
           paths: ./node_modules
