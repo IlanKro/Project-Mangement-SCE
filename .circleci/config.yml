@@ -13,8 +13,8 @@ jobs:
         key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
         paths: 
           -node_modules    
-     - run: "~/home/circleci/project/-node_modules/.bin/eslint ./"
-     
+     #- run: "~/home/circleci/project/-node_modules/.bin/eslint ./"
+     - run: ls -R
 
         
       
