@@ -1,5 +1,5 @@
 version: 2.1
-working_directory: ~/repo
+#working_directory: ~/repo
 jobs:
   build:
     docker:
@@ -14,9 +14,8 @@ jobs:
         paths: 
           -node_modules    
      #- run: "~/home/circleci/project/-node_modules/.bin/eslint ./"
-     - run: 
-        - cd ~/home
-        - ls -R
+     - run: ls -R 
+        
 
         
       
