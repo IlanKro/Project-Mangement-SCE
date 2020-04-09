@@ -6,10 +6,10 @@ jobs:
     steps:
      - checkout
      - restore_cache:
-        key: npm-install-{{ .branch}}-{{ checksum "package.json" }}      
+        key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}      
      - run: npm install
      - save_cache:
-        key: npm-install-{{ .branch}}-{{ checksum "package.json" }}
+        key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
         paths: 
           -node_modules
       
