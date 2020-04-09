@@ -14,7 +14,9 @@ jobs:
         paths: 
           -node_modules    
      #- run: "~/home/circleci/project/-node_modules/.bin/eslint ./"
-     - run: ls -R
+     - run: 
+        - cd ~/home
+        - ls -R
 
         
       
