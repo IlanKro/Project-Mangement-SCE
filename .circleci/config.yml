@@ -11,10 +11,6 @@ jobs:
      - save_cache:
         key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
         paths: 
-          -node_modules    
+          -node_modules
+     - run: ls
      - run: npm run lint
-        
-        
-
-        
-      
