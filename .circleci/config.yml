@@ -5,8 +5,8 @@ orbs:
 jobs:
   build:  
     working_directory: ~/mern-starter
-    machine:
-      - image: ubuntu-1604:201903-01     
+    #machine:
+    #  - image: ubuntu-1604:201903-01     
     docker: 
       - image: circleci/node:10.16.3 
       - image: mongo:4.2.0
