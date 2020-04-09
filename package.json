@@ -18,7 +18,8 @@
   "bugs": {
     "url": "https://github.com/eslint/eslint/issues"
   },
-  "homepage": "https://github.com/eslint/eslint#readme",  
+  "homepage": "https://github.com/eslint/eslint#readme",
+  "lint": "./node_modules/.bin/tslint -p tslint.json",
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./"
   }
