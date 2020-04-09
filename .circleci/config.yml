@@ -4,7 +4,7 @@ orbs:
   win: circleci/windows@2.3.0
 jobs:
   build:  
-    working_directory: ~/mern-starter       
+    #working_directory: ~/mern-starter       
     docker: 
       - image: circleci/node:10.16.3 
       - image: mongo:4.2.0
