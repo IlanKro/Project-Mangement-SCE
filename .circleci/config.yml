@@ -13,7 +13,7 @@ jobs:
         key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
         paths: 
           -node_modules    
-     - run: run "./node_modules/.bin/eslint ./"
+     - run: "./node_modules/.bin/eslint ./"
      
 
         
