@@ -5,10 +5,7 @@ orbs:
 jobs:
   build:  
     machine:
-      image: ubuntu-1604:201903-01    
-    docker:
-      image: cicleci/node 4.8.2
-      
+      image: ubuntu-1604:201903-01          
     steps:
       - checkout
       - run:
