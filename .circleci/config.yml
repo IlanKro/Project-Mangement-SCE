@@ -1,4 +1,5 @@
 version: 2.1
+working_directory: ~/repo
 jobs:
   build:
     docker:
