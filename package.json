@@ -1,8 +1,5 @@
 {
   "name": "project",
   "dependencies": {    
-  }
-  "scripts": {
-    "lint": "./node_modules/.bin/eslint ./"
-}
+  } 
 }
