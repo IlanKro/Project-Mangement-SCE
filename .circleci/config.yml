@@ -23,9 +23,9 @@ jobs:
 #               filters:
 #                 branches:
 #                   only: master # only run deploy-via-git job on master branch    
-workflows:
-  jobs:
+workflows:  
     - CICD:
-        steps:
-          - build
-          #- CD
+        jobs:
+          steps:
+            - build
+            #- CD
