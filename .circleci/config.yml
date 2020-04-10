@@ -25,5 +25,5 @@ jobs:
                    only: master # only run deploy-via-git job on master branch    
      workflows:
         CICD:
-        -CI
+        - CI
         - CD
