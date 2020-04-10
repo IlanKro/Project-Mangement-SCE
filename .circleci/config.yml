@@ -1,27 +1,16 @@
 version: 2.1
-orbs:   
-  win: circleci/windows@2.3.0
 jobs:
-  build:  
-    #working_directory: ~/mern-starter       
-    docker: 
-      - image: circleci/node:10.16.3 
-      - image: mongo:4.2.0
+  build:
+    docker:
+      - image: circleci/node:9.8      
     steps:
-      - checkout
-      - run:
-          name: Update npm
-          command: 'sudo npm install -g npm@latest' #updating npm
-      - restore_cache:          
-           key: dependency-cache-{{ checksum "package-lock.json" }} #skipping npm installing in new tests    
-           keys: dependency-cache-
-      - run:
-          name: install-npm-wee
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }} 
-          paths: ./node_modules
-workflows:
-   main:   
-    jobs:      
-      - build
+     - checkout
+     - restore_cache:
+        key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}      
+     - run: npm install
+     - save_cache:
+        key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
+        paths: 
+          -node_modules   
+     - run: ./node_modules/.bin/eslint ./
+     

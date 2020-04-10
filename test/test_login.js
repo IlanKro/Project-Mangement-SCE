@@ -1,1 +1,2 @@
-console.log("tests");
+document.log("hello world");
+
