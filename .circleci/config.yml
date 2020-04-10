@@ -11,8 +11,6 @@ jobs:
      - save_cache:
         key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
         paths: 
-          -node_modules
-     - run: npm install eslint --save-dev 
-     - run: npm install eslint-plugin-react@latest --save-dev
+          -node_modules   
      - run: ./node_modules/.bin/eslint ./
      
