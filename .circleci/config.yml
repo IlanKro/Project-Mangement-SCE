@@ -15,15 +15,15 @@ jobs:
         paths: 
           -node_modules   
      - run: ./node_modules/.bin/eslint ./
-  CD:
-          jobs:           
-           - heroku/deploy-via-git:
-               requires:
-                 - CI # only run deploy-via-git job if the build job has completed
-               filters:
-                 branches:
-                   only: master # only run deploy-via-git job on master branch    
+#  CD:
+#          jobs:           
+#           - heroku/deploy-via-git:
+#               requires:
+#                 - CI # only run deploy-via-git job if the build job has completed
+#               filters:
+#                 branches:
+#                   only: master # only run deploy-via-git job on master branch    
 workflows:
   CICD:
     - CI
-    - CD
+    #- CD
