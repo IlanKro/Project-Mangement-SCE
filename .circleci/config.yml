@@ -1,4 +1,5 @@
 version: 2.1
+working_directory: ~/repo
 orbs:
   heroku: circleci/heroku@1.0.1
 jobs:
