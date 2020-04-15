@@ -1,2 +1,0 @@
-document.log("hello world");
-
