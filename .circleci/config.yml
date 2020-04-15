@@ -1,0 +1,26 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - restore_cache:
+                 key: npm-install-{{ .Branch}}-{{ checksum "package.json" }} 
+            - run: npm install
+            - save_cache:
+                 key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
+                 paths:
+                  -node_modules
+            - run: npm test
+            - run: npm run lint
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test
+
+        
