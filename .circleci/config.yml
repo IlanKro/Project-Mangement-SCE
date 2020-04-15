@@ -1,36 +1,24 @@
 version: 2.1
-working_directory: ~/repo
 orbs:
-  heroku: circleci/heroku@1.0.1
+  node: circleci/node@1.1.6
 jobs:
-  build:
-    docker:
-      - image: circleci/node:9.8      
-    steps:
-     - checkout
-     - restore_cache:
-        key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}      
-     - run: npm install
-     - save_cache:
-        key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
-        paths: 
-          -node_modules   
-     - run: ./node_modules/.bin/eslint ./     
-  deploy:
-    executor: heroku/default
+  build-and-test:
+    executor:
+      name: node/default
     steps:
       - checkout
-      - heroku/install      
-      -  run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-
+      - node/with-cache:
+          steps:
+            - restore_cache:
+                 key: npm-install-{{ .Branch}}-{{ checksum "package.json" }} 
+            - run: npm install
+            - save_cache:
+                  key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
+            - run: npm test
+            - run: npm run lint
 workflows:
-  heroku_deploy:
-    jobs:
-      - build     
-      - deploy:
-          requires:
-            - build # only run deploy-via-git job if the build job has completed           
-          filters:
-            branches:
-              only: master
-              
+    build-and-test:
+      jobs:
+        - build-and-test
+
+        
