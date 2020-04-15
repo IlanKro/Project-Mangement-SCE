@@ -13,7 +13,9 @@ jobs:
                  key: npm-install-{{ .Branch}}-{{ checksum "package.json" }} 
             - run: npm install
             - save_cache:
-                  key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
+                 key: npm-install-{{ .Branch}}-{{ checksum "package.json" }}
+                 paths:
+                  -node_modules
             - run: npm test
             - run: npm run lint
 workflows:
