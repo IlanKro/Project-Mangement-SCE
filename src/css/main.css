@@ -1,1 +1,33 @@
-placeholder css file
+body{
+    background-image: linear-gradient(to bottom right,green,white);
+}
+.button{
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 4px 8px 4px 8px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
+#index > a{
+    align-self: center    
+}
+form > input{
+    align-self: flex-end;
+    align-content: center;
+    align-items: center;      
+}
+
+form > submit{
+    align-self: center;
+    align-content: center;
+    align-items: center;
+}
+h1{
+    font-size: 40;
+    color: greenyellow;
+    caret-color: azure;
+}
