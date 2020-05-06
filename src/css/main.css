@@ -17,6 +17,7 @@ body{
   width: 500px;
   position: relative;
   border: 2px solid green;
+  text-align: center;
 }
 
 .container2 {
@@ -40,18 +41,6 @@ body{
   border-left: 1px solid lightgreen;
 }
 
-form > input{
-    align-self: flex-end;
-    align-content: center;
-    align-items: center;      
-}
-
-form > submit{
-    align-self: center;
-    align-content: center;
-    align-items: center;
-}
-
 h1{
     font-family: Arial,Helvetica,sans-serif;
     text-align: center;
@@ -72,6 +61,19 @@ form > label{
     font-size: 20px;
     color: forestgreen;
 }
+
+#user_type{
+    text-align: center;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 25px;
+    color: forestgreen;    
+}
+
+#signup{
+    height: 600px;  
+    width: 600px;
+}
+
 
 
 
