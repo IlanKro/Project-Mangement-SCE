@@ -8,6 +8,27 @@
   text-align: center;
 }
 
+body{
+    background-image: white;
+}
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.container {
+  top: 50%;
+  left: 34%;
+  height: 90px;
+  width: 500px;
+  position: relative;
+  border: 2px solid green;
+  text-align: center;
+}
 .container2 {
   top: 50%;
   left: 40%;
@@ -63,7 +84,6 @@ form > label{
     width: 600px;
 }
 
-
 #T&C{
     color: black;
     text-align: left;    
@@ -72,3 +92,4 @@ form > label{
 #Password_Recovery {
     height:auto;
 }
+
