@@ -9,28 +9,35 @@
     <body>
         <h1>SCE ROOM</h1>
         <h2>Sign up</h2>
-        <form>
-            <label for="usertype">User type:</label>
-            <input type="radio" id="student" name="usertype" value="Student">
-            <label for="student">Student</label>
-            <input type="radio" id="renter" name="usertype" value="Renter">
-            <label for="renter">Renter</label><br><br>       
-            <label for="Email">Email:</label>
-            <input type="text" id="ue" name="email"><br><br>
-            <label for="password">Password:</label>
-            <input type="text" id="pass" name="pass"><br><br>
-            <label for="Username">Username:</label>
-            <input type="text" id="ue" name="username"><br><br>
-            <label for="fname">First name:</label>
-            <input type="text" id="fname" name="fname"><br><br>
-            <label for="lname">Last name:</label>
-            <input type="text" id="lname" name="lname"><br><br>
-            <label for="lname">Bank Account number:</label> #only for Renters
-            <input type="text" id="bank" name="bank"><br><br>
-            <label for="img">Add student card:</label> #only for Students
-            <input type="file" id="img" name="img" accept="image/*"><br><br>
-            <a href=http://asce.co.il/>Don't have Student card?</a><br>
-            <input type="submit" value="Sign up">
-        </form>       
+        <div id = "signup" class= "container">
+            <form>
+                <br>
+                <label for="usertype">User type</label><br>
+                <div id= "user_type">
+                    <input type="radio" id="student" name="usertype" value="Student">
+                    <label for="student">Student</label>
+                    <input type="radio" id="renter" name="usertype" value="Renter">
+                    <label for="renter">Renter</label><br><br>  
+                </div>
+                <label for="Email">Email</label>
+                <input type="text" id="ue" name="email"><br><br>
+                <label for="password">Password</label>
+                <input type="text" id="pass" name="pass"><br><br>
+                <label for="Username">Username</label>
+                <input type="text" id="ue" name="username"><br><br>
+                <label for="fname">First name</label>
+                <input type="text" id="fname" name="fname"><br><br>
+                <label for="lname">Last name</label>
+                <input type="text" id="lname" name="lname"><br><br>
+                <label for="lname">Bank Account number</label> <!--only for Renters-->
+                <input type="text" id="bank" name="bank"><br><br>
+                <label for="img">Add student ID</label> <!--only for Students-->
+                <input type="file" id="img" name="img" accept="image/*"><br><br>
+                <a href=http://asce.co.il>Don't have Student card?</a><br><br><br>
+                <input type="checkbox" name="checkbox" value="check" id="agree" />
+                I have read and agree to the <a href="terms&conditions.html">Terms and Conditions and Privacy Policy.</a><br><br><br>
+                <input class= "button" type="submit" value="Sign up">
+            </form>
+        </div>
     </body> 
 </html> 
