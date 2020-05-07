@@ -11,14 +11,15 @@
         <br>
         <div class="container2">                  
                 <h2>Login</h2>
-                <form>
+                <form onsubmit="return login()">
                     <label for="User/Email">Username/Email</label><br><br>
-                    <input type="text" id="ue" name="ue"><br><br>
+                    <input type="text" id="ue" name="ue" required><br><br>
                     <label for="password">Password</label><br><br> 
-                    <input type="text" id="pass" name="pass"><br><br>
+                    <input type="password" id="pass" name="pass" required><br><br>
                     <input class= "button" type="submit" value="Login"><br><br><br>
                     <a href="forgotpassword.html">forgot password?</a><br><br>                                          
                 </form>            
-        </div>    
+        </div>
+        <script src="../user_managment.js"></script>  
     </body> 
 </html> 

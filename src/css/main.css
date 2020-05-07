@@ -65,7 +65,7 @@ h2 ,#welcome{
     color: forestgreen;
 }
 
-form > label{
+form label{
     font-family: Arial,Helvetica,sans-serif;
     text-align: center;
     font-size: 20px;
@@ -80,7 +80,7 @@ form > label{
 }
 
 #signup{
-    height: 600px;  
+    height: 550px;  
     width: 600px;
 }
 
@@ -92,4 +92,6 @@ form > label{
 #Password_Recovery {
     height:auto;
 }
+
+
 
