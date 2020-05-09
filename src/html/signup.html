@@ -20,18 +20,18 @@
                     <label for="renter">Renter</label><br><br>  
                 </div>
                 <label for="Email">Email</label>
-                <input type="text" id="ue" name="email" required><br><br>
+                <input placeholder="Email" type="text" id="ue" name="email" required><br><br>
                 <label for="password">Password</label>
-                <input type="password" id="pass" name="pass" required><br><br>
+                <input placeholder="Password" type="password" id="pass" name="pass" required><br><br>
                 <label for="Username">Username</label>
-                <input type="text" id="ue" name="username" required><br><br>
+                <input placeholder="UserName" type="text" id="ue" name="username" required><br><br>
                 <label for="fname">First name</label>
-                <input type="text" id="fname" name="fname" required><br><br>
+                <input placeholder="First name" type="text" id="fname" name="fname" required><br><br>
                 <label for="lname">Last name</label>
-                <input type="text" id="lname" name="lname" required><br><br>
+                <input placeholder="Last name" type="text" id="lname" name="lname" required><br><br>
                 <div id="bank_account" style="display: none">
                     <label for="lname" >Bank Account number</label> <!--only for Renters-->
-                    <input type="text" id="bank" name="bank"><br><br> <!--add required field-->
+                    <input placeholder="Bank account"  type="text" id="bank" name="bank"><br><br> <!--add required field-->
                 </div>
                 <div id="imgup">
                     <label for="img">Add student ID</label> <!--only for Students-->
@@ -44,6 +44,12 @@
                 <input class= "button" type="submit" value="Sign up">
             </form>
         </div>
-         <script src="../user_managment.js"></script>  
+         <script src="../user_managment.js"></script>           
+         <!-- The core Firebase JS SDK is always required and must be listed first -->
+         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+         <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#available-libraries -->
+         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
+         <script src="../firebase.js"></script>     
     </body> 
 </html> 

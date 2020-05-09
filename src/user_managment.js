@@ -1,22 +1,64 @@
-
 class UserManagement {
+    
     static login() {
-        var username = document.getElementById("ue").value
-        var password = document.getElementById("pass").value        
-        try{window.location = "homepage_student.html"}
-        catch(e) {window.location = "404.html"} 
-        UserManagement.empty(username)
-        UserManagement.empty(password)
+        let username = document.getElementById("ue").value
+        let password = document.getElementById("pass").value       
+        alert("logging in...")
+        
+        firebase.auth().signInWithEmailAndPassword(username, password).catch(function (error) {
+        // Handle Errors here.
+            let error_code = error.code
+            let error_message = error.message
+            alert("Error:" + error_code + error_message)
+            if (error_code === "auth/invalid-email") {
+                alert("Invalid Email")
+            } else if (error_code == "auth/wrong-password") {
+                alert("Wrong password")
+            }
+        }) 
+        alert(firebase.auth().toString())
+        let user_type = "student" //TODO: attach properties to users..        
+        alert("redirecting")
+        if (user_type == "student"){            
+            try{window.location.href = "homepage_student.html"}
+            catch(e) {window.location.href = "404.html"}   
+            alert("why?") //dunno there needs to be another command for the redirect to happen weird..
+        }
+        else if (user_type == "renter") {
+            try{window.location.href = "homepage_renter.html"}
+            catch(e) {window.location.href = "404.html"} 
+        }
+        else if (user_type == "admin") {
+            try{window.location.href = "homepage_admin.html"}
+            catch(e) {window.location.href = "404.html"} 
+        }
+        else {
+            alert("YOur user is from an unidentified type!")
+        }  
+        
+    }
+    
+    
+    static forgotPassword() {
+        
     }
 
     static signUp() {
         alert("HELLO!")
+        let username = document.getElementById("ue").value
+        let password = document.getElementById("pass").value
+        firebase.auth().createUserWithEmailAndPassword(username, password) /*.catch(function(error) {
+        // Handle Errors here.
+            let error_code = error.code
+            let error_message = error.message
+            alert("Error:" error_code,error_message)            
+        })*/
     }
 
-    static userType(val) {         
-        var img_upload = document.getElementById("imgup")        
-        var bank = document.getElementById("bank_account")        
-        if (val == "renter") {                       
+    static userType(val) {        
+        let img_upload = document.getElementById("imgup")
+        let bank = document.getElementById("bank_account")
+        if (val == "renter") {            
             img_upload.style.display = "none"         
             bank.style.display = "block"
             //img_upload.setAttribute("required","false")
@@ -30,12 +72,17 @@ class UserManagement {
         }
     }
     
+    static logout(){
+        firebase.auth().signOut()
+    }
+
     static empty(a) {
         return a
         //temporarly used to satisfy the linter will be deleted later
     }
+    
 
 }
 
-var u =new UserManagement()
-u.empty(1)
+UserManagement.empty(firebaseConfig)
+UserManagement.empty(new UserManagement())

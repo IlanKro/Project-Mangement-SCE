@@ -12,14 +12,25 @@
         <div class="container2">                  
                 <h2>Login</h2>
                 <form onsubmit="UserManagement.login()">
-                    <label for="User/Email">Username/Email</label><br><br>
-                    <input type="text" id="ue" name="ue" required><br><br>
+                    <label for="User">Email</label><br><br>
+                    <input placeholder="Email" type="text" id="ue" name="ue" required><br><br>
                     <label for="password">Password</label><br><br> 
-                    <input type="password" id="pass" name="pass" required><br><br>
+                    <input placeholder="Password" type="password" id="pass" name="pass" required><br><br>
                     <input class= "button" type="submit" value="Login"><br><br><br>
                     <a href="forgotpassword.html">forgot password?</a><br><br>                                          
                 </form>            
-        </div>
-        <script src="../user_managment.js"></script>  
+        </div>          
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-messaging.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-functions.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#available-libraries -->   
+        <script src="../firebase.js"></script>          
+        <script src="../user_managment.js"></script> 
     </body> 
 </html> 
