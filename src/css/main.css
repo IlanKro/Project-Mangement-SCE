@@ -1,7 +1,16 @@
 .container {
   top: 50%;
   left: 34%;
-  height: 80px;  
+  height: 500px;  
+  width: 500px;      
+  position: relative;
+  border: 2px solid green;
+  text-align: center;
+}
+.container4 {
+  top: 50%;
+  left: 34%;
+  height: 90px;  
   width: 500px;      
   position: relative;
   border: 2px solid green;
@@ -21,16 +30,6 @@ body{
   transform: translate(-50%, -50%);
 }
 
-.container {
-  text-align: center;
-  top: 50%;
-  left: 1%;
-  margin: 0 auto;
-  height: 100px;
-  width: 400px; 
-  position: relative;
-  border: 2px solid green;
-}
 .container2 {
   top: 50%;
   margin: 0 auto;
@@ -120,15 +119,8 @@ form > label{
 
 #signup, write_review{
     height: 600px;  
-    width: 600px;
-}
 
-#T&C{
-    color: black;
-    text-align: left;    
-}
+//
 
-#Password_Recovery {
-    height:auto;
-}
+
 

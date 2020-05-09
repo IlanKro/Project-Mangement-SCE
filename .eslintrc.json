@@ -18,10 +18,6 @@
             "error",
             4
         ],
-        "linebreak-style": [
-            "warn",
-            "windows"
-        ],
         "quotes": [
             "error",
             "double"
@@ -29,12 +25,7 @@
         "semi": [
             "error",
             "never"
-        ],        
-         "no-unused-vars": [
-             "error", 
-             { "vars":"all", 
-                "args":"after-used", 
-                "ignoreRestSiblings": false }
-        ]        
+        ]                
+
     }
 }
