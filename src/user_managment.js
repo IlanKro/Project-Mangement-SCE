@@ -1,3 +1,28 @@
+/*
+var firebase = require("firebase/app")
+
+// Add the Firebase products that you want to use
+require("firebase/auth")
+require("firebase/firestore")
+
+
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+    // User is signed in.
+      
+      
+        var user2 = firebase.auth().currentUser
+
+        if(user2 != null){
+            alert("hello")
+        }
+        else {
+            alert("bye")
+        }
+    }
+})
+*/
+
 class UserManagement {
     
     static login() {
@@ -16,7 +41,7 @@ class UserManagement {
                 alert("Wrong password")
             }
         }) 
-        alert(firebase.auth().toString())
+        alert(firebase.auth().currentUser)
         let user_type = "student" //TODO: attach properties to users..        
         alert("redirecting")
         if (user_type == "student"){            
@@ -43,16 +68,17 @@ class UserManagement {
         
     }
 
-    static signUp() {
-        alert("HELLO!")
+    static signUp() {       
         let username = document.getElementById("ue").value
         let password = document.getElementById("pass").value
-        firebase.auth().createUserWithEmailAndPassword(username, password) /*.catch(function(error) {
+        firebase.auth().createUserWithEmailAndPassword(username, password).catch(function(error) {
         // Handle Errors here.
             let error_code = error.code
             let error_message = error.message
-            alert("Error:" error_code,error_message)            
-        })*/
+            if (error_code == "hello world")
+                alert("problem")
+                       
+        })
     }
 
     static userType(val) {        
