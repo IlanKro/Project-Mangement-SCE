@@ -2,19 +2,16 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
     // User is signed in.
         document.getElementById("user_div").style.display = "block"
-        document.getElementById("login_div").style.display = "none"
-        let user2 = firebase.auth().currentUser
-        if(user2 != null){
-            let email_id = user2.email
-            document.getElementById("user_para").innerHTML = "Welcome User : " + email_id
-            alert("yay")
+        document.getElementById("login_div").style.display = "none"       
+        if(firebase.auth().currentUser)  {                 
+            document.getElementById("user_para").innerHTML = "Welcome User : " + firebase.auth().currentUser.email                
+            redirectLogin("student")
         }
     } 
     else {
         // No user is signed in.
         document.getElementById("user_div").style.display = "none"
-        document.getElementById("login_div").style.display = "block"
-        alert("hello you are not logged in")
+        document.getElementById("login_div").style.display = "block"        
     }
 })
 
@@ -24,9 +21,56 @@ function login(){
     firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
         // Handle Errors here.    
         window.alert("Error : " + error.message)   
-    })
+    })        
+}
+
+
+function redirectLogin(user_type) {
+    try{
+        if (user_type == "student")         
+            window.location.href = "homepage_student.html"         
+        else if (user_type == "renter")
+            window.location.href = "homepage_renter.html"
+        else if (user_type == "admin")
+            window.location.href = "homepage_admin.html"                     
+        else 
+            alert("Unidentified usertype")          
+    }
+    catch(e){
+        window.location.href = "404.html"
+    }
+        
 }
 
 function logout(){
     firebase.auth().signOut()
 }
+
+
+
+        
+function forgotPassword() {
+}
+
+function signUp() {       
+    let username = document.getElementById("ue").value
+    let password = document.getElementById("pass").value
+    firebase.auth().createUserWithEmailAndPassword(username, password).catch(function(error) {
+    // Handle Errors here.
+        window.alert("Error : " + error.message)                      
+    })
+}
+
+function userType(val) {        
+    let img_upload = document.getElementById("imgup")
+    let bank = document.getElementById("bank_account")
+    if (val == "renter") {            
+        img_upload.style.display = "none"         
+        bank.style.display = "block"        
+    }
+    if (val == "student") {           
+        img_upload.style.display = "block"           
+        bank.style.display = "none"                 
+    }
+}
+    
