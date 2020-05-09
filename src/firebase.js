@@ -1,4 +1,4 @@
-const firebaseConfig = {
+var firebaseConfig = {
     apiKey: "AIzaSyCuqm7lR0YYnF8IiarnGQMEfRM-Fs5QpP4",
     authDomain: "sce-room.firebaseapp.com",
     databaseURL: "https://sce-room.firebaseio.com",

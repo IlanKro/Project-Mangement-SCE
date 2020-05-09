@@ -1,34 +1,45 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <title>login</title>
-        <link rel="stylesheet" type="text/css" href="../css/main.css">
-        <meta charset="UTF-8">
-        <link rel="icon" href="SCE%20ROOM.png">
-    </head>
-    <body>
-        <h1>SCE ROOM</h1>
-        <br>
-        <div class="container2">                  
-                <h2>Login</h2>
-                <form onsubmit="UserManagement.login()">                    
-                    <input placeholder="Email" type="text" id="ue" name="ue" required><br><br>                    
-                    <input placeholder="Password" type="password" id="pass" name="pass" required><br><br>
-                    <input class= "button" type="submit" value="Login"><br><br><br>
-                    <a href="forgotpassword.html">forgot password?</a><br><br>                                          
-                </form>            
-        </div>          
-        <!-- The core Firebase JS SDK is always required and must be listed first -->
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-database.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-messaging.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-functions.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
-        <!-- TODO: Add SDKs for Firebase products that you want to use
-             https://firebase.google.com/docs/web/setup#available-libraries -->   
-        <script src="../firebase.js"></script>          
-        <script src="../user_managment.js"></script> 
-    </body> 
-</html> 
+<head>
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <meta charset="UTF-8">
+    <link rel="icon" href="SCE%20ROOM.png">
+</head>
+<body>
+    <h1>SCE ROOM</h1>
+    <br>    
+    <div id="login_div" class="container2">            
+        <h2>SCE-ROOM login</h2>
+        <input type="email" placeholder="Email..." id="email_field" required/><br><br>
+        <input type="password" placeholder="Password..." id="password_field" required/><br><br>
+        <button class="button" onclick="login()">Login to Account</button><br><br><br><br>
+        <a href="forgotpassword.html">forgot password?</a><br><br>
+    </div> 
+    
+  <div id="user_div" class="loggedin-div">
+    <h3>Welcome User</h3>
+    <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
+    <button onclick="logout()">Logout</button>
+  </div>
+   
+
+
+  <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+   const firebaseConfig = {
+    apiKey: "AIzaSyCuqm7lR0YYnF8IiarnGQMEfRM-Fs5QpP4",
+    authDomain: "sce-room.firebaseapp.com",
+    databaseURL: "https://sce-room.firebaseio.com",
+    projectId: "sce-room",
+    storageBucket: "sce-room.appspot.com",
+    messagingSenderId: "289292987021",
+    appId: "1:289292987021:web:eb1bcaeef9af28611f50c4",
+    measurementId: "G-MT3MN5L1S3"
+   }
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="../user_managment.js"></script>
+
+</body>
+</html>
