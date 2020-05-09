@@ -11,6 +11,7 @@
 body{
     background-image: white;
 }
+
 .center {
   margin: 0;
   position: absolute;
@@ -21,19 +22,30 @@ body{
 }
 
 .container {
+  text-align: center;
   top: 50%;
-  left: 34%;
-  height: 90px;
-  width: 500px;
+  left: 1%;
+  margin: 0 auto;
+  height: 100px;
+  width: 400px; 
+  position: relative;
+  border: 2px solid green;
+}
+.container2 {
+  top: 50%;
+  margin: 0 auto;
+  height: 450px;
+  width: 300px; 
   position: relative;
   border: 2px solid green;
   text-align: center;
 }
-.container2 {
+
+.container3{
   top: 50%;
-  left: 40%;
+  margin: 0 auto;
   height: 450px;
-  width: 300px; 
+  width: 600px; 
   position: relative;
   border: 2px solid green;
   text-align: center;
@@ -51,6 +63,26 @@ body{
   border-left: 1px solid lightgreen;
 }
 
+.logoutLblPos{
+
+   position:fixed;
+   right:10px;
+   top:5px;
+}
+
+.button_write_review{
+  font: bold 15px Arial;
+  text-decoration: none;
+  background-color: green;
+  color: white;
+  padding: 10px 20px 10px 20px;
+  border-top: 1px solid lightgreen;
+  border-right: 1px solid lightgreen;
+  border-bottom: 1px solid lightgreen;
+  border-left: 1px solid lightgreen;
+  position:absolute; top:0; left:0;  
+}
+
 h1{
     font-family: Arial,Helvetica,sans-serif;
     text-align: center;
@@ -63,6 +95,13 @@ h2 ,#welcome{
     text-align: center;
     font-size: 40px;
     color: forestgreen;
+}
+
+h3{
+    font-family: Arial,Helvetica,sans-serif;
+    text-align: left;
+    font-size: 20px;
+    color: mediumseagreen;    
 }
 
 form > label{
@@ -79,7 +118,7 @@ form > label{
     color: forestgreen;    
 }
 
-#signup{
+#signup, write_review{
     height: 600px;  
     width: 600px;
 }
