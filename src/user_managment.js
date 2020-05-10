@@ -44,6 +44,7 @@ function redirectLogin(user_type) {
 
 function logout(){
     firebase.auth().signOut()
+    window.location.href = "index.html"   
 }
 
 
@@ -52,13 +53,32 @@ function logout(){
 function forgotPassword() {
 }
 
-function signUp() {       
-    let username = document.getElementById("ue").value
-    let password = document.getElementById("pass").value
-    firebase.auth().createUserWithEmailAndPassword(username, password).catch(function(error) {
+function signUp() {     
+    let form=document.getElementById("SignupForm").elements
+    let signup_data= []
+    alert("entering loop")
+    alert(form.length)
+    alert(form.item(0).value)
+    for(let i=0;i<form.length;i++){        
+        let element=form.item(i)        
+        signup_data[element.name]=element.value        
+        alert(i + " "+ element.name + " " + element.value)
+    }     
+    if (document.getElementById("student").checked) //handling the radiobox element separately.
+        signup_data["usertype"]="student"
+    else
+        signup_data["usertype"]="renter" 
+    alert(signup_data["email"] + signup_data["pass"])
+    if(!passwordStrength(signup_data["pass"]))
+        throw "Password too weak!"
+    
+    firebase.auth().createUserWithEmailAndPassword(signup_data["email"], signup_data["pass"]).catch(function(error) {
     // Handle Errors here.
-        window.alert("Error : " + error.message)                      
+        window.alert("Error : " + error.message)         
     })
+    
+    alert("!")
+         
 }
 
 function userType(val) {        
@@ -72,5 +92,27 @@ function userType(val) {
         img_upload.style.display = "block"           
         bank.style.display = "none"                 
     }
+}
+
+function passwordStrength(password) {      
+    let pass_check=document.getElementById("passwordCheck")
+    if (password.length<8) {
+        pass_check.innerHTML = "Password too short" 
+        pass_check.style.color="red"
+        return false        
+    }
+    
+    let capital= /[A-Z]/g
+    let lowercase= /[a-z]/g
+    let numbers= /[0-9]/g   
+    let special=/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g
+    if(password.match(capital) && password.match(lowercase) && password.match(numbers) && password.match(special)) {
+        pass_check.innerHTML = "Password is strong enough."
+        pass_check.style.color="green"
+        return true
+    }
+    pass_check.innerHTML = "Password is weak, must include at least :capital,lowercase,number,special."
+    pass_check.style.color="red"
+    return false   
 }
     

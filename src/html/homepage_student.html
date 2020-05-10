@@ -8,12 +8,8 @@
     </head>    
     <body>
         <h1>SCE Room</h1>
-        <h2 id="welcome">Available Housing Units For Rent</h2>
-        <form align="right" name="form1" method="post" action="log_out.php">
-            <label class="logoutLblPos">
-                <input name="submit2" type="submit" id="submit2" value="log out">
-            </label>
-        </form>
+        <button class="button" onclick="logout()">Logout</button><br>
+        <h2 id="welcome">Available Housing Units For Rent</h2>        
         <a class= "button_write_review" href="write_review.html"> Write Review</a><br><br><br> 
         <h3>Sort</h3>
             <select name="sort">
@@ -22,4 +18,5 @@
                 <option value="C">sort by price</option>
                 <option value="D">sort by number of rooms</option>
             </select>
+        <script src="../user_managment.js"></script>
     </body>
