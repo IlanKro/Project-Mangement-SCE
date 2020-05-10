@@ -10,10 +10,12 @@
         <br>    
         <div id="login_div" class="container2">            
             <h2>SCE-ROOM login</h2>
-            <input type="email" placeholder="Email..." id="email_field" required/><br><br>
-            <input type="password" placeholder="Password..." id="password_field" required/><br><br>
-            <button class="button" onclick="login()">Login to Account</button><br><br><br><br>
-            <a href="forgotpassword.html">forgot password?</a><br><br>
+            <form id="login_form" method="POST" action="/login">
+                <input name="email" type="email" placeholder="Email..." id="email_field" required/><br><br>
+                <input name="password" type="password" placeholder="Password..." id="password_field" required/><br><br>
+                <input type="submit" class="button" value="Login to Account"><br><br><br><br>
+                <a href="forgotpassword.ejs">forgot password?</a><br><br>
+            </form>    
         </div> 
 
       <div id="user_div" class="container2">
@@ -27,4 +29,3 @@
       <script src="../user_managment.js"></script>
     </body>
 </html>
-
