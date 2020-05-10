@@ -47,38 +47,39 @@ function logout(){
     window.location.href = "index.html"   
 }
 
-
-
         
 function forgotPassword() {
 }
 
 function signUp() {     
     let form=document.getElementById("SignupForm").elements
-    let signup_data= []
-    alert("entering loop")
-    alert(form.length)
-    alert(form.item(0).value)
+    let signup_data= []  
     for(let i=0;i<form.length;i++){        
         let element=form.item(i)        
-        signup_data[element.name]=element.value        
-        alert(i + " "+ element.name + " " + element.value)
+        signup_data[element.name]=element.value       
     }     
-    if (document.getElementById("student").checked) //handling the radiobox element separately.
+    if (document.getElementById("student").checked){ //handling the radiobox element separately. 
         signup_data["usertype"]="student"
-    else
+        //TODO: add check for img upload but much later, only after the rest of the login works.
+    }        
+    else {
         signup_data["usertype"]="renter" 
+        if (!signup_data["bank"]) {
+            alert("no bank data!")
+            return false
+        }            
+    }
     alert(signup_data["email"] + signup_data["pass"])
-    if(!passwordStrength(signup_data["pass"]))
-        throw "Password too weak!"
-    
+    if(!passwordStrength(signup_data["pass"])) {
+        alert("Password too weak!")
+        return false
+    }      
     firebase.auth().createUserWithEmailAndPassword(signup_data["email"], signup_data["pass"]).catch(function(error) {
     // Handle Errors here.
+        alert("!")
         window.alert("Error : " + error.message)         
-    })
-    
-    alert("!")
-         
+    })    
+    alert("!")         
 }
 
 function userType(val) {        
@@ -86,22 +87,21 @@ function userType(val) {
     let bank = document.getElementById("bank_account")
     if (val == "renter") {            
         img_upload.style.display = "none"         
-        bank.style.display = "block"        
+        bank.style.display = "block"
+        bank.getElementsByTagName("input")
     }
     if (val == "student") {           
         img_upload.style.display = "block"           
-        bank.style.display = "none"                 
+        bank.style.display = "none"        
     }
 }
-
 function passwordStrength(password) {      
     let pass_check=document.getElementById("passwordCheck")
     if (password.length<8) {
         pass_check.innerHTML = "Password too short" 
         pass_check.style.color="red"
         return false        
-    }
-    
+    }    
     let capital= /[A-Z]/g
     let lowercase= /[a-z]/g
     let numbers= /[0-9]/g   
