@@ -2,8 +2,10 @@ const express  = require("express")
 const app_port = process.env.PORT || 3000
 const app = express()
 const user_controller= require("./userController")
+
 app.set("view engine", "ejs")
-app.use("/css", express.static("css") )
+app.use(express.static("css") )
+app.use(express.static("images") )
 
 app.get("/",(req, res) => {
     res.render("index")

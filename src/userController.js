@@ -6,8 +6,24 @@ module.exports = function(app) {
         res.render("login")
     })
 
+    app.get("/signup",(req, res) => {
+        res.render("signup")
+    })
+
+    app.get("/forgotpassword",(req, res) => {
+        res.render("forgotpassword")
+    })
+
     app.post("/login",body_url, (req,res) => {
         console.log(req.body)
+        console.log("hello")
     })
-    
+
+    app.post("/signup",body_url, (req,res) => {
+        console.log(req.body)
+    })
+
+    app.post("/forgotpassword",body_url, (req,res) => {
+        console.log(req.body)
+    })
 }

@@ -3,18 +3,17 @@
         <title>login</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
         <meta charset="UTF-8">
-        <link rel="icon" href="SCE%20ROOM.png">
+        <link rel="icon" href="../images/SCE%20ROOM.png">
     </head>
     <body>
         <h1>SCE ROOM</h1>
-        <br>    
         <div id="login_div" class="container2">            
             <h2>SCE-ROOM login</h2>
-            <form id="login_form" method="POST" action="/login">
+            <form id="login_form" method="post" action="/login">
                 <input name="email" type="email" placeholder="Email..." id="email_field" required/><br><br>
                 <input name="password" type="password" placeholder="Password..." id="password_field" required/><br><br>
-                <input type="submit" class="button" value="Login to Account"><br><br><br><br>
-                <a href="forgotpassword.ejs">forgot password?</a><br><br>
+                <button type="submit" class="button" value="Login to Account">Login to Account</button> <br><br><br><br>
+                <a href="forgotpassword">forgot password?</a><br><br>
             </form>    
         </div> 
 
@@ -25,7 +24,5 @@
         <button class="button" onclick="logout()">Logout</button>
       </div>
       <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase.js"></script>
-      <script src="../firebase.js"></script>
-      <script src="../user_managment.js"></script>
     </body>
 </html>
