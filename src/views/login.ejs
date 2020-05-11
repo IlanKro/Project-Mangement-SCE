@@ -7,15 +7,15 @@
     </head>
     <body>
         <h1>SCE ROOM</h1>
-        <div id="login_div" class="container2">            
+        <div id="login_div" class="container2">
             <h2>SCE-ROOM login</h2>
             <form id="login_form" method="post" action="/login">
                 <input name="email" type="email" placeholder="Email..." id="email_field" required/><br><br>
                 <input name="password" type="password" placeholder="Password..." id="password_field" required/><br><br>
                 <button type="submit" class="button" value="Login to Account">Login to Account</button> <br><br><br><br>
                 <a href="forgotpassword">forgot password?</a><br><br>
-            </form>    
-        </div> 
+            </form>
+        </div>
 
       <div id="user_div" class="container2">
         <h3>Welcome User</h3>
@@ -24,5 +24,7 @@
         <button class="button" onclick="logout()">Logout</button>
       </div>
       <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase.js"></script>
+      <script src="../firebase.js"></script>
+      <script src="../user_managment.js"></script>
     </body>
 </html>
