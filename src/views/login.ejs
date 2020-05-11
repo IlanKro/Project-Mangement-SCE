@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>login</title>
@@ -6,6 +7,7 @@
         <link rel="icon" href="../images/SCE%20ROOM.png">
     </head>
     <body>
+
         <h1>SCE ROOM</h1>
         <div id="login_div" class="container2">
             <h2>SCE-ROOM login</h2>
@@ -20,11 +22,34 @@
       <div id="user_div" class="container2">
         <h3>Welcome User</h3>
         <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
-        <button class="button" onclick="redirectLogin('student')">Enter site</button>  <!-- find out how to get user types -->
+        <button class="button" onclick="redirectLogin('student')">Enter site</button>
         <button class="button" onclick="logout()">Logout</button>
       </div>
-      <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase.js"></script>
-      <script src="../firebase.js"></script>
-      <script src="../user_managment.js"></script>
+      <script> console.log("hellow world") </script>
+      <% include("partials/firebase.ejs") %>
+
+      <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
+      <script>
+        console.log("hello from firebase")
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCuqm7lR0YYnF8IiarnGQMEfRM-Fs5QpP4",
+          authDomain: "sce-room.firebaseapp.com",
+          databaseURL: "https://sce-room.firebaseio.com",
+          projectId: "sce-room",
+          storageBucket: "sce-room.appspot.com",
+          messagingSenderId: "289292987021",
+          appId: "1:289292987021:web:eb1bcaeef9af28611f50c4",
+          measurementId: "G-MT3MN5L1S3"
+        };
+        // Initialize Firebase
+        console.log(firebase.apps.length)
+        if (firebase.apps.length == 0){
+          firebase.initializeApp(firebaseConfig);
+          firebase.analytics();
+        }
+        console.log(firebase.apps.length)
+      </script>
     </body>
 </html>
