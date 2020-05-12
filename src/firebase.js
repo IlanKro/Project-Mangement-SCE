@@ -1,23 +1,16 @@
-module.exports = function(){
-
-  const admin= require ("firebase-admin")
-
-  const serviceAccount = require("./serviceAccountKey.json")
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://sec-room.firebaseio.com'
-  });
-
-  
-  return admin
-}
-
-
+const GGScript = require("ggscript")
+console.log(GGScript())
 /*
-src= for client
-server= npm install
+gg_script("https://www.gstatic.com/fireba)js/7.14.3/firebase-app.js").then(() => {
+    console.log("Finished loading file.")
+}).catch((err) => {
+    console.error("Something bad just happened! " + err)
+})
+*/
+/*
+//const firebase_auth= require("https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js")
+//const firebase_firestore= require("https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js")
 
-const firebase= require("https://www.gstatic.com/firebasejs/7.14.3/firebase.js")
 var firebaseConfig = {
       apiKey: "AIzaSyCuqm7lR0YYnF8IiarnGQMEfRM-Fs5QpP4",
       authDomain: "sce-room.firebaseapp.com",
@@ -32,9 +25,13 @@ var firebaseConfig = {
   if (firebase.apps.length == 0)
       firebase.initializeApp(firebaseConfig)
 
-      firebase.auth().currentUser.getIdToken(/* forceRefresh/ true).then(function(idToken) {
+/*firebase.auth().currentUser.getIdToken(/* forceRefresh/ true).then(function(idToken) {
         // Send token to your backend via HTTPS
         // ...
       }).catch(function(error) {
         // Handle error
-      });*/
+      }) */
+
+      /*src= for client
+      server= npm install
+*/

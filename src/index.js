@@ -1,38 +1,48 @@
 const express  = require("express")
 const app_port = process.env.PORT || 3000
+const path= require("path")
 const app = express()
 const user_controller= require("./userController")
-const admin= require("./firebase")()
-//const admin=admin1()
-app.set("view engine", "ejs")
+const admin= require("./firebase-admin")()
 
+app.set("view engine", "ejs")
+app.use("/",express.static("js"))
 app.use("/css",express.static("css"))
-app.use(express.static("images") )
+app.use(express.static("./") )
 
 app.get("/",(req, res) => {
     res.render("index", {title: "hello user"})
 })
-console.log(admin.app().name)
+
+app.get("/test",(req, res) => {
+    res.render("test", {title: "hello user"})
+})
+
+
+app.use(express.static(path.join(__dirname, '/views/')))
+app.set('views',__dirname+'/views/')
 /*
+console.log(admin.app().name)
+
 admin.auth().createUser({
-  email: 'user@example.com',
+  email: "user@example.com",
   emailVerified: false,
-  phoneNumber: '+11234567890',
-  password: 'secretPassword',
-  displayName: 'John Doe',
+  phoneNumber: ""+11234567890",
+  password: "secretPassword",
+  displayName: "John Doe",
   disabled: false
 })
 */
-
-admin.auth().getUser("OqKjlolzjQPTDDKCzxYhfiLR4wI2")
+/*
+admin.auth().getUser("X6QC83OvQue3oRaMQ9kULihnKN73")
   .then(function(userRecord) {
     // See the UserRecord reference doc for the contents of userRecord.
-    console.log('Successfully fetched user data:', userRecord.toJSON());
+    console.log("Successfully fetched user data:", userRecord.toJSON())
   })
   .catch(function(error) {
-    console.log('Error fetching user data:', error);
+      console.log("Error fetching user data:", error)
 });
-
+*/
 
 
 user_controller(app,admin)
