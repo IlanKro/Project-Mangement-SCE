@@ -46,12 +46,11 @@ module.exports = function(app,admin) {
         */
     })
     app.post("/signup",body_json, (req,res) => {
-        let database=admin.database()
+        let database=admin.firestore()
+        delete req.body.pass //no need to store password it's stored on auth.
+        delete req.body.checkbox //no need to store the same data in every user.
         console.log(req.body)
-        console.log(req.body.email + req.body.pass + " " )
-        //actual name: req.body.fname + " " + req.body.lname,
-        //TODO:find a way to add those 2, the image, the bank account and USER TYPE!!
-
+        database.collection("Users").doc(req.body.uid).set(req.body) //fix sign in
     })
 
     app.post("/forgotpassword",body_url, (req,res) => {

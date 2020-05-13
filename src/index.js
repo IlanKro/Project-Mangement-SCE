@@ -21,7 +21,23 @@ app.get("/",(req, res) => {
     res.render("index", {title: "hello user"})
 })
 
-var database=admin.database()
+var database=admin.firestore()
+let details= {
+    usertype: "renter",
+    email: "renter@rent.com",
+    pass: "money!qweWQ!@Qw1",
+    username: "21",
+    fname: "231",
+    email: "rent@redfg.com",
+    username: "231",
+    fname: "321",
+    lname: "321",
+    bank: "213321",
+    img: "",
+    //uid: "NmsN5Ls2OQUJNyGrmnwpnDG6OsJ2"
+}
+database.collection("Users").doc("NmsN5Ls2OQUJNyGrmnwpnDG6OsJ2").set(details)
+
 
 /*
 console.log(admin.app().name)
@@ -45,6 +61,8 @@ admin.auth().getUser("X6QC83OvQue3oRaMQ9kULihnKN73")
       console.log("Error fetching user data:", error)
 });
 */
+
+
 user_controller(app,admin)
 app.listen(app_port)
 console.log(`app is running. port: ${app_port}`)

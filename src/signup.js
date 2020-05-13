@@ -13,14 +13,14 @@ function userType(val) {
     if (val == "renter") {
         img_upload.style.display = "none"
         bank.style.display = "block"
-        document.getElementsbyId("student_image").required= false
-        document.getElementsbyId("bank").requred= true
+        //document.getElementsbyId("student_image").required= false
+        //document.getElementsbyId("bank").requred= true
     }
     if (val == "student") {
         img_upload.style.display = "block"
         bank.style.display = "none"
-        document.getElementsbyId("student_image").required =false //change to true at the end
-        document.getElementsbyId("bank").required=false
+        //document.getElementsbyId("student_image").required =false //change to true at the end
+        //document.getElementsbyId("bank").required=false
     }
 }
 
@@ -51,7 +51,7 @@ signupForm.addEventListener("submit", (e) => {
     e.preventDefault()
     let form=document.getElementById("SignupForm").elements
     let signup_data= {}
-    for(let i=0;i<form.length;i++){
+    for(let i=0;i<form.length-1;i++){
         let element=form.item(i)
         signup_data[element.name]=element.value
     }
