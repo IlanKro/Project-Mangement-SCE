@@ -1,16 +1,4 @@
-const GGScript = require("ggscript")
-console.log(GGScript())
-/*
-gg_script("https://www.gstatic.com/fireba)js/7.14.3/firebase-app.js").then(() => {
-    console.log("Finished loading file.")
-}).catch((err) => {
-    console.error("Something bad just happened! " + err)
-})
-*/
-/*
-//const firebase_auth= require("https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js")
-//const firebase_firestore= require("https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js")
-
+console.log("hello from firebase")
 var firebaseConfig = {
       apiKey: "AIzaSyCuqm7lR0YYnF8IiarnGQMEfRM-Fs5QpP4",
       authDomain: "sce-room.firebaseapp.com",
@@ -24,7 +12,42 @@ var firebaseConfig = {
   // Initialize Firebase
   if (firebase.apps.length == 0)
       firebase.initializeApp(firebaseConfig)
+function signInUsers(){
+    let email = document.getElementById('email_field').value
+    let pass = document.getElementById('password_field').value
+    console.log(email + " " + pass)
+    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
+                   // Handle Errors here.
+                  let errorCode = error.code
+                  let errorMessage = error.MESSAGE
+                  console.log(errorCode)
+                  console.log(errorMessage)
+    })
+}
+       //check if user is logged in or not
+function checkIfLoggedIn(){
+  firebase.auth().onAuthStateChanged(function(user) {
+           if (user) { // if the user is logged in
+              console.log(user)
+              let emailv =user.email
+              console.log("User is signed in. with email: "+ emailv)
+              document.getElementById('loginButton').setAttribute('style','display: none;visibility: hidden;');
+              document.getElementById('logoutButton').setAttribute('style','display: inline-block;visibility: visible;')
+          } else { // if the user is not logged in
+                 console.log("No user is signed in.");
+                 document.getElementById('loginButton').setAttribute("style","display: block;visibility: visible;");
+                 document.getElementById('logoutButton').setAttribute("style","display: inline-block;visibility: hidden;")
+             }
+         })
+}
 
+window.onload=function(){
+      checkIfLoggedIn()
+     }
+function logout(){
+    firebase.auth().signOut();
+    checkIfLoggedIn()
+  }
 /*firebase.auth().currentUser.getIdToken(/* forceRefresh/ true).then(function(idToken) {
         // Send token to your backend via HTTPS
         // ...

@@ -38,6 +38,7 @@
     "express": "^4.17.1",
     "firebase": "^7.14.2",
     "firebase-admin": "^8.12.1",
-    "ggscript": "^0.1.0"
+    "ggscript": "^0.1.0",
+    "morgan": "^1.10.0"
   }
 }
