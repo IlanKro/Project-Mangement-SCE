@@ -1,3 +1,12 @@
+/*
+auth.createUserWithEmailAndPassword("hello13221@gmail.com","21321131ADSADa2").catch(error => {
+// Handle Errors here.
+    alert("Error : " + error.message)
+}).then(cred => {
+    console.log(cred)
+})
+*/
+
 function userType(val) {
     let img_upload = document.getElementById("imgup")
     let bank = document.getElementById("bank_account")
@@ -16,7 +25,6 @@ function userType(val) {
 }
 
 function passwordStrength(password) {
-    console.log("checking password")
     let pass_check=document.getElementById("passwordCheck")
     if (password.length<8) {
         pass_check.innerHTML = "Password too short"
@@ -37,13 +45,15 @@ function passwordStrength(password) {
     return false
 }
 
-function signUp() {
+//function signUp() {
+const signupForm = document.querySelector("#SignupForm")
+signupForm.addEventListener("submit", (e) => {
+    e.preventDefault()
     let form=document.getElementById("SignupForm").elements
-    let signup_data= []
+    let signup_data= {}
     for(let i=0;i<form.length;i++){
         let element=form.item(i)
         signup_data[element.name]=element.value
-        console.log(i + " " + signup_data[element.name])
     }
     if (document.getElementById("student").checked){ //handling the radiobox element separately.
         signup_data["usertype"]="student"
@@ -55,23 +65,47 @@ function signUp() {
             return false
         }
     }
-
-    alert(signup_data["email"] + signup_data["pass"])
-
     if(!passwordStrength(signup_data["pass"])) {
-        alert("your password sucks")
+        alert("your password is too weak")
         return false
     }
-    auth.createUserWithEmailAndPassword(signup_data["email"], signup_data["pass"]).catch(error => {
+    auth.createUserWithEmailAndPassword(signup_data["email"],signup_data["pass"]).catch(error => {
     // Handle Errors here.
         alert("Error : " + error.message)
     }).then(cred => {
         console.log(cred)
+        console.log(cred.user.uid)
+        createUser(cred.user.uid,signup_data)
+        redirectSignup(signup_data["usertype"])
     })
+})
+
+function redirectSignup(user_type) {
+    try{
+        if (user_type == "student") {
+            alert("sign up was successful! wait for an admin to approve your account")
+            auth.signOut()
+        }
+        else if (user_type == "renter")
+            window.location.href = "homepage_renter"
+        else
+            alert("Unidentified usertype")
+    }
+    catch(e){
+        window.location.href = "404.html"
+    }
 }
 
 
+function createUser(uid,signup_data) {
+    signup_data["uid"]=uid
+    sendJSON("/signup",signup_data)
+}
 
-/*
-
-*/
+//testing:
+function sendJSON(url,data) {
+    let request = new XMLHttpRequest()
+    request.open("POST", url, true)
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    request.send(JSON.stringify(data))
+}

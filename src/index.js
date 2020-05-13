@@ -15,6 +15,7 @@ app.use("/css",express.static("css"))
 app.use(express.static("./") )
 app.use(logger("dev"))
 
+
 //homepage:
 app.get("/",(req, res) => {
     res.render("index", {title: "hello user"})
@@ -44,8 +45,6 @@ admin.auth().getUser("X6QC83OvQue3oRaMQ9kULihnKN73")
       console.log("Error fetching user data:", error)
 });
 */
-
-
 user_controller(app,admin)
 app.listen(app_port)
 console.log(`app is running. port: ${app_port}`)

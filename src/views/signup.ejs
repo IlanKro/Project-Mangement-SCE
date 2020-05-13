@@ -10,7 +10,7 @@
         <h1>SCE ROOM</h1>
         <h2>Sign up</h2>
         <div id = "signup" class= "container">
-            <form onsubmit="signUp()"  id="SignupForm">
+            <form id="SignupForm">
                 <br>
                 <label for="usertype">User type</label><br>
                 <div id= "user_type">
@@ -32,11 +32,11 @@
                 <input placeholder="Last name" type="text" name="lname" required><br><br>
                 <div id="bank_account" style="display: none">
                     <label for="lname" >Bank Account number</label> <!--only for Renters-->
-                    <input placeholder="Bank account"  type="text" name="bank"><br><br> <!--add required field-->
+                    <input id="bank" placeholder="Bank account"  type="text" name="bank"><br><br> <!--add required field-->
                 </div>
                 <div id="imgup">
                     <label for="img">Add student ID</label> <!--only for Students-->
-                    <input type="file" name="img" accept="image/*"><br><br> <!--add required field-->
+                    <input id="student_image" type="file" name="img" accept="image/*"><br><br> <!--add required field-->
                     <a href=http://asce.co.il>Don't have Student card?</a><br><br><br>
                 </div>
                 <input type="checkbox" name="checkbox" value="check" required/>
