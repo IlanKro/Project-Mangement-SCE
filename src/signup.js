@@ -1,18 +1,22 @@
-
 function userType(val) {
     let img_upload = document.getElementById("imgup")
     let bank = document.getElementById("bank_account")
     if (val == "renter") {
         img_upload.style.display = "none"
         bank.style.display = "block"
-        bank.getElementsByTagName("input")
+        document.getElementsbyId("student_image").required= false
+        document.getElementsbyId("bank").requred= true
     }
     if (val == "student") {
         img_upload.style.display = "block"
         bank.style.display = "none"
+        document.getElementsbyId("student_image").required =false //change to true at the end
+        document.getElementsbyId("bank").required=false
     }
 }
+
 function passwordStrength(password) {
+    console.log("checking password")
     let pass_check=document.getElementById("passwordCheck")
     if (password.length<8) {
         pass_check.innerHTML = "Password too short"
@@ -33,67 +37,13 @@ function passwordStrength(password) {
     return false
 }
 
-
-/*
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-    // User is signed in.
-        document.getElementById("user_div").style.display = "block"
-        document.getElementById("login_div").style.display = "none"
-        if(firebase.auth().currentUser)  {
-            document.getElementById("user_para").innerHTML = "Welcome User : " + firebase.auth().currentUser.email
-            redirectLogin("student")
-        }
-    }
-    else {
-        // No user is signed in.
-        document.getElementById("user_div").style.display = "none"
-        document.getElementById("login_div").style.display = "block"
-    }
-})
-
-function login(){
-    let userEmail = document.getElementById("email_field").value
-    let userPass = document.getElementById("password_field").value
-    firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-        // Handle Errors here.
-        window.alert("Error : " + error.message)
-    })
-}
-
-
-function redirectLogin(user_type) {
-    try{
-        if (user_type == "student")
-            window.location.href = "homepage_student.html"
-        else if (user_type == "renter")
-            window.location.href = "homepage_renter.html"
-        else if (user_type == "admin")
-            window.location.href = "homepage_admin.html"
-        else
-            alert("Unidentified usertype")
-    }
-    catch(e){
-        window.location.href = "404.html"
-    }
-
-}
-
-function logout(){
-    firebase.auth().signOut()
-    window.location.href = "index.html"
-}
-
-
-function forgotPassword() {
-}
-
 function signUp() {
     let form=document.getElementById("SignupForm").elements
     let signup_data= []
     for(let i=0;i<form.length;i++){
         let element=form.item(i)
         signup_data[element.name]=element.value
+        console.log(i + " " + signup_data[element.name])
     }
     if (document.getElementById("student").checked){ //handling the radiobox element separately.
         signup_data["usertype"]="student"
@@ -102,20 +52,26 @@ function signUp() {
     else {
         signup_data["usertype"]="renter"
         if (!signup_data["bank"]) {
-            alert("no bank data!")
             return false
         }
     }
+
     alert(signup_data["email"] + signup_data["pass"])
+
     if(!passwordStrength(signup_data["pass"])) {
-        alert("Password too weak!")
+        alert("your password sucks")
         return false
     }
-    firebase.auth().createUserWithEmailAndPassword(signup_data["email"], signup_data["pass"]).catch(function(error) {
+    auth.createUserWithEmailAndPassword(signup_data["email"], signup_data["pass"]).catch(error => {
     // Handle Errors here.
-        alert("!")
-        window.alert("Error : " + error.message)
+        alert("Error : " + error.message)
+    }).then(cred => {
+        console.log(cred)
     })
-    alert("!")
 }
+
+
+
+/*
+
 */

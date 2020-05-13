@@ -10,7 +10,7 @@
         <h1>SCE ROOM</h1>
         <h2>Sign up</h2>
         <div id = "signup" class= "container">
-            <form method="POST" action="/signup" id="SignupForm">
+            <form onsubmit="signUp()"  id="SignupForm">
                 <br>
                 <label for="usertype">User type</label><br>
                 <div id= "user_type">
@@ -40,13 +40,14 @@
                     <a href=http://asce.co.il>Don't have Student card?</a><br><br><br>
                 </div>
                 <input type="checkbox" name="checkbox" value="check" required/>
-
                 I have read and agree to the <a href="terms&conditions.html">Terms and Conditions and Privacy Policy.</a><br><br><br>
                 <input class= "button" type="submit" value="Sign up">
             </form>
       </div>
-      <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
       <script src="../firebase.js"></script>
-      <script src="../user_managment.js"></script>
+      <script src="../signup.js"></script>
     </body>
 </html>

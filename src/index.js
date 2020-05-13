@@ -1,32 +1,24 @@
 const express  = require("express")
 const app_port = process.env.PORT || 3000
 const path= require("path")
-const logger=require('morgan')
+const logger=require("morgan")
 const app = express()
 const user_controller= require("./userController")
 const admin= require("./firebase-admin")()
 
 // express settings:
 app.set("view engine", "ejs")
-app.use(express.static(path.join(__dirname, '/views/')))
-app.set('views',__dirname+'/views/')
+app.use(express.static(path.join(__dirname, "/views/")))
+app.set("views",__dirname+"/views/")
 app.use("/",express.static("js"))
 app.use("/css",express.static("css"))
 app.use(express.static("./") )
-app.use(logger('dev'))
+app.use(logger("dev"))
 
 //homepage:
 app.get("/",(req, res) => {
     res.render("index", {title: "hello user"})
 })
-
-function checkLoggedIn(request, resposense, next) {// if user is authenticated in the session, carry on
-    if (request.isAuthenticated())
-        return next();// if they aren't redirect them to the index page
-    resposense.redirect('/');
-}
-
-
 
 var database=admin.database()
 
