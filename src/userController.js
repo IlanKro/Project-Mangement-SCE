@@ -12,16 +12,17 @@ function isLoggedIn (req, res, next)
     }
 }
 */
-
+/*
 function checkLoggedIn(request, resposense, next) {// if user is authenticated in the session, carry on
     if (request.isAuthenticated())
         return next()// if they aren't redirect them to the index page
     resposense.redirect("/")
 }
+*/
 
 
 module.exports = function(app,admin) {
-
+    const database= admin.firestore()
     app.get("/login",(req, res) => {
         res.render("login")
     })
@@ -33,24 +34,36 @@ module.exports = function(app,admin) {
     app.get("/forgotpassword",(req, res) => {
         res.render("forgotpassword")
     })
-
-    app.post("/login",(req,res) => {
-        console.log("logged in")
-
-        //TODO: make this code below to work
-        /*
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-            // Handle Errors here.
-            window.alert("Error : " + error.message)
-        })
-        */
-    })
     app.post("/signup",body_json, (req,res) => {
-        let database=admin.firestore()
+
         delete req.body.pass //no need to store password it's stored on auth.
         delete req.body.checkbox //no need to store the same data in every user.
-        console.log(req.body)
-        database.collection("Users").doc(req.body.uid).set(req.body) //fix sign in
+        database.collection("Users").doc(req.body.uid).set(req.body)
+        if (req.body.usertype=="student")
+        //disabling user until they are accepted
+            admin.auth().updateUser(req.body.uid, {disabled: true})
+        admin.auth().updateUser(req.body.uid, {
+            displayName: req.body.username
+        })
+    })
+
+    app.post("/login",body_json, (req,res) => {
+        admin.firestore().collection("Users").doc(req.body.uid).get()
+            .then(doc => {
+                let user_type= doc.data().user_type
+                if (user_type == "student")
+                    return res.render(303,"homepage_student")
+                else if (user_type == "renter")
+                    return  res.render(303,"homepage_renter")
+                else if (user_type == "admin")
+                    return res.render(303,"homepage_admin")
+                else
+                    return res.render(303,"404")
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
     })
 
     app.post("/forgotpassword",body_url, (req,res) => {

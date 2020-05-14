@@ -1,12 +1,3 @@
-/*
-auth.createUserWithEmailAndPassword("hello13221@gmail.com","21321131ADSADa2").catch(error => {
-// Handle Errors here.
-    alert("Error : " + error.message)
-}).then(cred => {
-    console.log(cred)
-})
-*/
-
 function userType(val) {
     let img_upload = document.getElementById("imgup")
     let bank = document.getElementById("bank_account")
@@ -102,8 +93,8 @@ function createUser(uid,signup_data) {
     sendJSON("/signup",signup_data)
 }
 
-//testing:
 function sendJSON(url,data) {
+    // send to url the json data
     let request = new XMLHttpRequest()
     request.open("POST", url, true)
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
