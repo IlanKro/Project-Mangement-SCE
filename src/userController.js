@@ -19,8 +19,6 @@ function checkLoggedIn(request, resposense, next) {// if user is authenticated i
     resposense.redirect("/")
 }
 */
-
-
 module.exports = function(app,admin) {
     const database= admin.firestore()
     app.get("/login",(req, res) => {
@@ -42,28 +40,34 @@ module.exports = function(app,admin) {
         if (req.body.usertype=="student")
         //disabling user until they are accepted
             admin.auth().updateUser(req.body.uid, {disabled: true})
-        admin.auth().updateUser(req.body.uid, {
-            displayName: req.body.username
-        })
+
+        admin.auth().updateUser(req.body.uid, {displayName: req.body.username})
     })
+    /*
+    app.get("/enterSite",body_json,(req,res) => {
+        console.log(req.body.uid)
+        return res.redirect(301,"homepage_admin")
+    })
+    */
 
     app.post("/login",body_json, (req,res) => {
+        console.log(req.body.uid)
         admin.firestore().collection("Users").doc(req.body.uid).get()
             .then(doc => {
                 let user_type= doc.data().user_type
+                console.log(user_type)
                 if (user_type == "student")
-                    return res.render(303,"homepage_student")
+                    return res.redirect(302,"homepage_student")
                 else if (user_type == "renter")
-                    return  res.render(303,"homepage_renter")
+                    return  res.redirect(302,"homepage_renter")
                 else if (user_type == "admin")
-                    return res.render(303,"homepage_admin")
+                    return res.redirect(302,"homepage_admin")
                 else
-                    return res.render(303,"404")
+                    return res.redirect(302,"404")
             })
             .catch(err => {
                 console.log(err)
             })
-
     })
 
     app.post("/forgotpassword",body_url, (req,res) => {
