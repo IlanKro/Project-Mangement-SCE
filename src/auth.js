@@ -42,16 +42,19 @@ function checkIfLoggedIn(){
     })
 }
 
-function sendJSON(url,data) {
-    // send to url the json data
+function sendJSONRedirect(url,data,method) {
+    // send to url the json data and redirect to url received.
     let request = new XMLHttpRequest()
-    request.open("POST", url, true)
+    request.open(method, url, true)
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    request.onload = function (e) {
+        window.location=request.responseURL
+    }
     request.send(JSON.stringify(data))
+    return request
 }
-//redirect
+//redirect upon pressing "enter site"
 const enter_site = document.getElementById("enterSite")
 enter_site.addEventListener("click", (ev) => {
-    ev.preventDefault()
-    return sendJSON("/login",{uid: auth.currentUser.uid })
+    sendJSONRedirect("/login",{uid: auth.currentUser.uid },"post")
 })
