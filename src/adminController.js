@@ -24,24 +24,23 @@ function checkLoggedIn(request, resposense, next) {// if user is authenticated i
 */
 module.exports = function(app,admin) {
     const database= admin.firestore()
-    function getLibrary(library) {
-
-        database.collection(library).get().then(doc => {
-            let data= []
-            let i=0
-            doc.forEach(documentSnapshot => {
-                console.log( documentSnapshot.data())
-                data[i++] = documentSnapshot.data()
-                console.log(data[i])
-            })
+    async function getLibrary(library) {
+        return database.collection(library).get().then(doc => {
+            let data= {}
+            let i = 0
+            for(dat of doc.docs)
+                data[i++] = dat.data()
+            //console.log(data)
             return data
         })
-
     }
     app.get("/homepage_admin",(req, res) => {
-        let units= getLibrary("Units")
-        console.log("done!" +units)
-
-        res.render("homepage_admin")
+        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews")]).then(data =>
+        {
+            let units=data[0]
+            let users=data[1]
+            let reviews=data[2]
+            res.render("homepage_admin",units,users,reviews)
+        })
     })
 }
