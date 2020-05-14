@@ -57,23 +57,18 @@ module.exports = function(app,admin) {
                 let user_type= doc.data().user_type
                 console.log(user_type)
                 if (user_type == "student")
-                    return res.redirect(302,"homepage_student")
+                    return res.redirect("homepage_student")
                 else if (user_type == "renter")
-                    return  res.redirect(302,"homepage_renter")
+                    return  res.redirect("homepage_renter")
                 else if (user_type == "admin")
-                    return res.redirect(302,"homepage_admin")
+                    return res.redirect("homepage_admin")
                 else
-                    return res.redirect(302,"404")
+                    return res.redirect("404")
             })
             .catch(err => {
                 console.log(err)
             })
     })
-
-    app.post("/forgotpassword",body_url, (req,res) => {
-        console.log(req.body)
-    })
-
 }
 
 
