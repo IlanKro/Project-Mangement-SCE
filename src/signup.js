@@ -64,8 +64,6 @@ signupForm.addEventListener("submit", (e) => {
     // Handle Errors here.
         alert("Error : " + error.message)
     }).then(cred => {
-        console.log(cred)
-        console.log(cred.user.uid)
         createUser(cred.user.uid,signup_data)
         redirectSignup(signup_data["usertype"])
     })
@@ -86,7 +84,6 @@ function redirectSignup(user_type) {
         window.location.href = "404.html"
     }
 }
-
 
 function createUser(uid,signup_data) {
     signup_data["uid"]=uid
