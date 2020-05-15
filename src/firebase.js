@@ -11,17 +11,15 @@ var firebaseConfig = {
 // Initialize Firebase
 if (firebase.apps.length == 0)
     firebase.initializeApp(firebaseConfig)
-
-
 var auth=firebase.auth()
 var db=firebase.firestore()
-/*firebase.auth().currentUser.getIdToken(/* forceRefresh/ true).then(function(idToken) {
-        // Send token to your backend via HTTPS
-        // ...
-      }).catch(function(error) {
-        // Handle error
-      }) */
 
-/*src= for client
-      server= npm install
-*/
+const logout = document.getElementsByClassName("logoutButton")[0]
+console.log("hello")
+logout.addEventListener("click", (ev) => {
+    ev.preventDefault()
+    alert("signing out")
+    auth.signOut().then(() => {
+        window.location="/"
+    })
+})

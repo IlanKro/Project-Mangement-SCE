@@ -7,7 +7,6 @@ const user_controller= require("./userController")
 const admin_controller= require("./adminController")
 const student_controller= require("./studentController")
 const admin= require("./firebase-admin")()
-
 // express settings:
 app.set("view engine", "ejs")
 app.use(express.static(path.join(__dirname, "/views/")))
@@ -15,23 +14,13 @@ app.set("views",__dirname+"/views/")
 app.use("/",express.static("js"))
 app.use("/css",express.static("css"))
 app.use(express.static("./") )
-app.use(logger("dev"))
-
-
 //homepage:
 app.get("/",(req, res) => {
     res.render("index",{title: "hello"})
 })
-
-function firebaseGetUserAttr(admin,uid,attr) {
-    admin.firestore().collection("Users").doc(uid).get()
-        .then(doc => {
-            console.log(doc.data().attr)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-}
+app.get("/404",(req, res) => {
+    res.render("404")
+})
 
 
 user_controller(app,admin)
@@ -44,7 +33,7 @@ console.log(`http://127.0.0.1:${app_port}/`)
 
 
 
-/*
+/* maybe usable code:
   console.log(admin.app().name)
 
   admin.auth().createUser({
@@ -66,3 +55,14 @@ console.log(`http://127.0.0.1:${app_port}/`)
         console.log("Error fetching user data:", error)
   });
   */
+/*
+ function firebaseGetUserAttr(admin,uid,attr) {
+     admin.firestore().collection("Users").doc(uid).get()
+         .then(doc => {
+             console.log(doc.data().attr)
+         })
+         .catch(err => {
+             console.log(err)
+         })
+ }
+ */

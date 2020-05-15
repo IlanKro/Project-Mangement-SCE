@@ -9,10 +9,14 @@
      <body>
          <h1>Home Page</h1>
          <h2 id="welcome">Welcome</h2>
-         <form align="right" name="form1" method="post" action="log_out.php">
-            <label class="logoutLblPos">
-                <input name="submit2" type="submit" id="submit2" value="log out">
-            </label>
-        </form>
-        
+        <%- include("./partials/logout.ejs") %>
+        <%=units %>
+
+
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+        <script src="../firebase.js"></script>
+        <script src="../admin.js"></script>
+
     </body>
