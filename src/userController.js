@@ -43,10 +43,12 @@ module.exports = function(app,admin) {
         admin.auth().updateUser(req.body.uid, {displayName: req.body.username})
     })
 
-    app.post("/login",body_json, (req,res) => {        
+    app.post("/login",body_json, (req,res) => {
+        console.log(req.body.uid)
         admin.firestore().collection("Users").doc(req.body.uid).get()
             .then(doc => {
-                let user_type= doc.data().user_type
+                console.log(doc.data().usertype)
+                let user_type= doc.data().usertype
                 if (user_type == "student")
                     return res.redirect("homepage_student")
                 else if (user_type == "renter")

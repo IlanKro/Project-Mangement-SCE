@@ -24,8 +24,8 @@ module.exports = function(app,admin) {
 
 
     app.post("/write_review", body_url, (req, res) => {
-            console.log(req.body)
-            admin.firestore().collection("Reviews").doc(req.body.uid).set()
-            res.redirect("homepage_student")
-        })
+        console.log(req.body)
+        database.collection("Reviews").doc(req.body.uid).set()
+        res.redirect("homepage_student")
+    })
 }

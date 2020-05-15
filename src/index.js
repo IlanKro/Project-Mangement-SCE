@@ -18,6 +18,9 @@ app.use(express.static("./") )
 app.get("/",(req, res) => {
     res.render("index",{title: "hello"})
 })
+app.get("/404",(req, res) => {
+    res.render("404")
+})
 
 
 user_controller(app,admin)
