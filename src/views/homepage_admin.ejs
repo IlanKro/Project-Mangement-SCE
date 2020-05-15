@@ -3,6 +3,7 @@
     <head>
         <title>homepage</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
+        <link rel="stylesheet" type="text/css" href="../css/modal.css">
         <meta charset="UTF-8">
         <link rel="icon" href="SCE%20ROOM.png">
     </head>
@@ -10,7 +11,36 @@
          <h1>Home Page</h1>
          <h2 id="welcome">Welcome</h2>
         <%- include("./partials/logout.ejs") %>
-        <%=units %>
+        <button class="button">Student authorization</button>
+
+        <!-- The Modal -->
+        <div id="student modal" class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="Users">
+                <span class="close">&times;</span>
+                <h2>Student authorization</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <% for(var i=0;i<users.length;i++ ){
+                        if (users[i].usertype=="student") { %>
+                            <li>first name: <%=JSON.stringify(users[i].fname)%>
+                              last name:<%=JSON.stringify(users[i].lname)%>,
+                              username:<%=JSON.stringify(users[i].username)%><br>,
+                              email:<%=JSON.stringify(users[i].email)%>
+                              image link:<%=JSON.stringify(users[i].img)%>
+                              <form method="post" action="/homepage_admin">
+                                  <input type="text" name="uid" value="<%=users[i].uid%>" style="display: none;visibility: hidden;">
+                                  <input type="submit" class="button" value="enable">
+                              </form>
+                            </li>
+                      <% }
+                     } %>
+                </ul>
+              </div>
+            </div>
+        </div>
 
 
         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>

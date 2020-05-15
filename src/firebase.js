@@ -15,7 +15,6 @@ var auth=firebase.auth()
 var db=firebase.firestore()
 
 const logout = document.getElementsByClassName("logoutButton")[0]
-console.log("hello")
 logout.addEventListener("click", (ev) => {
     ev.preventDefault()
     alert("signing out")
