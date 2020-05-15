@@ -5,6 +5,7 @@ const logger=require("morgan")
 const app = express()
 const user_controller= require("./userController")
 const admin_controller= require("./adminController")
+const student_controller= require("./studentController")
 const admin= require("./firebase-admin")()
 
 // express settings:
@@ -18,7 +19,7 @@ app.use(logger("dev"))
 
 
 //homepage:
-app.get("/",(req, res) => {    
+app.get("/",(req, res) => {
     res.render("index",{title: "hello"})
 })
 
@@ -35,6 +36,7 @@ function firebaseGetUserAttr(admin,uid,attr) {
 
 user_controller(app,admin)
 admin_controller(app,admin)
+student_controller(app,admin)
 app.listen(app_port)
 console.log(`app is running. port: ${app_port}`)
 console.log(`http://127.0.0.1:${app_port}/`)
