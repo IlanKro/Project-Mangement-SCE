@@ -40,7 +40,7 @@ module.exports = function(app,admin) {
             let units=data[0]
             let users=data[1]
             let reviews=data[2]
-            console.log(reviews[0].student_id)            
+            //todo show usernames according to references.
             /*
             console.log(users)
             for(var i = 0; i < users.length; i++) {
@@ -88,7 +88,7 @@ module.exports = function(app,admin) {
             })
     })
     app.post("/homepage_admin/rmv_review",body_url, (req,res) => {
-        console.log(req.body)
+        //console.log(req.body)
         res.render("success_page",{"success" : req.body.rid + " deleted!"} )
     })
 

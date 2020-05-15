@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>homepage</title>
+        <title>homepage_admin</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
         <link rel="stylesheet" type="text/css" href="../css/modal.css">
         <meta charset="UTF-8">
@@ -11,15 +11,15 @@
          <h1>Home Page</h1>
          <h2 id="welcome">Welcome</h2>
         <%- include("./partials/logout.ejs") %>
-        <button class="button">Student authorization</button>
-        <button class="button">user access menu</button>
-        <button class="button">delete reviews</button>
-
+        <button class="modalButton">Student authorization</button><br>
+        <button class="modalButton">user access menu</button><br>
+        <button class="modalButton">delete reviews</button><br>
+        <button class="modalButton">View housing units</button><br>
         <!-- The authorizing Modal -->
-        <div id="student modal" class="modal">
+        <div class="modal">
           <!-- Modal content -->
             <div class="modal-content">
-              <div class="Users">
+              <div class="modal-header">
                 <span class="close">&times;</span>
                 <h2>Student authorization</h2>
               </div>
@@ -44,10 +44,10 @@
             </div>
         </div>
         <!-- The banning Modal -->
-        <div id="ban modal" class="modal">
+        <div class="modal">
           <!-- Modal content -->
             <div class="modal-content">
-              <div class="Users">
+              <div class="modal-header">
                 <span class="close">&times;</span>
                 <h2>ban/unban menu</h2>
               </div>
@@ -73,10 +73,10 @@
             </div>
         </div>
         <!-- The delete reviews Modal -->
-        <div id="deleteReviewsModal" class="modal">
+        <div class="modal">
           <!-- Modal content -->
             <div class="modal-content">
-              <div class="Users">
+              <div class="modal-header">
                 <span class="close">&times;</span>
                 <h2>Delete Reviews</h2>
               </div>
@@ -99,13 +99,32 @@
               </div>
             </div>
         </div>
-
-
-
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
-        <script src="../firebase.js"></script>
-        <script src="../admin.js"></script>
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Housing Units</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                <%for(var i=0;i<units.length;i++ ){%>
+                            <li>available:<%=JSON.stringify(units[i].available)%><br> <!-- for future: make it a V -->
+                              image: <%=JSON.stringify(units[i].image)%><br>
+                              city: <%=JSON.stringify(units[i].city)%><br>
+                              street: <%=JSON.stringify(units[i].street)%><br>
+                              house number:<%=JSON.stringify(units[i].house_number) %><br>
+                              rooms_num:<%=JSON.stringify(units[i].rooms_num)%><br>
+                              price:<%=JSON.stringify(units[i].price)%><br>
+                              time_limit:<%=JSON.stringify(units[i].time_limit)%><br>
+                              </form>
+                            </li>
+                     <% } %>
+                </ul>
+              </div>
+            </div>
+        </div>
+        <%- include("./partials/firebase.ejs") %>
+        <script type="text/javascript" src="../modal.js"></script>
 
     </body>
