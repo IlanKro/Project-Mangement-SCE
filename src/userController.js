@@ -49,15 +49,16 @@ module.exports = function(app,admin) {
     app.post("/login",body_json, (req,res) => {
         admin.firestore().collection("Users").doc(req.body.uid).get()
             .then(doc => {
+              console.log(doc.data())
                 let user_type= doc.data().user_type
                 if (user_type == "student")
-                    return res.render(303,"homepage_student")
+                    return res.render("homepage_student")
                 else if (user_type == "renter")
-                    return  res.render(303,"homepage_renter")
+                    return  res.render("homepage_renter")
                 else if (user_type == "admin")
-                    return res.render(303,"homepage_admin")
+                    return res.render("homepage_admin")
                 else
-                    return res.render(303,"404")
+                    return res.render("404")
             })
             .catch(err => {
                 console.log(err)

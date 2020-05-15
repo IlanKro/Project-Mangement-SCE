@@ -22,10 +22,9 @@ module.exports = function(app,admin) {
         res.render("write_review")
     })
 
-
-    app.post("/write_review", body_url, (req, res) => {
+    app.post("/write_review", body_json, (req, res) => {
             console.log(req.body)
-            admin.firestore().collection("Reviews").doc(req.body.uid).set()
+            admin.firestore().collection("Reviews").doc().set()
             res.redirect("homepage_student")
-        })
+    })
 }
