@@ -43,7 +43,7 @@
   text-align: center;
 }
 
-.logoutButton, .button{
+.modalButton, .logoutButton, .button{
   font: bold 15px Arial;
   text-decoration: none;
   background-color: green;

@@ -14,5 +14,24 @@
                 <input name="submit2" type="submit" id="submit2" value="log out">
             </label>
         </form>
-        
+        <!-- The Modal -->
+        <div id="student modal" class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="Users">
+                <span class="close">&times;</span>
+                <h2>Modal Header</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <% for(var i=0;i<users.length;i++ ){ %>
+                  <li><%= // JSON.stringify(users[i]) %> </li>
+                  <% } %>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <h3>Modal Footer</h3>
+            </div>
+        </div>
     </body>

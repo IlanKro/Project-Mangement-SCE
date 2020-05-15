@@ -32,6 +32,7 @@ module.exports = function(app,admin) {
     app.get("/forgotpassword",(req, res) => {
         res.render("forgotpassword")
     })
+
     app.post("/signup",body_json, (req,res) => {
         delete req.body.pass //no need to store password it's stored on auth.
         delete req.body.checkbox //no need to store the same data in every user.
@@ -45,7 +46,7 @@ module.exports = function(app,admin) {
 
     app.post("/login",body_json, (req,res) => {
         admin.firestore().collection("Users").doc(req.body.uid).get()
-            .then(doc => {                
+            .then(doc => {
                 let user_type= doc.data().usertype
                 if (user_type == "student")
                     return res.redirect("homepage_student")
