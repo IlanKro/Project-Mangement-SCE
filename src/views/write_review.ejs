@@ -6,31 +6,27 @@
         <meta charset="UTF-8">
         <link rel="icon" href="SCE%20ROOM.png">
     </head>
-    
+
     <body>
-        <h1>Writhe Review</h1>
+        <h1>Write Review</h1>
         <div id = "write_review" class= "container3">
-            <form>
+            <form method = "post" action = "/write_review">
                 <br>
                 <label for="Review">Review</label><br><br><br>
                 <label for="Renter's Name">Renter's Name </label>
-                <input type="text" id="ue" name="Renter's Name"><br><br>
-                <label for="location">The Location of the Housing Unit </label>
-                <input type="text" id="ue" name="Renter's Name"><br><br><br><br>
+                <input type="text" id="ue" name="renter's Name"><br><br>
+                <label for="location">The Location of the Housing Unit</label>
+                <input type="text" id="l1" name = "housing_unit_location"><br><br><br><br>
                 <label for="Student's Review">Your Review</label><br><br>
-                <textarea rows="2" cols="25"></textarea><br><br><br><br>
+                <textarea rows="2" cols="25" name="text review"></textarea><br><br><br><br>
                 <br><br>
-                <a class= "button" href="homepage_student.html"> Update </a><br><br><br>  
-                <a class= "button_write_review" href="homepage_student.html"> cancel </a><br><br><br> 
+                <input type = "submit" class= "button" value = "Post" href="homepage_student"></input><br><br><br>
             </form>
+            <a class= "button_write_review" href="homepage_student">Cancel</a><br><br><br>
         </div>
         <form align="right" name="form1" method="post" action="log_out.php">
             <label class="logoutLblPos">
                 <input name="submit2" type="submit" id="submit2" value="log out">
             </label>
         </form>
-    
-    
     </body>
-    
-    

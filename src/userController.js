@@ -33,7 +33,6 @@ module.exports = function(app,admin) {
         res.render("forgotpassword")
     })
     app.post("/signup",body_json, (req,res) => {
-
         delete req.body.pass //no need to store password it's stored on auth.
         delete req.body.checkbox //no need to store the same data in every user.
         database.collection("Users").doc(req.body.uid).set(req.body)
