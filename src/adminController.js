@@ -40,6 +40,7 @@ module.exports = function(app,admin) {
             let units=data[0]
             let users=data[1]
             let reviews=data[2]
+            console.log(reviews[0].student_id)            
             /*
             console.log(users)
             for(var i = 0; i < users.length; i++) {
@@ -50,17 +51,46 @@ module.exports = function(app,admin) {
         })
     })
 
-    app.post("/homepage_admin",body_url, (req,res) => {
+    app.post("/homepage_admin/enable",body_url, (req,res) => {
         console.log(req.body)
         console.log(req.body.uid)
         admin.auth().updateUser(req.body.uid, {disabled: false})
             .then(function(userRecord) {
                 console.log("Successfully enabled user data:", userRecord.toJSON())
-                res.send("success " + userRecord.email + " activated!" )
+                res.render("success_page",{"success" : userRecord.email + " activated!"} )
             })
             .catch(function(error) {
                 console.log("Error fetching user data:", error)
                 res.send(error)
             })
     })
+
+    app.post("/homepage_admin/ban",body_url, (req,res) => {
+        admin.auth().updateUser(req.body.uid, {disabled: true})
+            .then(function(userRecord) {
+                console.log("Successfully enabled user data:", userRecord.toJSON())
+                res.render("success_page",{"success" : userRecord.email + " banned!"} )
+            })
+            .catch(function(error) {
+                console.log("Error fetching user data:", error)
+                res.send(error)
+            })
+    })
+    app.post("/homepage_admin/unban",body_url, (req,res) => {
+        admin.auth().updateUser(req.body.uid, {disabled: false})
+            .then(function(userRecord) {
+                console.log("Successfully enabled user data:", userRecord.toJSON())
+                res.render("success_page",{"success" : userRecord.email + " activated!"} )
+            })
+            .catch(function(error) {
+                console.log("Error fetching user data:", error)
+                res.send(error)
+            })
+    })
+    app.post("/homepage_admin/rmv_review",body_url, (req,res) => {
+        console.log(req.body)
+        res.render("success_page",{"success" : req.body.rid + " deleted!"} )
+    })
+
+
 }

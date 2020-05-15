@@ -12,8 +12,10 @@
          <h2 id="welcome">Welcome</h2>
         <%- include("./partials/logout.ejs") %>
         <button class="button">Student authorization</button>
+        <button class="button">user access menu</button>
+        <button class="button">delete reviews</button>
 
-        <!-- The Modal -->
+        <!-- The authorizing Modal -->
         <div id="student modal" class="modal">
           <!-- Modal content -->
             <div class="modal-content">
@@ -30,7 +32,7 @@
                               username:<%=JSON.stringify(users[i].username)%><br>,
                               email:<%=JSON.stringify(users[i].email)%>
                               image link:<%=JSON.stringify(users[i].img)%>
-                              <form method="post" action="/homepage_admin">
+                              <form method="post" action="/homepage_admin/enable">
                                   <input type="text" name="uid" value="<%=users[i].uid%>" style="display: none;visibility: hidden;">
                                   <input type="submit" class="button" value="enable">
                               </form>
@@ -41,6 +43,63 @@
               </div>
             </div>
         </div>
+        <!-- The banning Modal -->
+        <div id="ban modal" class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="Users">
+                <span class="close">&times;</span>
+                <h2>ban/unban menu</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <% for(var i=0;i<users.length;i++ ){%>
+                            <li>first name: <%=JSON.stringify(users[i].fname)%>
+                              last name:<%=JSON.stringify(users[i].lname)%>,
+                              username:<%=JSON.stringify(users[i].username)%><br>,
+                              email:<%=JSON.stringify(users[i].email)%>
+                              <form method="post" action="/homepage_admin/ban">
+                                  <input type="text" name="uid" value="<%=users[i].uid%>" style="display: none;visibility: hidden;">
+                                  <input type="submit" class="button" value="ban">
+                              </form>
+                              <form method="post" action="/homepage_admin/unban">
+                                  <input type="text" name="uid" value="<%=users[i].uid%>" style="display: none;visibility: hidden;">
+                                  <input type="submit" class="button" value="unban">
+                              </form>
+                            </li>
+                     <% } %>
+                </ul>
+              </div>
+            </div>
+        </div>
+        <!-- The delete reviews Modal -->
+        <div id="deleteReviewsModal" class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="Users">
+                <span class="close">&times;</span>
+                <h2>Delete Reviews</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                <% let time = new Date(1970, 0, 1) // Epoch
+                   for(var i=0;i<reviews.length;i++ ){%>
+                            <li>writen by: <%=JSON.stringify(reviews[i].student_id.displayName)%><br>
+                              about:<%=JSON.stringify(reviews[i].renter_id.displayName)%><br>
+                              <% time.setSeconds(reviews[i].timestamp._seconds)%>
+                              at:<%=time %><br>
+                              body:<%=JSON.stringify(reviews[i].body)%><br>
+                              <form method="post" action="/homepage_admin/rmv_review">
+                                  <input type="text" name="rid" value="<%=reviews[i].rid%>" style="display: none;visibility: hidden;">
+                                  <input type="submit" class="button" value="delete">
+                              </form>
+                            </li>
+                     <% } %>
+                </ul>
+              </div>
+            </div>
+        </div>
+
 
 
         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
