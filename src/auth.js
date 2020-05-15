@@ -1,12 +1,3 @@
-// logout
-const logout = document.querySelector("#logout")
-logout.addEventListener("click", (ev) => {
-    ev.preventDefault()
-    alert("signing out")
-    auth.signOut().then(() => {
-        window.location="/"
-    })
-})
 // login
 const loginForm = document.querySelector("#login_form")
 loginForm.addEventListener("submit", (ev) => {

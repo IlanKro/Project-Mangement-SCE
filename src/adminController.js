@@ -40,7 +40,7 @@ module.exports = function(app,admin) {
             let units=data[0]
             let users=data[1]
             let reviews=data[2]
-            res.render("homepage_admin",units,users,reviews)
+            res.render("homepage_admin",{"units" :units,"users" : users,"reviews" :reviews})
         })
     })
 }

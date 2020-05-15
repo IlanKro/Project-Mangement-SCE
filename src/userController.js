@@ -44,10 +44,8 @@ module.exports = function(app,admin) {
     })
 
     app.post("/login",body_json, (req,res) => {
-        console.log(req.body.uid)
         admin.firestore().collection("Users").doc(req.body.uid).get()
-            .then(doc => {
-                console.log(doc.data().usertype)
+            .then(doc => {                
                 let user_type= doc.data().usertype
                 if (user_type == "student")
                     return res.redirect("homepage_student")

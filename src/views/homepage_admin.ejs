@@ -9,10 +9,8 @@
      <body>
          <h1>Home Page</h1>
          <h2 id="welcome">Welcome</h2>
-        <div class="logoutLblPos">
-                <button name="logout" class="logoutButton" value="log out">log out</button>
-        </div>
-
+        <%- include("./partials/logout.ejs") %>
+        <%=units %>
 
 
         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
