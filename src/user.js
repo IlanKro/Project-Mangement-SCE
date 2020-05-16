@@ -7,3 +7,14 @@ window.onload=function(){
             window.location= "/"
     })
 }
+/*
+function checkIfLoggedIn(){
+    auth.onAuthStateChanged(function(user) {
+        if (user) { // if the user is logged in
+            if(!auth.currentUser)  {
+              a
+            }
+
+    })
+}
+*/
