@@ -13,6 +13,7 @@ if (firebase.apps.length == 0)
     firebase.initializeApp(firebaseConfig)
 var auth=firebase.auth()
 var db=firebase.firestore()
+var storage = firebase.storage()
 
 const logout = document.getElementsByClassName("logoutButton")[0]
 logout.addEventListener("click", (ev) => {

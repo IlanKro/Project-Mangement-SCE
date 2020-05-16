@@ -75,8 +75,9 @@ function redirectSignup(user_type) {
             alert("sign up was successful! wait for an admin to approve your account")
             auth.signOut()
         }
-        else if (user_type == "renter")
-            window.location.href = "homepage_renter"
+        else if (user_type == "renter") {
+            alert("account created successfully! try to login")
+        }
         else
             alert("Unidentified usertype")
     }
