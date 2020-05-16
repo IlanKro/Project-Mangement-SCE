@@ -48,7 +48,8 @@ function addClick(unitId, renterId, userId) {
     review_data["unit_id"] = db.collection("Users").doc(unitId)
     console.log(review_data)
     db.collection("Reviews").add(review_data).then(res => {
-      window.location.href = "homepage_student"
+      alert("Review Submitted Successfully")
+      setTimeout(function(){  }, 1500)
     })
   })
 
