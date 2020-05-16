@@ -5,6 +5,7 @@ const body_json=body_parser.json()
 module.exports = function(app,admin) {
     const database= admin.firestore()
     async function getLibrary(library) {
+        /* async function to get complete library, returns promise with the library */
         return database.collection(library).get().then(doc => {
             return doc.docs
         })
@@ -16,6 +17,7 @@ module.exports = function(app,admin) {
             let units=data[0]
             let users=data[1]
             let reviews=data[2]
+            console.log(reviews[0].data().student_id.path.substring("users/".length))
 
             res.render("homepage_admin",{"units" :units,"users" : users,"reviews" :reviews})
         })
