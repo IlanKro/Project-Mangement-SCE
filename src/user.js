@@ -7,14 +7,26 @@ window.onload=function(){
             window.location= "/"
     })
 }
-/*
-function checkIfLoggedIn(){
-    auth.onAuthStateChanged(function(user) {
-        if (user) { // if the user is logged in
-            if(!auth.currentUser)  {
-              a
-            }
 
-    })
-}
-*/
+
+/*
+  //console.log(reviews[0].data().student_id.path.substring("users/".length))
+
+ */
+/*
+//path,attr
+//ref.path
+
+function refAttr(libraries)
+{
+/*
+for (var i=0;i<db.length;i++) {
+  if (id == db[i].id)
+  for (var i=0;i<db.length;i++) {
+    if (id == Users[i].id) %>
+       <%=users[i].data().fname %> <%
+   }
+
+   */
+
+//}

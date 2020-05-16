@@ -22,11 +22,11 @@ function renderUnit(doc){
     min_rent_time.textContent = "Min staying time: " + doc.data().min_rent_time
     phone.textContent = "Phone: " + doc.data().phone
     doc.data().user_id.get().then(res => {
-      console.log(res)
-      if(res.exists) {
-        owner.textContent = res.data().fname + " " + res.data().lname
-        email.textContent = "Email: " + res.data().email
-      }
+        console.log(res)
+        if(res.exists) {
+            owner.textContent = res.data().fname + " " + res.data().lname
+            email.textContent = "Email: " + res.data().email
+        }
     })
 
 

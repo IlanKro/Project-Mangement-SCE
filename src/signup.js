@@ -83,19 +83,15 @@ function createUser(signup_data) {
         sendJSON("/signup",signup_data)
         redirectSignup(signup_data["usertype"])
     })
-
 }
-
-
 function redirectSignup(user_type) {
     try{
         if (user_type == "student") {
             alert("sign up was successful! wait for an admin to approve your account")
             auth.signOut()
         }
-        else if (user_type == "renter") {
-            alert("account created successfully! try to login")
-        }
+        else if (user_type == "renter")
+            window.location.href = "homepage_renter"
         else
             alert("Unidentified usertype")
     }
@@ -146,22 +142,3 @@ async function uploadImage(email) {
         )
     })
 }
-
-
-/*
-return uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-    function(snapshot) {
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        console.log("Upload is " + progress + "% done")
-    }, function(error) {
-        alert(error.message)
-        return null
-    },  async function() {
-    // Upload completed successfully, now we can get the download URL
-        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-            console.log("File available at: ", downloadURL)
-            return downloadURL
-        })
-    })
-    */

@@ -11,6 +11,20 @@
          <h1>Home Page</h1>
          <h2 id="welcome">Welcome</h2>
         <%- include("./partials/logout.ejs") %>
+        <%
+         var libraries={ "Users": users ,"Reviews": reviews,"Units" : units}
+         refAttr("Users/tSWXwYg1aMVYVCwlbKTwNf0lL7j2")
+         function refAttr(path)
+         {
+           let library=path.split("/")[0]
+           let id=path.split("/")[1]
+           let db=libraries[library]
+           for (var i=0;i<db.length;i++) {
+             if (db[i].id == id ) {
+                return db[i].data()
+              }
+            }
+          }%>
         <button class="modalButton">Student authorization</button><br>
         <button class="modalButton">user access menu</button><br>
         <button class="modalButton">delete reviews</button><br>
@@ -26,14 +40,14 @@
               <div class="modal-body">
                 <ul>
                   <% for(var i=0;i<users.length;i++ ){
-                        if (users[i].usertype=="student") { %>
-                            <li>first name: <%=JSON.stringify(users[i].fname)%>
-                              last name:<%=JSON.stringify(users[i].lname)%>,
-                              username:<%=JSON.stringify(users[i].username)%><br>,
-                              email:<%=JSON.stringify(users[i].email)%>
-                              image link:<%=JSON.stringify(users[i].img)%>
+                        if (users[i].data().usertype=="student") { %>
+                            <li>first name: <%=users[i].data().fname%>
+                              last name:<%=JSON.stringify(users[i].data().lname)%>,
+                              username:<%=JSON.stringify(users[i].data().username)%><br>,
+                              email:<%=JSON.stringify(users[i].data().email)%>
+                              image link:<a href=<%=users[i].data().img%>> ID</a>
                               <form method="post" action="/homepage_admin/enable">
-                                  <input type="text" name="uid" value="<%=users[i].uid%>" style="display: none;visibility: hidden;">
+                                  <input type="text" name="uid" value="<%=users[i].id %>" style="display: none;visibility: hidden;">
                                   <input type="submit" class="button" value="enable">
                               </form>
                             </li>
@@ -53,17 +67,17 @@
               </div>
               <div class="modal-body">
                 <ul>
-                  <% for(var i=0;i<users.length;i++ ){%>
-                            <li>first name: <%=JSON.stringify(users[i].fname)%>
-                              last name:<%=JSON.stringify(users[i].lname)%>,
-                              username:<%=JSON.stringify(users[i].username)%><br>,
-                              email:<%=JSON.stringify(users[i].email)%>
+                  <% for(var i=0;i<users.length;i++){%>
+                            <li>first name: <%=JSON.stringify(users[i].data().fname)%>
+                              last name:<%=JSON.stringify(users[i].data().lname)%>,
+                              username:<%=JSON.stringify(users[i].data().username)%><br>,
+                              email:<%=JSON.stringify(users[i].data().email)%>
                               <form method="post" action="/homepage_admin/ban">
-                                  <input type="text" name="uid" value="<%=users[i].uid%>" style="display: none;visibility: hidden;">
+                                  <input type="text" name="uid" value="<%=users[i].id%>" style="display: none;visibility: hidden;">
                                   <input type="submit" class="button" value="ban">
                               </form>
-                              <form method="post" action="/homepage_admin/unban">
-                                  <input type="text" name="uid" value="<%=users[i].uid%>" style="display: none;visibility: hidden;">
+                              <form method="post" action="/homepage_admin/enable">
+                                  <input type="text" name="uid" value="<%=users[i].id%>" style="display: none;visibility: hidden;">
                                   <input type="submit" class="button" value="unban">
                               </form>
                             </li>
@@ -84,13 +98,13 @@
                 <ul>
                 <% let time = new Date(1970, 0, 1) // Epoch
                    for(var i=0;i<reviews.length;i++ ){%>
-                            <li>writen by: <%=JSON.stringify(reviews[i].student_id.displayName)%><br>
-                              about:<%=JSON.stringify(reviews[i].renter_id.displayName)%><br>
-                              <% time.setSeconds(reviews[i].timestamp._seconds)%>
+                            <li>written by: <%=JSON.stringify(reviews[i].data().student_id.displayName)%><br>
+                              about:<%=JSON.stringify(reviews[i].data().renter_id.displayName)%><br>
+                              <% time.setSeconds(reviews[i].data().timestamp._seconds)%>
                               at:<%=time %><br>
-                              body:<%=JSON.stringify(reviews[i].body)%><br>
+                              body:<%=JSON.stringify(reviews[i].data().body)%><br>
                               <form method="post" action="/homepage_admin/rmv_review">
-                                  <input type="text" name="rid" value="<%=reviews[i].rid%>" style="display: none;visibility: hidden;">
+                                  <input type="text" name="rid" value="<%=reviews[i].id%>" style="display: none;visibility: hidden;">
                                   <input type="submit" class="button" value="delete">
                               </form>
                             </li>
@@ -109,14 +123,18 @@
               <div class="modal-body">
                 <ul>
                 <%for(var i=0;i<units.length;i++ ){%>
-                            <li>available:<%=JSON.stringify(units[i].available)%><br> <!-- for future: make it a V -->
-                              image: <%=JSON.stringify(units[i].image)%><br>
-                              city: <%=JSON.stringify(units[i].city)%><br>
-                              street: <%=JSON.stringify(units[i].street)%><br>
-                              house number:<%=JSON.stringify(units[i].house_number) %><br>
-                              rooms_num:<%=JSON.stringify(units[i].rooms_num)%><br>
-                              price:<%=JSON.stringify(units[i].price)%><br>
-                              time_limit:<%=JSON.stringify(units[i].time_limit)%><br>
+                            <li>available:<%=JSON.stringify(units[i].data().available)%><br> <!-- for future: make it a V -->
+                              belongs to: <%=refAttr(units[i].data().user_id.path).username%> <br>
+                              currently renting: <%=refAttr(units[i].data().user_id.path).username%>  <br>
+                              image: <%=JSON.stringify(units[i].data().image)%><br>
+                              city: <%=JSON.stringify(units[i].data().city)%><br>
+                              street: <%=JSON.stringify(units[i].data().street)%><br>
+                              house number:<%=JSON.stringify(units[i].data().house_number) %><br>
+                              rooms_num:<%=JSON.stringify(units[i].data().rooms_num)%><br>
+                              price per month:<%=JSON.stringify(units[i].data().price)%><br>
+                              phone:<%=JSON.stringify(units[i].data().phone)%><br>
+                              time_limit (in months):<%=JSON.stringify(units[i].data().min_rent_time + " to "
+                              + units[i].data().max_rent_time)%><br>
                               </form>
                             </li>
                      <% } %>
