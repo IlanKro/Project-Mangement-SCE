@@ -12,7 +12,7 @@
          <h1>SCE Room</h1>
          <h2 id="welcome">Welcome</h2>         
         <button class="modalButton">Post housing unit</button><br>
-        <button class="modalButton">Your housing units</button><br>
+        <button class="modalButton" id="housing_units">Your housing units</button><br>
         <button class="modalButton">Watch Reviews</button><br>
         <button class="modalButton">View housing units orders</button><br>
         <button class="modalButton">View statistics</button><br>
@@ -61,11 +61,17 @@
             <div class="modal-content">
               <div class="modal-header">
                 <span class="close">&times;</span>
-                <h2>ban/unban menu</h2>
+                <h2>Your housing units</h2>
               </div>
               <div class="modal-body">
                 <ul>
-
+                  <div class="card">
+                    <img src="/src/images/SCE%ROOM.png" alt="No Image" style="width:100%">
+                    <h3>Address</h3>
+                    <p class="price">2000 ILS / Month</p>
+                    <p>Description</p>
+                    <p><button>Remove Unit</button></p>
+                  </div>
                 </ul>
               </div>
             </div>
@@ -117,11 +123,5 @@
         <%- include("./partials/firebase.ejs") %>
         <script type="text/javascript" src="../modal.js"></script>
         <script type="text/javascript" src="../user.js"></script>
-        <!--<script> getRId(){return auth.currentUser.uid}</script> -->
-          <script>
-            auth.onAuthStateChanged(function(user) {
-              if (user && auth.currentUser )
-                  document.getElementById("SendRId").value=auth.currentUser.uid
-            })
-          </script>
+        <script type="text/javascript" src="../renter.js"></script>
       </body>

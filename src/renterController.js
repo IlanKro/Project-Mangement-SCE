@@ -5,14 +5,12 @@ const body_json=body_parser.json()
 module.exports = function(app,admin) {
     const database= admin.firestore()
     async function getLibrary(library) {
+        /* async function to get complete library, returns promise with the library */
         return database.collection(library).get().then(doc => {
-            let data= []
-            let i = 0
-            for(dat of doc.docs)
-                data[i++] = dat.data()
-            return data
+            return doc.docs
         })
     }
+    
     app.get("/homepage_renter",(req, res) => {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews"),getLibrary("Orders")]).then(data =>
         {
@@ -37,11 +35,8 @@ module.exports = function(app,admin) {
         req.body.user_id=database.collection("Users").doc(req.body.user_id)
         database.collection("Units").add(req.body).then(() => {
             res.render("message_page",{"message" : req.body.street + " "
-            + req.body.house_number + " " + req.body.city + " listed"} )
+            + req.body.house_number + " " + req.body.city + " listed"})
         })
-
-
-
     })
     /*
 
