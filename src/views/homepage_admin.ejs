@@ -12,12 +12,16 @@
          <h2 id="welcome">Welcome</h2>
         <%- include("./partials/logout.ejs") %>
         <%
-         var libraries={ "Users": users ,"Reviews": reviews,"Units" : units}
-         refAttr("Users/tSWXwYg1aMVYVCwlbKTwNf0lL7j2")
-         function refAttr(path)
+         var libraries={ "Users": users ,"Reviews": reviews,"Units" : units} //put here all the databases you want to cover.
+         var none ={username: "None"} //put here all the attributes you want to cover
+         //I am aware this code sucks but IDC
+         function refAttr(ref)
          {
-           let library=path.split("/")[0]
-           let id=path.split("/")[1]
+           if (ref == null) {
+             return none
+           }
+           let library=ref.path.split("/")[0]
+           let id=ref.path.split("/")[1]
            let db=libraries[library]
            for (var i=0;i<db.length;i++) {
              if (db[i].id == id ) {
@@ -98,8 +102,8 @@
                 <ul>
                 <% let time = new Date(1970, 0, 1) // Epoch
                    for(var i=0;i<reviews.length;i++ ){%>
-                            <li>written by: <%=JSON.stringify(reviews[i].data().student_id.displayName)%><br>
-                              about:<%=JSON.stringify(reviews[i].data().renter_id.displayName)%><br>
+                            <li>written by: <%=refAttr(reviews[i].data().student_id).username%> <br>
+                              about:<%=refAttr(reviews[i].data().renter_id).username%> <br>
                               <% time.setSeconds(reviews[i].data().timestamp._seconds)%>
                               at:<%=time %><br>
                               body:<%=JSON.stringify(reviews[i].data().body)%><br>
@@ -124,8 +128,8 @@
                 <ul>
                 <%for(var i=0;i<units.length;i++ ){%>
                             <li>available:<%=JSON.stringify(units[i].data().available)%><br> <!-- for future: make it a V -->
-                              belongs to: <%=refAttr(units[i].data().user_id.path).username%> <br>
-                              currently renting: <%=refAttr(units[i].data().user_id.path).username%>  <br>
+                              belongs to: <%=refAttr(units[i].data().user_id).username%> <br>
+                              currently renting: <%=refAttr(units[i].data().student).username%>  <br>
                               image: <%=JSON.stringify(units[i].data().image)%><br>
                               city: <%=JSON.stringify(units[i].data().city)%><br>
                               street: <%=JSON.stringify(units[i].data().street)%><br>
