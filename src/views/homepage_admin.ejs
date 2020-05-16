@@ -31,8 +31,8 @@
                               last name:<%=JSON.stringify(users[i].lname)%>,
                               username:<%=JSON.stringify(users[i].username)%><br>,
                               email:<%=JSON.stringify(users[i].email)%>
-                              image link:<%=JSON.stringify(users[i].img)%>
-                              <form method="post" action="/homepage_admin/enable">
+                              image link:<a href=<%=users[i].img%>> ID</a>
+                              <form method="post" action="/homepage_admin/unban">
                                   <input type="text" name="uid" value="<%=users[i].uid%>" style="display: none;visibility: hidden;">
                                   <input type="submit" class="button" value="enable">
                               </form>
