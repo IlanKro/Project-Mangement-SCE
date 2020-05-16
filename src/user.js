@@ -7,7 +7,6 @@ window.onload=function(){
             window.location= "/"
     })
 }
-
 /*
 function checkIfLoggedIn(){
     auth.onAuthStateChanged(function(user) {
