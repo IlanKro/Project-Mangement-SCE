@@ -1,24 +1,148 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>homepage</title>
+        <title>homepage_admin</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
+        <link rel="stylesheet" type="text/css" href="../css/modal.css">
         <meta charset="UTF-8">
         <link rel="icon" href="SCE%20ROOM.png">
     </head>
      <body>
          <h1>Home Page</h1>
          <h2 id="welcome">Welcome</h2>
-        <div class="logoutLblPos">
-                <button name="logout" class="logoutButton" value="log out">log out</button>
-        </div>        
-
-
-
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
-        <script src="../firebase.js"></script>
-        <script src="../admin.js"></script>
-
+        <%- include("./partials/logout.ejs") %>
+        <%
+         var libraries={ "Users": users ,"Reviews": reviews,"Units" : units}
+         refAttr("Users/tSWXwYg1aMVYVCwlbKTwNf0lL7j2")
+         function refAttr(path)
+         {
+           let library=path.split("/")[0]
+           let id=path.split("/")[1]
+           let db=libraries[library]
+           for (var i=0;i<db.length;i++) {
+             if (db[i].id == id ) {
+                return db[i].data()
+              }
+            }
+          }%>
+        <button class="modalButton">Student authorization</button><br>
+        <button class="modalButton">user access menu</button><br>
+        <button class="modalButton">delete reviews</button><br>
+        <button class="modalButton">View housing units</button><br>
+        <!-- The authorizing Modal -->
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Student authorization</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <% for(var i=0;i<users.length;i++ ){
+                        if (users[i].data().usertype=="student") { %>
+                            <li>first name: <%=users[i].data().fname%>
+                              last name:<%=JSON.stringify(users[i].data().lname)%>,
+                              username:<%=JSON.stringify(users[i].data().username)%><br>,
+                              email:<%=JSON.stringify(users[i].data().email)%>
+                              image link:<a href=<%=users[i].data().img%>> ID</a>
+                              <form method="post" action="/homepage_admin/enable">
+                                  <input type="text" name="uid" value="<%=users[i].id %>" style="display: none;visibility: hidden;">
+                                  <input type="submit" class="button" value="enable">
+                              </form>
+                            </li>
+                      <% }
+                     } %>
+                </ul>
+              </div>
+            </div>
+        </div>
+        <!-- The banning Modal -->
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>ban/unban menu</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <% for(var i=0;i<users.length;i++){%>
+                            <li>first name: <%=JSON.stringify(users[i].data().fname)%>
+                              last name:<%=JSON.stringify(users[i].data().lname)%>,
+                              username:<%=JSON.stringify(users[i].data().username)%><br>,
+                              email:<%=JSON.stringify(users[i].data().email)%>
+                              <form method="post" action="/homepage_admin/ban">
+                                  <input type="text" name="uid" value="<%=users[i].id%>" style="display: none;visibility: hidden;">
+                                  <input type="submit" class="button" value="ban">
+                              </form>
+                              <form method="post" action="/homepage_admin/enable">
+                                  <input type="text" name="uid" value="<%=users[i].id%>" style="display: none;visibility: hidden;">
+                                  <input type="submit" class="button" value="unban">
+                              </form>
+                            </li>
+                     <% } %>
+                </ul>
+              </div>
+            </div>
+        </div>
+        <!-- The delete reviews Modal -->
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Delete Reviews</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                <% let time = new Date(1970, 0, 1) // Epoch
+                   for(var i=0;i<reviews.length;i++ ){%>
+                            <li>written by: <%=JSON.stringify(reviews[i].data().student_id.displayName)%><br>
+                              about:<%=JSON.stringify(reviews[i].data().renter_id.displayName)%><br>
+                              <% time.setSeconds(reviews[i].data().timestamp._seconds)%>
+                              at:<%=time %><br>
+                              body:<%=JSON.stringify(reviews[i].data().body)%><br>
+                              <form method="post" action="/homepage_admin/rmv_review">
+                                  <input type="text" name="rid" value="<%=reviews[i].id%>" style="display: none;visibility: hidden;">
+                                  <input type="submit" class="button" value="delete">
+                              </form>
+                            </li>
+                     <% } %>
+                </ul>
+              </div>
+            </div>
+        </div>
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Housing Units</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                <%for(var i=0;i<units.length;i++ ){%>
+                            <li>available:<%=JSON.stringify(units[i].data().available)%><br> <!-- for future: make it a V -->
+                              belongs to: <%=refAttr(units[i].data().user_id.path).username%> <br>
+                              currently renting: <%=refAttr(units[i].data().user_id.path).username%>  <br>
+                              image: <%=JSON.stringify(units[i].data().image)%><br>
+                              city: <%=JSON.stringify(units[i].data().city)%><br>
+                              street: <%=JSON.stringify(units[i].data().street)%><br>
+                              house number:<%=JSON.stringify(units[i].data().house_number) %><br>
+                              rooms_num:<%=JSON.stringify(units[i].data().rooms_num)%><br>
+                              price per month:<%=JSON.stringify(units[i].data().price)%><br>
+                              phone:<%=JSON.stringify(units[i].data().phone)%><br>
+                              time_limit (in months):<%=JSON.stringify(units[i].data().min_rent_time + " to "
+                              + units[i].data().max_rent_time)%><br>
+                              </form>
+                            </li>
+                     <% } %>
+                </ul>
+              </div>
+            </div>
+        </div>
+        <%- include("./partials/firebase.ejs") %>
+        <script type="text/javascript" src="../modal.js"></script>
+        <script type="text/javascript" src="../user.js"></script>
     </body>

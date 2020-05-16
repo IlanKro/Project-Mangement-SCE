@@ -46,29 +46,44 @@ signupForm.addEventListener("submit", (e) => {
         let element=form.item(i)
         signup_data[element.name]=element.value
     }
-    if (document.getElementById("student").checked){ //handling the radiobox element separately.
-        signup_data["usertype"]="student"
-        //TODO: add check for img upload but much later, only after the rest of the login works.
-    }
-    else {
-        signup_data["usertype"]="renter"
-        if (!signup_data["bank"]) {
-            return false
-        }
-    }
     if(!passwordStrength(signup_data["pass"])) {
         alert("your password is too weak")
         return false
     }
-    auth.createUserWithEmailAndPassword(signup_data["email"],signup_data["pass"]).catch(error => {
-    // Handle Errors here.
-        alert("Error : " + error.message)
-    }).then(cred => {
-        createUser(cred.user.uid,signup_data)
-        redirectSignup(signup_data["usertype"])
-    })
+    if (document.getElementById("student").checked){ //handling the radiobox element separately.
+        signup_data["usertype"]="student"
+        if (signup_data["img"]=="") {
+            alert("no image uploaded!")
+            return false
+        }else{ //uploaded image
+            uploadImage(signup_data["email"]).then((download_url) => {
+                signup_data["img"] =download_url
+                console.log("uploaded to:" + download_url )
+                createUser(signup_data) //create student
+            }).catch((error) =>{
+                return false
+            })
+        }
+    }
+    else{ //create renter
+        signup_data["usertype"]="renter"
+        if (!signup_data["bank"]) {
+            return false
+        }
+        createUser(signup_data) //create renter
+    }
 })
 
+function createUser(signup_data) {
+    auth.createUserWithEmailAndPassword(signup_data["email"],signup_data["pass"]).catch(error => {
+        // Handle Errors here.
+        alert("Error : " + error.message)
+    }).then(cred => {
+        signup_data["uid"]=cred.user.uid
+        sendJSON("/signup",signup_data)
+        redirectSignup(signup_data["usertype"])
+    })
+}
 function redirectSignup(user_type) {
     try{
         if (user_type == "student") {
@@ -85,10 +100,7 @@ function redirectSignup(user_type) {
     }
 }
 
-function createUser(uid,signup_data) {
-    signup_data["uid"]=uid
-    sendJSON("/signup",signup_data)
-}
+
 
 function sendJSON(url,data) {
     // send to url the json data
@@ -96,4 +108,37 @@ function sendJSON(url,data) {
     request.open("POST", url, true)
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     request.send(JSON.stringify(data))
+}
+
+var fileList= "none"
+const fileSelector = document.getElementById("student_image")
+fileSelector.addEventListener("change", (event) => {
+    fileList = event.target.files
+})
+
+async function uploadImage(email) {
+    console.log("uploading: student_ids/" + fileList[0].name + email.toString())
+    if(fileList[0].name == undefined)
+        return null
+    let ref= storage.ref("student_ids/" + fileList[0].name + email.toString()) //making the upload unique since emails are unique
+    uploadTask = ref.put(fileList[0])
+    return new Promise((resolve, reject) => {
+        uploadTask.on(
+            "state_changed",
+            function(snapshot) {
+                const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100
+                console.log("Upload is " + progress + "% done")
+            },
+            function(error) {
+                reject(error)
+                alert(error)
+            },
+            function() {
+                resolve(uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                    console.log("File available at: ", downloadURL)
+                    return downloadURL
+                }))
+            }
+        )
+    })
 }

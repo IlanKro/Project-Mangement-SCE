@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>404 error</title>
+        <title>Message</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
         <meta charset="UTF-8">
         <link rel="icon" href="SCE%20ROOM.png">
     </head>
     <body>
-    <h1> Error 404: page not found!</h1>
+      <h1> <%=message %></h1>
+      <button class="button" onclick="goBack()">Back</button>
+
+      <script>
+      function goBack() {
+        window.history.back()
+      }
+      </script>
     </body>

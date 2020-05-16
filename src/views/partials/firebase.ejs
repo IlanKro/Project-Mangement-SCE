@@ -1,25 +1,5 @@
-<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
-<script>
-  console.log("hello from firebase")
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyCuqm7lR0YYnF8IiarnGQMEfRM-Fs5QpP4",
-    authDomain: "sce-room.firebaseapp.com",
-    databaseURL: "https://sce-room.firebaseio.com",
-    projectId: "sce-room",
-    storageBucket: "sce-room.appspot.com",
-    messagingSenderId: "289292987021",
-    appId: "1:289292987021:web:eb1bcaeef9af28611f50c4",
-    measurementId: "G-MT3MN5L1S3"
-  };
-  // Initialize Firebase
-  console.log(firebase.apps.length)
-  if (firebase.apps.length == 0){
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-  }
-  console.log(firebase.apps.length)
-</script>
-
-<% console.log("after firebase") %>
+<script type="text/javascript" src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/firebasejs/7.14.4/firebase-storage.js"></script>
+<script type="text/javascript" src="../firebase.js"></script>
