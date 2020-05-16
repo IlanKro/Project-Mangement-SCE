@@ -18,6 +18,10 @@ module.exports = function(app,admin) {
         res.render("homepage_student")
     })
 
+    app.get("/booking",(req, res) => {
+        res.render("booking")
+    })
+
     app.get("/write_review",(req, res) => {
         res.render("write_review")
     })

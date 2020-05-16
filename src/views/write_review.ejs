@@ -8,27 +8,21 @@
     </head>
 
     <body>
+        <%- include("./partials/logout.ejs") %>
         <h1>Write Review</h1>
         <div id = "write_review" class= "container3">
-            <form method = "post" action = "/write_review">
+          <label for="Review">Review</label><br><br><br>
+          <label for="Renter's Name" id = "renter_name"></label><br><br>
+          <label for="location" id = "unit_address"></label><br><br>
+          <label for="Student's Review">Your Review</label><br><br>
+            <form id = "review_form" >
                 <br>
-                <label for="Review">Review</label><br><br><br>
-                <label for="Renter's Name">Renter's Name </label>
-                <input type="text" id="ue" name="renter's Name"><br><br>
-                <label for="location">The Location of the Housing Unit</label>
-                <input type="text" id="l1" name = "housing_unit_location"><br><br><br><br>
-                <label for="Student's Review">Your Review</label><br><br>
-                <textarea rows="2" cols="25" name="text review"></textarea><br><br><br><br>
+                <textarea id = "review_body" name = "body" rows="7" cols="35" name="text review"></textarea><br><br><br><br>
                 <br><br>
-                <input type = "submit" class= "button" value = "Post" href="homepage_student"></input><br><br><br>
+                <input type = "submit" class= "button" value = "Post"></input><br><br><br>
             </form>
             <a class= "button_write_review" href="homepage_student">Cancel</a><br><br><br>
         </div>
-        <form align="right" name="form1" method="post" action="log_out.php">
-            <label class="logoutLblPos">
-                <input name="submit2" type="submit" id="submit2" value="log out">
-            </label>
-        </form>
         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
