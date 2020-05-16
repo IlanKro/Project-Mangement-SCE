@@ -33,18 +33,11 @@ module.exports = function(app,admin) {
     app.post("/homepage_renter/post_housing_unit",body_url, (req,res) => {
         req.body.available= true
         req.body.student= null
-        console.log(req.body)
-        database.collection("Users").doc(req.body.user_id).get().then(ref => {
-            req.body.user_id=ref.toString()
-            console.log(ref)
-            console.log(ref._path)
-            console.log(ref.toString())
-            database.collection("Units").add(req.body).then(() => {
-                res.render("message_page",{"message" : req.body.city + " "
-                + req.body.street + " " + req.body.house_number + " available for rent!"} )
-            })
-        }).catch((error) => {
-            res.render("message_page",{"message" : error})
+        console.log("New unit added:\n" + req.body)
+        req.body.user_id=database.collection("Users").doc(req.body.user_id)
+        database.collection("Units").add(req.body).then(() => {
+            res.render("message_page",{"message" : req.body.street + " "
+            + req.body.house_number + " " + req.body.city + " listed"} )
         })
 
 
