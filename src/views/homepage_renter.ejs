@@ -10,14 +10,13 @@
     <body>
          <%- include("./partials/logout.ejs") %>
          <h1>SCE Room</h1>
-         <h2 id="welcome">Welcome</h2>
-         <%- include("./partials/logout.ejs") %>
+         <h2 id="welcome">Welcome</h2>         
         <button class="modalButton">Post housing unit</button><br>
         <button class="modalButton">Your housing units</button><br>
         <button class="modalButton">Watch Reviews</button><br>
         <button class="modalButton">View housing units orders</button><br>
         <button class="modalButton">View statistics</button><br>
-
+        
         <!-- The authorizing Modal -->
         <div class="modal">
           <!-- Modal content -->
@@ -48,7 +47,7 @@
                     <textarea rows="10" cols="50" placeholder="description" type="text" name="description"></textarea><br><br>
                     <label for="img">Add housing unit photo</label>
                     <input id="house_img" type="file" name="image" accept="image/*"><br><br>
-                    <input  id="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">                    
+                    <input  id="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
                     <input class= "button" type="submit" value="Post">
                   </form>
                 </ul>
@@ -109,6 +108,7 @@
               </div>
               <div class="modal-body">
                 <ul>
+
 
                 </ul>
               </div>

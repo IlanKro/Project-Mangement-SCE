@@ -5,7 +5,7 @@ const pass_check=require("check-password-strength")
 
 module.exports = function(app,admin) {
     const database= admin.firestore()
-
+ 
     app.get("/login",(req, res) => {
         res.render("login")
     })
@@ -27,8 +27,8 @@ module.exports = function(app,admin) {
     })
 
     app.post("/write_review", body_json, (req, res) => {
-            console.log(req.body)
-            admin.firestore().collection("Reviews").doc().set()
-            res.redirect("homepage_student")
+        console.log(req.body)
+        admin.firestore().collection("Reviews").doc().set()
+        res.redirect("homepage_student")
     })
 }
