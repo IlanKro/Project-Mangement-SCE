@@ -43,9 +43,9 @@ function addClick(unitId, renterId, userId) {
     }
     review_data["timestamp"] = time
     //to save reference write int this format: "/<table_name>/<doc_id>"
-    review_data["renter_id"] = "/Users/" + renterId
-    review_data["student_id"] = "/Users/" + userId
-    review_data["unit_id"] = "/Users/" + unitId
+    review_data["renter_id"] = db.collection("Users").doc(renterId)
+    review_data["student_id"] = db.collection("Users").doc(userId)
+    review_data["unit_id"] = db.collection("Users").doc(unitId)
     console.log(review_data)
     db.collection("Reviews").add(review_data).then(res => {
       window.location.href = "homepage_student"
