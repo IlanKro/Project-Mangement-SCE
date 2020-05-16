@@ -18,14 +18,17 @@ module.exports = function(app,admin) {
         res.render("homepage_student")
     })
 
+    app.get("/booking",(req, res) => {
+        res.render("booking")
+    })
+
     app.get("/write_review",(req, res) => {
         res.render("write_review")
     })
 
-
-    app.post("/write_review", body_url, (req, res) => {
-        console.log(req.body)
-        database.collection("Reviews").doc(req.body.uid).set()
-        res.redirect("homepage_student")
+    app.post("/write_review", body_json, (req, res) => {
+            console.log(req.body)
+            admin.firestore().collection("Reviews").doc().set()
+            res.redirect("homepage_student")
     })
 }
