@@ -8,16 +8,25 @@ function renderUnit(doc){
     let numRooms = document.createElement("span")
     let address = document.createElement("span")
     let owner = document.createElement("span")
-    let timeLimit = document.createElement("span")
+    let max_rent_time = document.createElement("span")
+    let min_rent_time = document.createElement("span")
+    let phone = document.createElement("span")
+    let email = document.createElement("span")
 
     li.setAttribute("data-id", doc.id)
     price.textContent = "Price: " + doc.data().price
     desc.textContent = "Description: " + doc.data().description
     numRooms.textContent = "Num Of Rooms: " + doc.data().rooms_num
     address.textContent = "Addess: " + doc.data().city + doc.data().street + doc.data().house_number
-    timeLimit.textContent = "Staying Time: " + doc.data().time_limit
-    doc.data().user_id.get().then(res =>{
+    max_rent_time.textContent = "Max staying time: " + doc.data().max_rent_time
+    min_rent_time.textContent = "Min staying time: " + doc.data().min_rent_time
+    phone.textContent = "Phone: " + doc.data().phone
+    doc.data().user_id.get().then(res => {
+      console.log(res)
+      if(res.exists) {
         owner.textContent = res.data().fname + " " + res.data().lname
+        email.textContent = "Email: " + res.data().email
+      }
     })
 
 
@@ -25,13 +34,17 @@ function renderUnit(doc){
     li.appendChild(desc)
     li.appendChild(numRooms)
     li.appendChild(address)
-    li.appendChild(timeLimit)
+    li.appendChild(max_rent_time)
+    li.appendChild(min_rent_time)
+    li.appendChild(phone)
     li.appendChild(owner)
+    li.appendChild(email)
     unitList.appendChild(li)
 }
 
 // getting data
 db.collection("Units").get().then(snapshot => {
+    console.log(auth.currentUser)
     snapshot.docs.forEach(doc => {
         console.log(doc.data())
         renderUnit(doc)
