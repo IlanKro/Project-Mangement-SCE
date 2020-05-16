@@ -83,9 +83,7 @@ function createUser(signup_data) {
         sendJSON("/signup",signup_data)
         redirectSignup(signup_data["usertype"])
     })
-
 }
-
 
 function redirectSignup(user_type) {
     try{
