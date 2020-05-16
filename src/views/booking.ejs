@@ -10,20 +10,59 @@
         <h1>SCE ROOM</h1>
         <h2>Booking</h2>
         <div id = "booking" class= "container2">
+          <label for = "price" id = "price">Price: </label><br>
+          <label for = "description" id = "description">Description: </label><br>
+          <label for = "number of rooms" id = "number_of_rooms">Number Of Rooms: </label><br>
+          <label for = "address" id = "address">Address: </label><br>
+          <label for = "max rent time" id = "max_rent_time">Max Staying Time: </label><br>
+          <label for = "min rent time" id = "min_rent_time">Min Staying Time: </label><br>
+          <label for = "phone" id = "phone">Phone: </label><br>
+          <label for = "owner" id = "owner">Owner</label><br>
+          <label for = "email" id = "email">Email: </label><br>
             <form id="bookingForm">
                 <br><br><br>
                 <label for = "Credit card number">Credit Card Number: </label>
-                <input placeholder = "Credit card number" type="text" name="Credit card number" required><br><br><br>
+                <input id="credit_card" placeholder = "Credit card number" type="text" name="Credit card number" required><br>
                 <label for = "Expiration date">Expiration Date: </label>
-                <input placeholder = "Expiration date" type = "text" name = "Expiration date" required><br><br><br>
+                <select name='expireMM' id='expireMM'>
+                    <option value=''>Month</option>
+                    <option value='01'>January</option>
+                    <option value='02'>February</option>
+                    <option value='03'>March</option>
+                    <option value='04'>April</option>
+                    <option value='05'>May</option>
+                    <option value='06'>June</option>
+                    <option value='07'>July</option>
+                    <option value='08'>August</option>
+                    <option value='09'>September</option>
+                    <option value='10'>October</option>
+                    <option value='11'>November</option>
+                    <option value='12'>December</option>
+                </select>
+                <select name='expireYY' id='expireYY'>
+                    <option value=''>Year</option>
+                    <option value='2020'>2020</option>
+                    <option value='2021'>2021</option>
+                    <option value='2022'>2022</option>
+                    <option value='2023'>2023</option>
+                    <option value='2024'>2024</option>
+                    <option value='2025'>2025</option>
+                    <option value='2026'>2026</option>
+                    <option value='2027'>2027</option>
+                </select><br>
+                <input class="inputCard" type="hidden" name="expiry" id="expiry" maxlength="4"/>
                 <label for = "CVC">CVC</label>
-                <input placeholder="CVC" type="text"  name="CVC" required><br><br><br>
+                <input placeholder="CVC" type="text"  name="CVC" required><br>
                 <label for = "ID">ID: </label>
-                <input placeholder="ID" type="text"  name="ID" required><br>
+                <input placeholder="ID" type="text"  name="ID" required><br><br>
+                <input type = "submit" class= "button" value = "Checkout"></input><br><br>
             </form>
       <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
       <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
       <script src="../firebase.js"></script>
+      <script src="../model/User.js"></script>
+      <script src="../model/Unit.js"></script>
+      <script src = "../booking.js"></script>
     </body>
 </html>
