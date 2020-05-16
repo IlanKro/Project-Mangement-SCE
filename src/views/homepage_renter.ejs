@@ -3,19 +3,125 @@
     <head>
         <title>homepage</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
+        <link rel="stylesheet" type="text/css" href="../css/modal.css">
         <meta charset="UTF-8">
         <link rel="icon" href="SCE%20ROOM.png">
     </head>
-     <body>
+    <body>
          <%- include("./partials/logout.ejs") %>
          <h1>SCE Room</h1>
-         <h2 id="welcome">Your Housing Utits</h2>
-         <a class= "button_write_review"> New Upload </a><br><br><br>
-         <a class= "button_watch_review" href= "reviewsaboutme.html"> Watch Review </a><br><br><br>
-         <a class= "button_tracking" href= "trackingpage.html"> Tracking</a><br><br>
-         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
-         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
-         <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
-         <script src="../firebase.js"></script>
+         <h2 id="welcome">Welcome</h2>
+         <%- include("./partials/logout.ejs") %>
+        <button class="modalButton">Post housing unit</button><br>
+        <button class="modalButton">Your housing units</button><br>
+        <button class="modalButton">Watch Reviews</button><br>
+        <button class="modalButton">View housing units orders</button><br>
+        <button class="modalButton">View statistics</button><br>
 
-    </body>
+        <!-- The authorizing Modal -->
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Post housing Unit</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <form method="post" action="/homepage_renter/post_housing_unit">
+                    <label for="city">city</label>
+                    <input placeholder="city" type="text" name="city" required><br><br>
+                    <label for="street">street</label>
+                    <input placeholder="street" type="text"  name="street" required><br><br>
+                    <label for="house_number">house_number</label>
+                    <input placeholder="house_number" type="text" name="house_number" required><br><br>
+                    <label for="price">price per month</label>
+                    <input placeholder="price" type="number" name="price" required><br><br>
+                    <label for="phone">contact number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="phone" required required><br><br>
+                    <label for="rooms_num">number of rooms</label>
+                    <input placeholder="number of rooms" type="number" name="rooms_num" required><br><br>
+                    <label for="rent range">rent months range (min/max)</label>
+                    <input min="0" placeholder="min" type="number" name="min_rent_time" value=0 required>&nbsp;
+                    <input min="1" placeholder="max" type="number" name="max_rent_time" value=1 required><br><br>
+                    <label for="description">description</label><br>
+                    <textarea rows="10" cols="50" placeholder="description" type="text" name="description"></textarea><br><br>
+                    <label for="img">Add housing unit photo</label>
+                    <input id="house_img" type="file" name="image" accept="image/*"><br><br>
+                    <input  id="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">                    
+                    <input class= "button" type="submit" value="Post">
+                  </form>
+                </ul>
+              </div>
+            </div>
+        </div>
+
+        <!-- The banning Modal -->
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>ban/unban menu</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+
+                </ul>
+              </div>
+            </div>
+        </div>
+        <!-- The delete reviews Modal -->
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Delete Reviews</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+
+                </ul>
+              </div>
+            </div>
+        </div>
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Housing Units</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+
+                </ul>
+              </div>
+            </div>
+        </div>
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Housing Units</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+
+                </ul>
+              </div>
+            </div>
+        </div>
+        <%- include("./partials/firebase.ejs") %>
+        <script type="text/javascript" src="../modal.js"></script>
+        <script type="text/javascript" src="../user.js"></script>
+        <!--<script> getRId(){return auth.currentUser.uid}</script> -->
+          <script>
+            auth.onAuthStateChanged(function(user) {
+              if (user && auth.currentUser )
+                  document.getElementById("SendRId").value=auth.currentUser.uid
+            })
+          </script>
+      </body>

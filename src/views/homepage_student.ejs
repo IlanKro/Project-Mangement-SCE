@@ -9,8 +9,8 @@
     <body>
         <%- include("./partials/logout.ejs") %>
         <h1>SCE Room</h1>
-        <button class="button" onclick="logout()">Logout</button><br>
-        <h2 id="welcome">Available Housing Units For Rent</h2>
+        <h2>Available Housing Units For Rent</h2>
+        <h3 id="welcome"></h3>
         <a class= "button_write_review" href="write_review"> Write Review</a><br><br><br>
         <h3>Sort</h3>
             <select name="sort">
@@ -20,9 +20,7 @@
                 <option value="D">sort by number of rooms</option>
             </select>
         <ul id="unit-list"></ul>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
-        <script src="../firebase.js"></script>
+        <%- include("./partials/firebase.ejs") %>
         <script src="../homepage_student.js"></script>
+        <script type="text/javascript" src="../user.js"></script>
     </body>

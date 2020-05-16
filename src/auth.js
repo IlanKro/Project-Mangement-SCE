@@ -24,7 +24,7 @@ function checkIfLoggedIn(){
             document.getElementById("login_div").setAttribute("style","display: none;visibility: hidden;")
             document.getElementById("user_div").setAttribute("style","display: inline-block;visibility: visible;")
             if(auth.currentUser)  {
-                document.getElementById("user_para").innerHTML = "Loggen in as : " + auth.currentUser.displayName
+                document.getElementById("user_para").innerHTML = "Logged in as : " + auth.currentUser.displayName
             }
         } else { // if the user is not logged in
             document.getElementById("login_div").setAttribute("style","display: block;visibility: visible;")
