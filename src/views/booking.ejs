@@ -22,10 +22,9 @@
             <form id="bookingForm">
                 <br><br><br>
                 <label for = "Credit card number">Credit Card Number: </label>
-                <input id="credit_card" placeholder = "Credit card number" type="text" name="Credit card number" required><br>
+                <input id="credit_card" placeholder = "Credit card number" type="text" name="Credit card number" pattern="^[0-9]{16}$" required><br>
                 <label for = "Expiration date">Expiration Date: </label>
-                <select name='expireMM' id='expireMM'>
-                    <option value=''>Month</option>
+                <select name='expireMM' id='expireMM' value="Month" required>
                     <option value='01'>January</option>
                     <option value='02'>February</option>
                     <option value='03'>March</option>
@@ -39,8 +38,7 @@
                     <option value='11'>November</option>
                     <option value='12'>December</option>
                 </select>
-                <select name='expireYY' id='expireYY'>
-                    <option value=''>Year</option>
+                <select min="2020" max="2027" name='expireYY' id='expireYY' value="Year" required>
                     <option value='2020'>2020</option>
                     <option value='2021'>2021</option>
                     <option value='2022'>2022</option>
@@ -50,7 +48,7 @@
                     <option value='2026'>2026</option>
                     <option value='2027'>2027</option>
                 </select><br>
-                <input class="inputCard" type="hidden" name="expiry" id="expiry" maxlength="4"/>
+                <input class="inputCard" type="hidden" name="expiry" id="expiry" maxlength="4" required>
                 <label for = "CVC">CVC</label>
                 <input placeholder="CVC" type="text"  name="CVC" required><br>
                 <label for = "ID">ID: </label>

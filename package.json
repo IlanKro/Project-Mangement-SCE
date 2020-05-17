@@ -39,6 +39,7 @@
     "firebase": "^7.14.2",
     "firebase-admin": "^8.12.1",
     "ggscript": "^0.1.0",
+    "luhn": "^2.4.1",
     "morgan": "^1.10.0"
   }
 }

@@ -9,14 +9,27 @@
     </head>
     <body>
          <%- include("./partials/logout.ejs") %>
+         <% function refAttr(ref)
+          {
+            if (ref == null) {
+              return {username: "None"} //put here all the attributes you want to cover
+            }
+            // ref path is divided by a "/ and contains the collection name and the unique id
+            let database=locals[ref.path.split("/")[0]]
+            for (var i=0;i<database.length;i++) {
+              if (database[i].id == ref.path.split("/")[1] ) { //if found the specific id (which is unique)
+                 return database[i].data()
+               }
+             }
+         }%>
          <h1>SCE Room</h1>
-         <h2 id="welcome">Welcome</h2>         
+         <h2 id="welcome">Welcome</h2>
         <button class="modalButton">Post housing unit</button><br>
         <button class="modalButton">Your housing units</button><br>
         <button class="modalButton">Watch Reviews</button><br>
         <button class="modalButton">View housing units orders</button><br>
         <button class="modalButton">View statistics</button><br>
-        
+
         <!-- The authorizing Modal -->
         <div class="modal">
           <!-- Modal content -->
