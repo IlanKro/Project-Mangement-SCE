@@ -37,6 +37,9 @@ module.exports = function(app,admin) {
         })
         //res.render("write_review")
     })
+    app.post("/homepage_student/order",body_url,(req, res) => {
+
+    })
 
     app.post("/write_review", body_json, (req, res) => {
         console.log(req.body)
