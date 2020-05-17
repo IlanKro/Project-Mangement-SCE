@@ -28,14 +28,18 @@ module.exports = function(app,admin) {
 
     })
 
-    app.post("/booking",body_url,(req, res) => {
-        console.log(req.body)
+    app.post("/booking",body_json,(req, res) => {
+        req.body.timestamp = admin.firestore.Timestamp.fromDate(new Date())
+        database.collection("Orders").add(req.body).then(() =>{
+            //BUG! does not redirect properly..
+            res.render("message_page",{"message" : req.body.transaction_id + " received successfully!"} )
+        }).catch((error) => {
+            res.render("message_page",{"message" : error} )
+        })
     })
 
-
     app.post("/homepage_student/write_review",body_url,(req, res) => {
-        console.log(req.body)
-        console.log(req.body.renter_id)
+
         req.body.timestamp = admin.firestore.Timestamp.fromDate(new Date())
         req.body.renter_id=database.collection("Users").doc(req.body.renter_id)
         req.body.student_id=database.collection("Users").doc(req.body.student_id)

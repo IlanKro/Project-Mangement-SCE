@@ -117,10 +117,10 @@ fileSelector.addEventListener("change", (event) => {
 })
 
 async function uploadImage(email) {
-    console.log("uploading: student_ids/" + fileList[0].name + email.toString())
+    console.log("uploading: student_ids/" + email.toString() +  fileList[0].name)
     if(fileList[0].name == undefined)
         return null
-    let ref= storage.ref("student_ids/" + fileList[0].name + email.toString()) //making the upload unique since emails are unique
+    let ref= storage.ref("student_ids/" + email.toString() + fileList[0].name ) //making the upload unique since emails are unique
     uploadTask = ref.put(fileList[0])
     return new Promise((resolve, reject) => {
         uploadTask.on(

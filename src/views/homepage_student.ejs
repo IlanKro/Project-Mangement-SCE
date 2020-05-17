@@ -91,7 +91,7 @@
                         <h2>More details</h2>
                       </div>
                       <div class="modal-body">
-                          <img src=<%= Units[i].data().image%>></img><br>
+                          <img src= "<%= Units[i].data().image %>">  <br>
                           <label>address :<%= (Units[i].data().city + " street: " + Units[i].data().street
                             + " number: " + Units[i].data().house_number)  %></label><br>
                           <label>price per month: <%= Units[i].data().price %></label><br>
@@ -107,7 +107,7 @@
                               <input type="submit" class="button" value="Order">
                           </form>
                           <h3>Reviews about the renter:</h3>
-                          <ul>
+                            <ul>
                             <% for (var j=0 ;j < Reviews.length;j++) { %>
                                 <% if(refAttr(Reviews[j].data().renter_id).id ==
                                 refAttr(Units[i].data().user_id).id) { %>
@@ -118,11 +118,11 @@
                                     body:<%=Reviews[j].data().body%><br>
                               <%  } %>
                             <% } %>
-
+                              </li>
+                            </ul>
                       </div>
                     </div>
                 </div>
-
           <%  } %>
           <% } %>
 
