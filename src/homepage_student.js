@@ -1,3 +1,4 @@
+
 const unitList = document.querySelector("#unit-list")
 
 // create element & render cafe
@@ -13,22 +14,23 @@ function renderUnit(doc){
     let phone = document.createElement("span")
     let email = document.createElement("span")
 
-    li.setAttribute("data-id", doc.id)
-    price.textContent = "Price: " + doc.data().price
-    desc.textContent = "Description: " + doc.data().description
-    numRooms.textContent = "Num Of Rooms: " + doc.data().rooms_num
-    address.textContent = "Addess: " + doc.data().city + doc.data().street + doc.data().house_number
-    max_rent_time.textContent = "Max staying time: " + doc.data().max_rent_time
-    min_rent_time.textContent = "Min staying time: " + doc.data().min_rent_time
-    phone.textContent = "Phone: " + doc.data().phone
-    doc.data().user_id.get().then(res => {
-        console.log(res)
-        if(res.exists) {
-            owner.textContent = res.data().fname + " " + res.data().lname
-            email.textContent = "Email: " + res.data().email
-        }
+    li.setAttribute("data-id", doc.unitId)
+    price.textContent = "Price: " + doc.price
+    desc.textContent = "Description: " + doc.description
+    numRooms.textContent = "Num Of Rooms: " + doc.numRooms
+    address.textContent = "Addess: " + doc.address
+    max_rent_time.textContent = "Max staying time: " + doc.max_rent_time
+    min_rent_time.textContent = "Min staying time: " + doc.min_rent_time
+    phone.textContent = "Phone: " + doc.phone
+    owner.textContent = doc.user.fname + " " + doc.user.lname
+    email.textContent = "Email: " + doc.user.email
+    const btn = document.createElement("button")
+    btn.appendChild(document.createTextNode("Checkout"))
+    btn.addEventListener("click", function() {
+      console.log(doc)
+      localStorage.setItem("unit", JSON.stringify(doc))
+      window.location.href = "booking"
     })
-
 
     li.appendChild(price)
     li.appendChild(desc)
@@ -39,14 +41,22 @@ function renderUnit(doc){
     li.appendChild(phone)
     li.appendChild(owner)
     li.appendChild(email)
+    li.appendChild(btn)
     unitList.appendChild(li)
 }
 
 // getting data
-db.collection("Units").get().then(snapshot => {
+db.collection("Units").where("available", "==", true).get().then(snapshot => {
     console.log(auth.currentUser)
     snapshot.docs.forEach(doc => {
         console.log(doc.data())
-        renderUnit(doc)
+        doc.data().user_id.get().then(userDoc => {
+          console.log(userDoc)
+          if(userDoc.exists) {
+              let unit = new Unit(doc.data(), userDoc.data(), doc.id, userDoc.id)
+              console.log(unit)
+              renderUnit(unit)
+          }
+        })
     })
 })

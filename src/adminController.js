@@ -14,12 +14,12 @@ module.exports = function(app,admin) {
     app.get("/homepage_admin",(req, res) => {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews")]).then(data =>
         {
+            /*
             let units=data[0]
             let users=data[1]
             let reviews=data[2]
-            console.log(reviews[0].data().student_id.path.substring("users/".length))
-
-            res.render("homepage_admin",{"units" :units,"users" : users,"reviews" :reviews})
+          */
+            res.render("homepage_admin",{"Units" :data[0],"Users" : data[1],"Reviews" :data[2]})
         })
     })
     app.post("/homepage_admin/ban",body_url, (req,res) => {
@@ -43,8 +43,11 @@ module.exports = function(app,admin) {
             })
     })
     app.post("/homepage_admin/rmv_review",body_url, (req,res) => {
-        console.log(req.body)
-        res.render("message_page",{"message" : req.body.rid + " deleted!"} )
+        database.collection("Reviews").doc(req.body.rid).delete().then(function() {
+            res.redirect("/homepage_admin")
+        }).catch(function(error) {
+            res.render("message_page",{"message" : error} )
+        })
     })
 
 
