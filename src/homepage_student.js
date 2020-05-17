@@ -27,9 +27,9 @@ function renderUnit(doc){
     const btn = document.createElement("button")
     btn.appendChild(document.createTextNode("Checkout"))
     btn.addEventListener("click", function() {
-      console.log(doc)
-      localStorage.setItem("unit", JSON.stringify(doc))
-      window.location.href = "booking"
+        console.log(doc)
+        localStorage.setItem("unit", JSON.stringify(doc))
+        window.location.href = "booking"
     })
 
     li.appendChild(price)
@@ -51,12 +51,12 @@ db.collection("Units").where("available", "==", true).get().then(snapshot => {
     snapshot.docs.forEach(doc => {
         console.log(doc.data())
         doc.data().user_id.get().then(userDoc => {
-          console.log(userDoc)
-          if(userDoc.exists) {
-              let unit = new Unit(doc.data(), userDoc.data(), doc.id, userDoc.id)
-              console.log(unit)
-              renderUnit(unit)
-          }
+            console.log(userDoc)
+            if(userDoc.exists) {
+                let unit = new Unit(doc.data(), userDoc.data(), doc.id, userDoc.id)
+                console.log(unit)
+                renderUnit(unit)
+            }
         })
     })
 })
