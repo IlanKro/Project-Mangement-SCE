@@ -19,9 +19,19 @@ module.exports = function(app,admin) {
         })
     })
 
-    app.get("/booking",(req, res) => {
-        res.render("booking")
+    app.post("/homepage_student/order",body_url,(req, res) => {
+        database.collection("Units").doc(req.body.unitID).get().then((unit) => {
+            res.render("booking",{unit: unit})
+        }).catch((error) => {
+            res.render("message_page",{"message" : error} )
+        })
+
     })
+
+    app.post("/booking",body_url,(req, res) => {
+        console.log(req.body)
+    })
+
 
     app.post("/homepage_student/write_review",body_url,(req, res) => {
         console.log(req.body)
@@ -35,15 +45,6 @@ module.exports = function(app,admin) {
         }).catch((error) => {
             res.render("message_page",{"message" : error} )
         })
-        //res.render("write_review")
-    })
-    app.post("/homepage_student/order",body_url,(req, res) => {
-
     })
 
-    app.post("/write_review", body_json, (req, res) => {
-        console.log(req.body)
-        admin.firestore().collection("Reviews").doc().set()
-        res.redirect("homepage_student")
-    })
 }
