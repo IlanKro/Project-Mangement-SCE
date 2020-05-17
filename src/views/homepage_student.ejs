@@ -3,16 +3,57 @@
     <head>
         <title>homepage</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
+        <link rel="stylesheet" type="text/css" href="../css/modal.css">
         <meta charset="UTF-8">
         <link rel="icon" href="SCE%20ROOM.png">
     </head>
     <body>
         <%- include("./partials/logout.ejs") %>
+        <% function refAttr(ref)
+         {
+           if (ref == null) {
+             return {username: "None"} //put here all the attributes you want to cover
+           }
+           // ref path is divided by a "/ and contains the collection name and the unique id
+           let database=locals[ref.path.split("/")[0]]
+           for (var i=0;i<database.length;i++) {
+             if (database[i].id == ref.path.split("/")[1] ) { //if found the specific id (which is unique)
+                return database[i].data()
+              }
+            }
+        }%>
         <h1>SCE Room</h1>
-
-        <h2>Available Housing Units For Rent</h2>
         <h3 id="welcome"></h3>
-        <a class= "button_write_review" href="write_review"> Write Review</a><br><br><br>
+        <h2>Available Housing Units For Rent</h2>
+        <button class="modalButton">Write review</button><br>
+        <!-- The authorizing Modal -->
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Write Review</h2>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <form method="post" action="/homepage_student/write_review">
+                      <label for="renter">renter</label>
+                      <select name="renter_id" id="renter_display" type="text" placeholder="renter_name" required>
+                        <% for(var i=0;i<Users.length;i++) {
+                          if(Users[i].data().usertype=="renter") {
+                            %><option value=<%=Users[i].id%>><%=Users[i].data().username%></option> <%
+                          }
+                        }%>
+                      </select><br><br>
+                      <label for="reviews">review</label><br>
+                      <textarea rows="10" cols="50" placeholder="review body.." type="text" name="review_body"></textarea><br><br>
+                      <input  id="SendUId" type="text" name="student_id" value="none" style="display: none;visibility: hidden;">
+                      <input class= "button" type="submit" value="Post">
+                  </form>
+                </ul>
+              </div>
+            </div>
+        </div>
         <h3>Sort</h3>
             <select name="sort">
                 <option value="A"></option>
@@ -22,8 +63,18 @@
             </select>
         <ul id="unit-list"></ul>
         <%- include("./partials/firebase.ejs") %>
+        <script type="text/javascript" src="../modal.js"></script>
+        <script type="text/javascript" src="../user.js"></script>
+        <script>
+          auth.onAuthStateChanged(function(user) {
+            if (user && auth.currentUser )
+                document.getElementById("SendUId").value=auth.currentUser.uid
+          })
+        </script>
+        <!--
+        <script type="text/javascript" src="../autoComplete.js"></script>
+
         <script src="../model/Unit.js"></script>
         <script src="../model/User.js"></script>
-        <script src="../homepage_student.js"></script>
-        <script type="text/javascript" src="../user.js"></script>
+        <script src="../homepage_student.js"></script>         -->
     </body>
