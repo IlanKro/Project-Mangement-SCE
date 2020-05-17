@@ -28,24 +28,24 @@
               <div class="modal-body">
                 <ul>
                   <form method="post" action="/homepage_renter/post_housing_unit">
-                    <label for="city">city</label>
+                    <label for="city">City</label>
                     <input placeholder="city" type="text" name="city" required><br><br>
-                    <label for="street">street</label>
+                    <label for="street">Street</label>
                     <input placeholder="street" type="text"  name="street" required><br><br>
-                    <label for="house_number">house_number</label>
+                    <label for="house_number">House Number</label>
                     <input placeholder="house_number" type="text" name="house_number" required><br><br>
-                    <label for="price">price per month</label>
+                    <label for="price">Price / Month</label>
                     <input placeholder="price" type="number" name="price" required><br><br>
-                    <label for="phone">contact number</label>
+                    <label for="phone">Contact Phone Number</label>
                     <input type="tel" id="phone" name="phone" placeholder="phone" required required><br><br>
-                    <label for="rooms_num">number of rooms</label>
+                    <label for="rooms_num">Number of Rooms</label>
                     <input placeholder="number of rooms" type="number" name="rooms_num" required><br><br>
-                    <label for="rent range">rent months range (min/max)</label>
+                    <label for="rent range">Rent Months Range (Min/Max)</label>
                     <input min="0" placeholder="min" type="number" name="min_rent_time" value=0 required>&nbsp;
                     <input min="1" placeholder="max" type="number" name="max_rent_time" value=1 required><br><br>
-                    <label for="description">description</label><br>
+                    <label for="description">Description</label><br>
                     <textarea rows="10" cols="50" placeholder="description" type="text" name="description"></textarea><br><br>
-                    <label for="img">Add housing unit photo</label>
+                    <label for="img">Add Unit Photo</label>
                     <input id="house_img" type="file" name="image" accept="image/*"><br><br>
                     <input  id="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
                     <input class= "button" type="submit" value="Post">
@@ -64,15 +64,8 @@
                 <h2>Your housing units</h2>
               </div>
               <div class="modal-body">
-                <ul>
-                  <div class="card">
-                    <img src="/src/images/SCE%ROOM.png" alt="No Image" style="width:100%">
-                    <h3>Address</h3>
-                    <p class="price">2000 ILS / Month</p>
-                    <p>Description</p>
-                    <p><button>Remove Unit</button></p>
+                  <div class = "unitCardsContainer">
                   </div>
-                </ul>
               </div>
             </div>
         </div>
