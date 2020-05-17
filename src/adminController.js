@@ -13,12 +13,7 @@ module.exports = function(app,admin) {
 
     app.get("/homepage_admin",(req, res) => {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews")]).then(data =>
-        {
-            /*
-            let units=data[0]
-            let users=data[1]
-            let reviews=data[2]
-          */
+        {        
             res.render("homepage_admin",{"Units" :data[0],"Users" : data[1],"Reviews" :data[2]})
         })
     })
