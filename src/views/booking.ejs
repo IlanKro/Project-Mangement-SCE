@@ -49,8 +49,8 @@
 
        </div>
       <%- include("./partials/firebase.ejs") %>
-      <script type="text/javascript" src="../user.js"></script>
-      <script type="text/javascript" src="../Payment Validation.js"></script>
+      <script type="text/javascript" src="../Utility/user.js"></script>
+      <script type="text/javascript" src="../pageScripts/Payment Validation.js"></script>
       <script>
         auth.onAuthStateChanged(function(user) {
           if (user && auth.currentUser )

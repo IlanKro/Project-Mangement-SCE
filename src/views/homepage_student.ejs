@@ -127,13 +127,14 @@
           <% } %>
 
         <%- include("./partials/firebase.ejs") %>
-        <script type="text/javascript" src="../modal.js"></script>
-        <script type="text/javascript" src="../user.js"></script>
+        <script type="text/javascript" src="../utility/modal.js"></script>
+        <script type="text/javascript" src="../utility/user.js"></script>
+        <script type="text/javascript" src="../utility/table_sort.js"></script>
         <script>
           auth.onAuthStateChanged(function(user) {
             if (user && auth.currentUser )
                 document.getElementById("SendUId").value=auth.currentUser.uid
           })
         </script>
-        <script src="../table_sort.js"></script>
+
     </body>
