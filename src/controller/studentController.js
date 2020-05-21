@@ -28,13 +28,13 @@ module.exports = function(app,admin) {
 
     })
 
-    app.post("/booking",body_json,(req, res) => {
+    app.post("/transaction",body_json,(req, res) => {
         req.body.timestamp = admin.firestore.Timestamp.fromDate(new Date())
         database.collection("Orders").add(req.body).then(() =>{
             //BUG! does not redirect properly..
-            res.render("message_page",{"message" : req.body.transaction_id + " received successfully!"} )
+            res.render("transaction",{"message" : req.body.transaction_id + " received successfully!"} )
         }).catch((error) => {
-            res.render("message_page",{"message" : error} )
+            res.render("transaction",{"message" : error} )
         })
     })
 

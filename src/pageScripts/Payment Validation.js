@@ -23,7 +23,7 @@ bookForm.addEventListener("submit", (e) => {
     for(let i=0;i<deleteList.length;i++)
         delete order_data[deleteList[i]]
     //send request to server.
-    sendJSON("/booking",order_data)
+    sendJSON("/transaction",order_data)
 
 })
 
@@ -40,37 +40,36 @@ function transaction(order_data) {
     return (Math.floor(Math.random() * (10000000000000000000 - 10000000) ) + 10000000).toString(36).substring(2,30)
 }
 
-//TODO: doesn't currently work!! (orders don't calculate the price right)
+
 var min_month= document.getElementById("min_month")
 var max_month=document.getElementById("max_month")
 var min_year=document.getElementById("min_year")
 var max_year=document.getElementById("max_year")
+
 var range= [min_month,max_month, min_year,max_year]
 range.forEach(item => {
-    item.addEventListener("onchange", (e) => {
-        alert("total price")
+    item.addEventListener("change", (e) => {
 
         let min_month= document.getElementById("min_month").value
         let max_month=document.getElementById("max_month").value
         let min_year=document.getElementById("min_year").value
         let max_year=document.getElementById("max_year").value
-        let price=document.getElementById("price").value
+        let price = document.getElementById("price").value
         let rent_time_limit=document.getElementById("rent_time_max").value -
         document.getElementById("rent_time_min").value
+        let min_rent_time =document.getElementById("rent_time_min").value        
         let rent_time= 12*(max_year-min_year) + (max_month-min_month)
-        console.log(rent_time)
-        if (rent_time>rent_time_limit || rent_time<1) {
-            document.getElementById("totPrice").innerHTML.value= -1
+        if (rent_time >rent_time_limit || rent_time<1 || rent_time<min_rent_time) {
+            document.getElementById("totPrice").value= "Error"
+            document.getElementById("submitButton").disabled = true
             return false
         }
-        document.getElementById("totPrice").innerHTML.value= rent_time*price
+        document.getElementById("totPrice").value= rent_time*price
+        document.getElementById("submitButton").disabled = false
         return true
 
     })
-
-    console.log(item)
 })
-
 
 function valid_credit_card(value) {
   	if (/[^0-9-\s]+/.test(value)) return false
