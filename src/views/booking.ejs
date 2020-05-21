@@ -21,29 +21,37 @@
               <input id="price" value= "<%= unit.data().price %>" style="display: none;visibility: hidden;">
               <input id="rent_time_min" value= "<%= unit.data().min_rent_time %>" style="display: none;visibility: hidden;">
               <input id="rent_time_max" value= "<%= unit.data().max_rent_time %>" style="display: none;visibility: hidden;">
-                <form id="bookingForm">
+              <form id="bookingForm" action="/booking" method="post"></form>
+              <form id="transactionForm"></form>
                     <br><br><br>
                     <label>min rent date</label>
-                    <input  min="1" max="12" type="number" name='min_month' id='min_month' value="1" placeholder="1" required>
-                    <input  type=number min="2020" max="2030" name='min_year' id='min_year' value="2020" placeholder="2020" required><br>
+                    <!-- using 2 different forms one to pay (on client side) and one to save the data (server side) -->
+                    <input form="bookingForm"  min="1" max="12" type="number" name='min_month' id='min_month'  placeholder="min month" required>
+                    <input form="bookingForm"  type=number min="2020" max="2030" name='min_year' id='min_year' placeholder="min year"  required><br>
                     <label>max rent date</label>
-                    <input  min="1" max="12" type="number" name='max_month' id='max_month' value="2" placeholder="2" required>
-                    <input  type=number min="2020" max="2030" name='max_year' id='max_year' value="2020" placeholder="2020" required><br>
+                    <input form="bookingForm"  min="1" max="12" type="number" name='max_month' id='max_month'  placeholder="max month"  required>
+                    <input form="bookingForm"  type=number min="2020" max="2030" name='max_year' id='max_year' placeholder="max year"  required><br>
                     <label>Total price:</label>
-                    <input  id="totPrice" name="totalPrice" value="<%= unit.data().price %>" disabled required><br>
-                    <label for = "Credit card number">Credit Card Number: </label>
-                    <input id="credit_card" placeholder = "1234567891234567" type="text" name="CreditCardNumber" pattern="^[0-9]{16}$" required><br>
-                    <label for = "Expiration date">Expiration Date: </label>
-                    <input min="1" max="12" type="number" name='expireMM' id='expireMM' value="01" placeholder="01" required>
-                    <input type=number min="2020" max="2027" name='expireYY' id='expireYY' value="2020" placeholder="2020" required>
-                    <input class="inputCard" type="hidden" name="expiry" id="expiry" maxlength="4" required><br>
-                    <label for = "CVC">CVC</label>
-                    <input placeholder="CVC" type="text" name="CVC" pattern=^[0-9]{3}$ required><br>
-                    <label for = "ID">ID: </label>
-                    <input placeholder="ID" type="text"  name="ID" required><br><br>
-                    <input  type="text" name="unit_id" value= "<%= unit.id %>" style="display: none;visibility: hidden;">
-                    <input  id="SendUId" type="text" name="student_id" value="none" style="display: none;visibility: hidden;">
-                    <input type = "submit" id="submitButton" class= "button" value = "Checkout"><br><br>
+                    <input form="bookingForm" id="totPrice" name="totalPrice" value="<%= unit.data().price %>" readonly required><br>
+                    <div> <!--Start of trasaction form -->
+                      <label for = "Credit card number">Credit Card Number: </label>
+                      <input form="transactionForm" id="credit_card" placeholder = "1234567891234567" type="text" name="CreditCardNumber"
+                      title:"16 numbers long valid credit card" pattern="^[0-9]{16}$" required><br>
+                      <label for = "Expiration date">Expiration Date: </label>
+                      <input form="transactionForm" min="1" max="12" type="number" name='expireMM' id='expireMM' value="01" placeholder="01" required>
+                      <input form="transactionForm" type=number min="2020" max="2027" name='expireYY' id='expireYY' value="2020" placeholder="2020" required>
+                      <input form="transactionForm" class="inputCard" type="hidden" name="expiry" id="expiry" maxlength="4" required><br>
+                      <label for = "CVC">CVC</label>
+                      <input form="transactionForm" placeholder="CVC" type="text" name="CVC" pattern=^[0-9]{3}$ required><br>
+                      <label for = "ID">ID: </label>
+                      <input form="transactionForm" placeholder="ID" type="text"  name="ID" required><br><br>
+                      <input form="transactionForm" type = "submit" id="submitTransactionButton" class= "button" value = "Checkout"><br><br>
+                  </div>   <!-- End of trasaction form -->
+                  <!-- hidden data: -->
+                    <input form="bookingForm"  type="text" name="unit_id" value= "<%= unit.id %>" style="display: none;visibility: hidden;">
+                    <input form="bookingForm"  id="SendUId" type="text" name="student_id" value="none" style="display: none;visibility: hidden;">
+                    <input form="bookingForm"  id="transaction_id" type="text" name="transaction_id" style="display: none;visibility: hidden;" required>
+                    <input form="bookingForm" type = "submit" id="submitOrderButton" class= "button" value = "Order!" disabled><br><br>
                 </form>
                 <button class="button" onclick="goBack()">Back</button>
 

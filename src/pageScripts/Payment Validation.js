@@ -1,42 +1,28 @@
-const bookForm = document.querySelector("#bookingForm")
+const bookForm = document.querySelector("#transactionForm")
 bookForm.addEventListener("submit", (e) => {
     e.preventDefault()
-    e.returnValue= true
-    let form=document.getElementById("bookingForm").elements
-    let order_data= {}
+    let form=document.getElementById("transactionForm").elements
+    let transaction_data= {}
     for(let i=0;i<form.length-1;i++){
         let element=form.item(i)
-        order_data[element.name]=element.value
+        transaction_data[element.name]=element.value
     }
+    transaction_data["total_price"]=document.getElementById("totPrice").value
 
-    if (!valid_credit_card(order_data["CreditCardNumber"])) {
+    if (!valid_credit_card(transaction_data["CreditCardNumber"])) {
     //if credit card is incorrect or the price is incorrect
         alert("credit card is invalid!")
         return false
     }
     //assume a transaction happened and we got the id:
-    order_data["transaction_id"]=transaction(order_data)
+    transaction_data["transaction_id"]=transaction(transaction_data)
     alert("transaction was successful!!")
-    //TODO handle trasaction errors too.
-    //delete the credit card data
-    let deleteList=["ID","CVC","expiry","CreditCardNumber","expireMM","expireYY"]
-    for(let i=0;i<deleteList.length;i++)
-        delete order_data[deleteList[i]]
-    //send request to server.
-    sendJSON("/transaction",order_data)
-
+    document.getElementById("transaction_id").value=  transaction_data["transaction_id"]
+    document.getElementById("submitOrderButton").disabled = false
 })
 
-function sendJSON(url,data) {
-    // send to url the json data
-    let request = new XMLHttpRequest()
-    request.open("POST", url, true)
-    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
-    request.send(JSON.stringify(data))
-}
-
 function transaction(order_data) {
-    //no time to implement payment have a random string as placeholder.
+    //Placeholder for transaction since we are not going to implement actual transactions.
     return (Math.floor(Math.random() * (10000000000000000000 - 10000000) ) + 10000000).toString(36).substring(2,30)
 }
 
@@ -48,24 +34,23 @@ var max_year=document.getElementById("max_year")
 
 var range= [min_month,max_month, min_year,max_year]
 range.forEach(item => {
-    item.addEventListener("change", (e) => {
-
+    item.addEventListener("change", (e) => {      
+        //variables:
         let min_month= document.getElementById("min_month").value
         let max_month=document.getElementById("max_month").value
         let min_year=document.getElementById("min_year").value
         let max_year=document.getElementById("max_year").value
         let price = document.getElementById("price").value
-        let rent_time_limit=document.getElementById("rent_time_max").value -
-        document.getElementById("rent_time_min").value
-        let min_rent_time =document.getElementById("rent_time_min").value        
+        let rent_time_limit=document.getElementById("rent_time_max").value
+        let min_rent_time =document.getElementById("rent_time_min").value
         let rent_time= 12*(max_year-min_year) + (max_month-min_month)
         if (rent_time >rent_time_limit || rent_time<1 || rent_time<min_rent_time) {
             document.getElementById("totPrice").value= "Error"
-            document.getElementById("submitButton").disabled = true
+            document.getElementById("submitTransactionButton").disabled = true
             return false
         }
         document.getElementById("totPrice").value= rent_time*price
-        document.getElementById("submitButton").disabled = false
+        document.getElementById("submitTransactionButton").disabled = false
         return true
 
     })
