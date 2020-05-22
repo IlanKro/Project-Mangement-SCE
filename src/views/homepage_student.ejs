@@ -56,13 +56,13 @@
             </div>
         </div>
         <h3>Sort</h3>
-            <select name="sort" placeholder="Sort">
-                <option value="city ascending" onclick=sortTable("0","string","asc")>sort by city ascending</option>
-                <option value="city descending" onclick=sortTable("0","string","des")>sort by city descending</option>
-                <option value="price ascending" onclick=sortTable("1","number","asc")>sort by price ascending</option>
-                <option value="price descending" onclick=sortTable("1","number","des")>sort by price descending</option>
-                <option value="rooms_num ascending" onclick=sortTable("2","number","asc")>sort by number of rooms ascending</option>
-                <option value="rooms_num descending" onclick=sortTable("2","number","des")>sort by number of rooms descending</option>
+            <select name="sort" placeholder="Sort" onclick="if (typeof(this.selectedIndex) != 'undefined') onSortItemClick(this.selectedIndex)">
+                <option value="city ascending">sort by city ascending</option>
+                <option value="city descending">sort by city descending</option>
+                <option value="price ascending">sort by price ascending</option>
+                <option value="price descending">sort by price descending</option>
+                <option value="rooms_num ascending">sort by number of rooms ascending</option>
+                <option value="rooms_num descending">sort by number of rooms descending</option>
             </select><br><br>
         <!-- <ul id="unit-list"></ul> -->
         <% let time = new Date(1970, 0, 1) // Epoch %>

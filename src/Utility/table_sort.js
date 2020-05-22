@@ -1,5 +1,34 @@
+function onSortItemClick(index){
+    console.log("onSortItemClick " + index)
+    switch (index) {
+      case 0:
+        sortTable("0","string","asc")
+        break
+      case 1:
+        sortTable("0","string","des")
+        break
+      case 2:
+        sortTable("1","number","asc")
+        break
+      case 3:
+        sortTable("1","number","des")
+        break
+      case 4:
+        sortTable("2","number","asc")
+        break
+      case 5:
+        sortTable("2","number","des")
+        break
+      default:
+        break
+    }
+
+
+
+}
+
 function sortTable(column_num,type,order) {
-    var table, rows, switching, i, x, y, shouldSwitch
+    var table, rows, switching, i, x, y, shouldSwitch, val1, val2
     table = document.getElementById("unitsTable")
     switching = true
     /* Make a loop that will continue until
@@ -19,16 +48,24 @@ function sortTable(column_num,type,order) {
             y = rows[i + 1].getElementsByTagName("TD")[column_num]
             console.log(x.innerHTML + y.innerHTML)
             // Check if the two rows should switch place:
-            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            val1 = type == "number" ? parseInt(x.innerHTML.toLowerCase()) : x.innerHTML.toLowerCase()
+            val2 = type == "number" ? parseInt(y.innerHTML.toLowerCase()) : y.innerHTML.toLowerCase()
+            if (order == "asc" && val1 > val2) {
                 // If so, mark as a switch and break the loop:
                 shouldSwitch = true
                 break
-            } }
+            }
+            else if (order == "des" && val1 < val2) {
+                shouldSwitch = true
+                break
+            }
+          }
+          if (shouldSwitch) {
+              /* If a switch has been marked, make the switch
+              and mark that a switch has been done: */
+              rows[i].parentNode.insertBefore(rows[i + 1], rows[i])
+              switching = true
+          }
     }
-    if (shouldSwitch) {
-        /* If a switch has been marked, make the switch
-        and mark that a switch has been done: */
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i])
-        switching = true
-    }
+    table.selectedIndex = -1
 }
