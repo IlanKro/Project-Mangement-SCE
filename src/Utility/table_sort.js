@@ -1,33 +1,33 @@
 function onSortItemClick(index){
-    console.log("onSortItemClick " + index)
+    /* chooses which index the table sort will use 0-5 each one has different functionality,
+    even indexes are ascending order odd indexes are decending order  */    
     switch (index) {
-      case 0:
+    case 0:
         sortTable("0","string","asc")
         break
-      case 1:
+    case 1:
         sortTable("0","string","des")
         break
-      case 2:
+    case 2:
         sortTable("1","number","asc")
         break
-      case 3:
+    case 3:
         sortTable("1","number","des")
         break
-      case 4:
+    case 4:
         sortTable("2","number","asc")
         break
-      case 5:
+    case 5:
         sortTable("2","number","des")
         break
-      default:
+    default:
         break
     }
-
-
-
 }
 
 function sortTable(column_num,type,order) {
+    /* params: column number: column to sort,type: the data type to sort, order decending or ascending
+    (using the short term "asc" or dec") */
     var table, rows, switching, i, x, y, shouldSwitch, val1, val2
     table = document.getElementById("unitsTable")
     switching = true
@@ -46,7 +46,6 @@ function sortTable(column_num,type,order) {
         one from current row and one from the next: */
             x = rows[i].getElementsByTagName("TD")[column_num]
             y = rows[i + 1].getElementsByTagName("TD")[column_num]
-            console.log(x.innerHTML + y.innerHTML)
             // Check if the two rows should switch place:
             val1 = type == "number" ? parseInt(x.innerHTML.toLowerCase()) : x.innerHTML.toLowerCase()
             val2 = type == "number" ? parseInt(y.innerHTML.toLowerCase()) : y.innerHTML.toLowerCase()
@@ -59,13 +58,13 @@ function sortTable(column_num,type,order) {
                 shouldSwitch = true
                 break
             }
-          }
-          if (shouldSwitch) {
-              /* If a switch has been marked, make the switch
-              and mark that a switch has been done: */
-              rows[i].parentNode.insertBefore(rows[i + 1], rows[i])
-              switching = true
-          }
+        }
+        if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+          and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i])
+            switching = true
+        }
     }
-    table.selectedIndex = -1
+    Index = -1
 }

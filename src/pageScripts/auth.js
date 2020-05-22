@@ -1,4 +1,4 @@
-// login
+// login TODO: remove the whole enter site deal it's quite pointless.
 const loginForm = document.querySelector("#login_form")
 loginForm.addEventListener("submit", (ev) => {
     ev.preventDefault()

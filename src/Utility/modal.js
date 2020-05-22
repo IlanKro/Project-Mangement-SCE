@@ -6,9 +6,11 @@ const span= document.getElementsByClassName("close")
 // When the user clicks on the button, open the modal
 
 for(let i=0; i<modals.length;i++) {
+    //link ModalButton number i to modal number i.
     button[i].onclick = function() {
         modals[i].style.display = "block"
     }
+    //link close button number i to modal number i.
     span[i].onclick = function() {
         modals[i].style.display = "none"
     }

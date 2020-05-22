@@ -127,16 +127,18 @@
           <% } %>
 
         <%- include("./partials/firebase.ejs") %>
-        <script type="text/javascript" src="../utility/modal.js"></script>
-        <script type="text/javascript" src="../utility/user.js"></script>
-        <script type="text/javascript" src="../utility/table_sort.js"></script>
+        <script type="text/javascript" src="../firebase/signout.js"></script>
+        <script type="text/javascript" src="../Utility/modal.js"></script>
+        <script type="text/javascript" src="../Utility/user.js"></script>
+        <script type="text/javascript" src="../Utility/table_sort.js"></script>
         <script>
           auth.onAuthStateChanged(function(user) {
+            /* sends a hidden user ID element to an html value
+            to identify with the server side. */
             if (user && auth.currentUser )
                 document.getElementById("SendUId").value=auth.currentUser.uid
           })
         </script>
 
-        <script src="../Utility/table_sort.js"></script>
 
     </body>

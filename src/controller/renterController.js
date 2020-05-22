@@ -2,6 +2,7 @@ const body_parser=require("body-parser")
 const body_url=body_parser.urlencoded({extended: "true"})
 const body_json=body_parser.json()
 
+/* this controls pages that have to do with renter */
 module.exports = function(app,admin) {
     const database= admin.firestore()
     async function getLibrary(library) {
@@ -28,34 +29,5 @@ module.exports = function(app,admin) {
             + req.body.house_number + " " + req.body.city + " listed"})
         })
     })
-    /*
-
-    app.post("/homepage_admin/ban",body_url, (req,res) => {
-        admin.auth().updateUser(req.body.uid, {disabled: true})
-            .then(function(userRecord) {
-                console.log("Successfully enabled user data:", userRecord.toJSON())
-                res.render("success_page",{"success" : userRecord.email + " banned!"} )
-            })
-            .catch(function(error) {
-                console.log("Error fetching user data:", error)
-                res.send(error)
-            })
-    })
-    app.post("/homepage_admin/unban",body_url, (req,res) => {
-        admin.auth().updateUser(req.body.uid, {disabled: false})
-            .then(function(userRecord) {
-                console.log("Successfully enabled user data:", userRecord.toJSON())
-                res.render("success_page",{"success" : userRecord.email + " activated!"} )
-            })
-            .catch(function(error) {
-                console.log("Error fetching user data:", error)
-                res.send(error)
-            })
-    })
-    app.post("/homepage_admin/rmv_review",body_url, (req,res) => {
-        //console.log(req.body)
-        res.render("success_page",{"success" : req.body.rid + " deleted!"} )
-    })
-*/
 
 }

@@ -1,3 +1,4 @@
+/* import for firebase client side module*/
 var firebaseConfig = {
     apiKey: "AIzaSyCuqm7lR0YYnF8IiarnGQMEfRM-Fs5QpP4",
     authDomain: "sce-room.firebaseapp.com",
@@ -14,12 +15,3 @@ if (firebase.apps.length == 0)
 var auth=firebase.auth()
 var db=firebase.firestore()
 var storage = firebase.storage()
-
-const logout = document.getElementsByClassName("logoutButton")[0]
-logout.addEventListener("click", (ev) => {
-    ev.preventDefault()
-    alert("signing out")
-    auth.signOut().then(() => {
-        window.location="/"
-    })
-})

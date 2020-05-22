@@ -33,7 +33,8 @@
                     <input form="bookingForm"  type=number min="2020" max="2030" name='max_year' id='max_year' placeholder="max year"  required><br>
                     <label>Total price:</label>
                     <input form="bookingForm" id="totPrice" name="totalPrice" value="<%= unit.data().price %>" readonly required><br>
-                    <div> <!--Start of trasaction form -->
+                    <!--Start of trasaction form -->
+                    <div>
                       <label for = "Credit card number">Credit Card Number: </label>
                       <input form="transactionForm" id="credit_card" placeholder = "1234567891234567" type="text" name="CreditCardNumber"
                       title:"16 numbers long valid credit card" pattern="^[0-9]{16}$" required><br>
@@ -54,13 +55,15 @@
                     <input form="bookingForm" type = "submit" id="submitOrderButton" class= "button" value = "Order!" disabled><br><br>
                 </form>
                 <button class="button" onclick="goBack()">Back</button>
-
        </div>
       <%- include("./partials/firebase.ejs") %>
+      <script type="text/javascript" src="../firebase/signout.js"></script>
       <script type="text/javascript" src="../Utility/user.js"></script>
       <script type="text/javascript" src="../pageScripts/Payment Validation.js"></script>
       <script>
         auth.onAuthStateChanged(function(user) {
+          /* sends a hidden user ID element to an html value
+          to identify with the server side. */
           if (user && auth.currentUser )
               document.getElementById("SendUId").value=auth.currentUser.uid
         })

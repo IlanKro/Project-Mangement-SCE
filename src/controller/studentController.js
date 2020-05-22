@@ -2,6 +2,7 @@ const body_parser=require("body-parser")
 const body_url=body_parser.urlencoded({extended: "true"})
 const body_json=body_parser.json()
 
+/* this controls pages that have to do with student */
 module.exports = function(app,admin) {
     const database= admin.firestore()
     async function getLibrary(library) {
@@ -10,7 +11,6 @@ module.exports = function(app,admin) {
             return doc.docs
         })
     }
-
 
     app.get("/homepage_student",(req, res) => {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews")]).then(data =>
