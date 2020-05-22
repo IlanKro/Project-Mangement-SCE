@@ -134,7 +134,6 @@
                               phone:<%=JSON.stringify(Units[i].data().phone)%><br>
                               time_limit (in months):<%=JSON.stringify(Units[i].data().min_rent_time + " to "
                               + Units[i].data().max_rent_time)%><br>
-                              </form>
                             </li>
                      <% } %>
                 </ul>
@@ -142,6 +141,6 @@
             </div>
         </div>
         <%- include("./partials/firebase.ejs") %>
-        <script type="text/javascript" src="../modal.js"></script>
-        <script type="text/javascript" src="../user.js"></script>
+        <script type="text/javascript" src="../utility/modal.js"></script>
+        <script type="text/javascript" src="../utility/user.js"></script>
     </body>

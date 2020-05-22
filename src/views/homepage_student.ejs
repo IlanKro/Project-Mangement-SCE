@@ -56,15 +56,17 @@
             </div>
         </div>
         <h3>Sort</h3>
-            <select name="sort">
-                <option value="A"></option>
-                <option value="B">sort by location</option>
-                <option value="C">sort by price</option>
-                <option value="D">sort by number of rooms</option>
-            </select>
+            <select name="sort" placeholder="Sort">
+                <option value="city ascending" onclick=sortTable("0","string","asc")>sort by city ascending</option>
+                <option value="city descending" onclick=sortTable("0","string","des")>sort by city descending</option>
+                <option value="price ascending" onclick=sortTable("1","number","asc")>sort by price ascending</option>
+                <option value="price descending" onclick=sortTable("1","number","des")>sort by price descending</option>
+                <option value="rooms_num ascending" onclick=sortTable("2","number","asc")>sort by number of rooms ascending</option>
+                <option value="rooms_num descending" onclick=sortTable("2","number","des")>sort by number of rooms descending</option>
+            </select><br><br>
         <!-- <ul id="unit-list"></ul> -->
         <% let time = new Date(1970, 0, 1) // Epoch %>
-        <table>
+        <table id="unitsTable">
           <tr>
             <th>Address</th>
             <th>Price per month</th>
@@ -89,7 +91,7 @@
                         <h2>More details</h2>
                       </div>
                       <div class="modal-body">
-                          <img src=<%= Units[i].data().image%>></img><br>
+                          <img src= "<%= Units[i].data().image %>">  <br>
                           <label>address :<%= (Units[i].data().city + " street: " + Units[i].data().street
                             + " number: " + Units[i].data().house_number)  %></label><br>
                           <label>price per month: <%= Units[i].data().price %></label><br>
@@ -105,7 +107,7 @@
                               <input type="submit" class="button" value="Order">
                           </form>
                           <h3>Reviews about the renter:</h3>
-                          <ul>
+                            <ul>
                             <% for (var j=0 ;j < Reviews.length;j++) { %>
                                 <% if(refAttr(Reviews[j].data().renter_id).id ==
                                 refAttr(Units[i].data().user_id).id) { %>
@@ -116,30 +118,25 @@
                                     body:<%=Reviews[j].data().body%><br>
                               <%  } %>
                             <% } %>
-
+                              </li>
+                            </ul>
                       </div>
                     </div>
                 </div>
-
           <%  } %>
           <% } %>
 
-
-
-
         <%- include("./partials/firebase.ejs") %>
-        <script type="text/javascript" src="../modal.js"></script>
-        <script type="text/javascript" src="../user.js"></script>
+        <script type="text/javascript" src="../utility/modal.js"></script>
+        <script type="text/javascript" src="../utility/user.js"></script>
+        <script type="text/javascript" src="../utility/table_sort.js"></script>
         <script>
           auth.onAuthStateChanged(function(user) {
             if (user && auth.currentUser )
                 document.getElementById("SendUId").value=auth.currentUser.uid
           })
         </script>
-        <!--
-        <script type="text/javascript" src="../autoComplete.js"></script>
 
-        <script src="../model/Unit.js"></script>
-        <script src="../model/User.js"></script>
-        <script src="../homepage_student.js"></script>         -->
+        <script src="../Utility/table_sort.js"></script>
+
     </body>
