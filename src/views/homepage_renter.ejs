@@ -128,11 +128,14 @@
             </div>
         </div>
         <%- include("./partials/firebase.ejs") %>
+        <script type="text/javascript" src="../firebase/signout.js"></script>
         <script type="text/javascript" src="../utility/modal.js"></script>
         <script type="text/javascript" src="../utility/user.js"></script>
         <!--<script> getRId(){return auth.currentUser.uid}</script> -->
           <script>
             auth.onAuthStateChanged(function(user) {
+              /* sends a hidden user ID element to an html value
+              to identify with the server side. */
               if (user && auth.currentUser )
                   document.getElementById("SendRId").value=auth.currentUser.uid
             })

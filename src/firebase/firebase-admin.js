@@ -1,3 +1,4 @@
+/*import for the admin server side firebase module*/
 module.exports = function(){
 
     const admin= require ("firebase-admin")

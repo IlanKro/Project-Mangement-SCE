@@ -1,21 +1,26 @@
 function userType(val) {
+    // handles the radiobox elements on the top of the signup.
     let img_upload = document.getElementById("imgup")
     let bank = document.getElementById("bank_account")
     if (val == "renter") {
         img_upload.style.display = "none"
         bank.style.display = "block"
+        //TODO: check how to implement those 4 lines for required input based on
+        //radioboxes
         //document.getElementsbyId("student_image").required= false
         //document.getElementsbyId("bank").requred= true
     }
     if (val == "student") {
         img_upload.style.display = "block"
         bank.style.display = "none"
-        //document.getElementsbyId("student_image").required =false //change to true at the end
+        //document.getElementsbyId("student_image").required =false
         //document.getElementsbyId("bank").required=false
     }
 }
 
 function passwordStrength(password) {
+    // checks password strength and changes the site UI to match it's strength.
+    // optional: make this a listener instead, or make it a pattern and remove this.
     let pass_check=document.getElementById("passwordCheck")
     if (password.length<8) {
         pass_check.innerHTML = "Password too short"
@@ -36,7 +41,7 @@ function passwordStrength(password) {
     return false
 }
 
-//function signUp() {
+//sign up funtionallity:
 const signupForm = document.querySelector("#SignupForm")
 signupForm.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -46,10 +51,12 @@ signupForm.addEventListener("submit", (e) => {
         let element=form.item(i)
         signup_data[element.name]=element.value
     }
+    // check password strength in case the new user presses the signup button.
     if(!passwordStrength(signup_data["pass"])) {
         alert("your password is too weak")
         return false
     }
+    //student users:
     if (document.getElementById("student").checked){ //handling the radiobox element separately.
         signup_data["usertype"]="student"
         if (signup_data["img"]=="") {
@@ -67,6 +74,7 @@ signupForm.addEventListener("submit", (e) => {
     }
     else{ //create renter
         signup_data["usertype"]="renter"
+        //TODO: make it so it's required instead of checking here.
         if (!signup_data["bank"]) {
             return false
         }
@@ -84,14 +92,18 @@ function createUser(signup_data) {
         redirectSignup(signup_data["usertype"])
     })
 }
+
 function redirectSignup(user_type) {
     try{
         if (user_type == "student") {
             alert("sign up was successful! wait for an admin to approve your account")
             auth.signOut()
         }
-        else if (user_type == "renter")
+        else if (user_type == "renter") {
+            //used to buy a little time for the browser to login as well.
+            alert("user created succeffully!")
             window.location.href = "homepage_renter"
+        }
         else
             alert("Unidentified usertype")
     }
@@ -99,8 +111,6 @@ function redirectSignup(user_type) {
         window.location.href = "404.html"
     }
 }
-
-
 
 function sendJSON(url,data) {
     // send to url the json data
@@ -113,27 +123,29 @@ function sendJSON(url,data) {
 var fileList= "none"
 const fileSelector = document.getElementById("student_image")
 fileSelector.addEventListener("change", (event) => {
+    //add listener to the image upload selector.
     fileList = event.target.files
 })
 
 async function uploadImage(email) {
-    console.log("uploading: student_ids/" + email.toString() +  fileList[0].name)
+    //uploads an image with the email name.
+    //returns a promise with the download url.
     if(fileList[0].name == undefined)
         return null
     let ref= storage.ref("student_ids/" + email.toString() + fileList[0].name ) //making the upload unique since emails are unique
-    uploadTask = ref.put(fileList[0])
+    uploadTask = ref.put(fileList[0]) //this is the download tank it needs to be activated to upload.
     return new Promise((resolve, reject) => {
         uploadTask.on(
             "state_changed",
-            function(snapshot) {
+            function(snapshot) { //progress part.
                 const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100
                 console.log("Upload is " + progress + "% done")
             },
-            function(error) {
+            function(error) { //error part
                 reject(error)
                 alert(error)
             },
-            function() {
+            function() { //upload complete part.
                 resolve(uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     console.log("File available at: ", downloadURL)
                     return downloadURL

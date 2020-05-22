@@ -1,32 +1,12 @@
 window.onload=function(){
     auth.onAuthStateChanged(function(user) {
-        if (user
-          && auth.currentUser )
-            document.getElementById("welcome").innerHTML = "Logged in as : " + auth.currentUser.displayName
+        if (user && auth.currentUser ) {
+            //if there is a welcome id it changes the text to logged user.
+            if (document.getElementById("welcome")) {
+                document.getElementById("welcome").innerHTML = "Logged in as : " + auth.currentUser.displayName
+            }
+        }
         else
-            window.location= "/"
+            window.location= "/" //if no user is logged on kicks you out to index.
     })
 }
-
-
-/*
-  //console.log(reviews[0].data().student_id.path.substring("users/".length))
-
- */
-/*
-//path,attr
-//ref.path
-
-function refAttr(libraries)
-{
-/*
-for (var i=0;i<db.length;i++) {
-  if (id == db[i].id)
-  for (var i=0;i<db.length;i++) {
-    if (id == Users[i].id) %>
-       <%=users[i].data().fname %> <%
-   }
-
-   */
-
-//}
