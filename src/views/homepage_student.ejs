@@ -109,18 +109,18 @@
                           </form>
                           <h3>Additional images:</h3>
                           <% for (var j=1 ;j<Units[i].data().images.length;j++) { %>
-                            <img alt="more housing unit image" src= <%= Units[i].data().images[j] %> width="200" height="200">                              
+                            <img alt="more housing unit image" src= <%= Units[i].data().images[j] %> width="200" height="200">
                         <% } %>
                           <h3>Reviews about the renter:</h3>
                             <ul>
                             <% for (var j=0 ;j < Reviews.length;j++) { %>
-                                <% if(refAttr(Reviews[j].data().renter_id).id ==
-                                refAttr(Units[i].data().user_id).id) { %>
+                                <% if(refAttr(Reviews[j].data().renter_id).uid ==
+                                refAttr(Units[i].data().user_id).uid) { %>
                                   <li>written by: <%=refAttr(Reviews[j].data().student_id).username%> <br>
                                     about:<%=refAttr(Reviews[j].data().renter_id).username%> <br>
                                     <% time.setSeconds(Reviews[j].data().timestamp._seconds)%>
                                     at:<%=time %><br>
-                                    body:<%=Reviews[j].data().body%><br>
+                                    body:<%=Reviews[j].data().review_body%><br>
                               <%  } %>
                             <% } %>
                               </li>
