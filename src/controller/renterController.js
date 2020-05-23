@@ -42,14 +42,15 @@ module.exports = function(app,admin) {
         })
     })
 
-    app.post("/homepage_renter/post_housing_unit",body_url, (req,res) => {
-        req.body.available= true
-        req.body.student= null
-        console.log("New unit added:\n" + req.body)
-        req.body.user_id=database.collection("Users").doc(req.body.user_id)
+    app.post("/homepage_renter/post_housing_unit",body_json, (req,res) => {
+        req.body.available= true //availeable to rent
+        req.body.student= null // no student is currently renting it.
+        req.body.user_id=database.collection("Users").doc(req.body.user_id) //belongs to user who psoted it.
         database.collection("Units").add(req.body).then(() => {
-            res.render("message_page",{"message" : req.body.street + " "
-            + req.body.house_number + " " + req.body.city + " listed"} )
+            res.send("The housing unit at: " + req.body.street + " "
+            + req.body.house_number + " " + req.body.city + " posted successfully!")
+        }).catch((error) => {
+            res.send(error.message)
         })
     })
 

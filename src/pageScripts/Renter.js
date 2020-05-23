@@ -1,6 +1,7 @@
-
-const bookForm = document.querySelector("#addHousingForm")
-bookForm.addEventListener("submit", (e) => {
+window.onload=function(){
+    document.getElementById("addHousingForm").reset
+}
+document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
     // handle second (inner) form for payment.
     e.preventDefault()
     let form=document.getElementById("addHousingForm").elements
@@ -9,25 +10,56 @@ bookForm.addEventListener("submit", (e) => {
         let element=form.item(i)
         housing_data[element.name]=element.value
     }
+    if(fileList[0].name == undefined) {
+        alert("Cannot upload a housing unit without at least one photo!")
+        location.reload()
+        return false
+    }
+    document.getElementById("postHouseButton").disabled= true //disables the button so they wait for the uplaod to finish.
+    document.getElementById("postHouseButton").value = "Posting..."
+    let image_uploads= []
+    Array.prototype.forEach.call(fileList,(image,imgnum) => {
+        image_uploads[imgnum]=uploadImage(imgnum,housing_data["city"]+housing_data["street"]+ housing_data["house_number"])
+    })
+
+    Promise.all(image_uploads).then((uploads)=> {
+        housing_data["images"]=uploads //set images as the download link urls.
+        sendJSON("/homepage_renter/post_housing_unit",housing_data)
+    })
 
 })
 
+function sendJSON(url,data) {
+    // send to url the json data
+    let request = new XMLHttpRequest()
+    request.open("POST", url, true)
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    request.onload = function (e) {
+        alert(request.responseText)
+        document.getElementById("postHouseButton").value = "Post"
+        document.getElementById("postHouseButton").disabled= false //enables the button again.
+    }
+    request.send(JSON.stringify(data))
+}
+
 var fileList= "none"
-const fileSelector = document.getElementById("student_image")
+const fileSelector = document.getElementById("house_img")
 fileSelector.addEventListener("change", (event) => {
     //add listener to the image upload selector.
     fileList = event.target.files
 })
-
-async function uploadImage(adress) {
-    //uploads an image with the email name.
+var tasks=[]
+async function uploadImage(imgnum,address) {
+    //uploads an image with the address name.
     //returns a promise with the download url.
-    if(fileList[0].name == undefined)
+    filename= "housing_units_photos/" + address.toString() + "/" + imgnum + fileList[imgnum].name // the / creates a new folder.
+    if(fileList[imgnum].name == undefined)
         return null
-    let ref= storage.ref("housing_units_photos/" + adress.toString() + fileList[0].name ) //making the upload unique since emails are unique
-    uploadTask = ref.put(fileList[0]) //this is the download tank it needs to be activated to upload.
+    let ref= storage.ref(filename) //making the upload unique since emails are unique
+    tasks[imgnum]= ref.put(fileList[imgnum]) //this is the download task it needs to be activated to upload.
+    console.log(tasks[imgnum])
     return new Promise((resolve, reject) => {
-        uploadTask.on(
+        tasks[imgnum].on(
             "state_changed",
             function(snapshot) { //progress part.
                 const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100
@@ -38,7 +70,7 @@ async function uploadImage(adress) {
                 alert(error)
             },
             function() { //upload complete part.
-                resolve(uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                resolve(tasks[imgnum].snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     console.log("File available at: ", downloadURL)
                     return downloadURL
                 }))
