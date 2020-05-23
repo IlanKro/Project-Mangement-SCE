@@ -4,32 +4,30 @@
         <title>homepage</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
         <link rel="stylesheet" type="text/css" href="../css/modal.css">
-        <link rel="stylesheet" type="text/css" href="../css/table.css">
         <meta charset="UTF-8">
         <link rel="icon" href="SCE%20ROOM.png">
     </head>
     <body>
          <%- include("./partials/logout.ejs") %>
-         <% function refAttr(ref)
-          {
-            if (ref == null) {
-              return {username: "None"} //put here all the attributes you want to cover
-            }
-            // ref path is divided by a "/ and contains the collection name and the unique id
-            let database=locals[ref.path.split("/")[0]]
-            for (var i=0;i<database.length;i++) {
-              if (database[i].id == ref.path.split("/")[1] ) { //if found the specific id (which is unique)
-                 return database[i].data()
-               }
-             }
-         }%>
          <h1>SCE Room</h1>
          <h2 id="welcome">Welcome</h2>
         <button class="modalButton">Post housing unit</button><br>
-        <button class="modalButton" id="housing_units">Your housing units</button><br>
-        <button class="modalButton">Watch Reviews</button><br>
-        <button class="modalButton">View housing units orders</button><br>
-        <button class="modalButton">View statistics</button><br>
+        <form method="post" action="/homepage_renter/manage">
+          <input  class="SendRId" type="text" name="user_id" value=RetriveUId()" style="display: none;visibility: hidden;">
+          <button type="submit" class="button">Your housing units</button><br>
+        </form>
+        <form method="post" action="/homepage_renter/user_reviews">
+          <input  class="SendRId" type="text" name="user_id" value=RetriveUId()" style="display: none;visibility: hidden;">
+          <button type="submit" class="button">Watch Reviews about me</button><br>
+        </form>
+        <form method="post" action="/homepage_renter/your_orders">
+          <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
+          <button type="submit" class="button">View housing units orders</button><br>
+        </form>
+        <form method="post" action="/homepage_renter/statistics">
+            <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
+            <button type="submit" class="button">View statistics</button><br>
+        </form>
 
         <!-- The authorizing Modal -->
         <div class="modal">
@@ -41,27 +39,27 @@
               </div>
               <div class="modal-body">
                 <ul>
-                  <form method="post" action="/homepage_renter/post_housing_unit">
-                    <label for="city">City</label>
+                  <form id="addHousingForm" method="post" action="/homepage_renter/post_housing_unit">
+                    <label for="city">city</label>
                     <input placeholder="city" type="text" name="city" required><br><br>
-                    <label for="street">Street</label>
+                    <label for="street">street</label>
                     <input placeholder="street" type="text"  name="street" required><br><br>
-                    <label for="house_number">House Number</label>
+                    <label for="house_number">house_number</label>
                     <input placeholder="house_number" type="text" name="house_number" required><br><br>
-                    <label for="price">Price / Month</label>
+                    <label for="price">price per month</label>
                     <input placeholder="price" type="number" name="price" required><br><br>
-                    <label for="phone">Contact Phone Number</label>
+                    <label for="phone">contact number</label>
                     <input type="tel" id="phone" name="phone" placeholder="phone" required required><br><br>
-                    <label for="rooms_num">Number of Rooms</label>
+                    <label for="rooms_num">number of rooms</label>
                     <input placeholder="number of rooms" type="number" name="rooms_num" required><br><br>
-                    <label for="rent range">Rent Months Range (Min/Max)</label>
+                    <label for="rent range">rent months range (min/max)</label>
                     <input min="0" placeholder="min" type="number" name="min_rent_time" value=0 required>&nbsp;
                     <input min="1" placeholder="max" type="number" name="max_rent_time" value=1 required><br><br>
-                    <label for="description">Description</label><br>
+                    <label for="description">description</label><br>
                     <textarea rows="10" cols="50" placeholder="description" type="text" name="description"></textarea><br><br>
-                    <label for="img">Add Unit Photo</label>
+                    <label for="img">Add housing unit photo</label>
                     <input id="house_img" type="file" name="image" accept="image/*"><br><br>
-                    <input  id="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
+                    <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
                     <input class= "button" type="submit" value="Post">
                   </form>
                 </ul>
@@ -69,133 +67,24 @@
             </div>
         </div>
 
-        <!-- The banning Modal -->
-        <div class="modal">
-          <!-- Modal content -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Your housing units</h2>
-              </div>
-              <div class="modal-body">
-                <% let time = new Date(1970, 0, 1) // Epoch %>
-                <table id="unitsTable">
-                  <tr>
-                    <th>Address</th>
-                    <th>Price per month</th>
-                    <th>Number Of Rooms</th>
-                    <th>...</th>
-                  </tr>
-                  <% for (var i=0 ;i < Units.length;i++) { %>
-                      <% if(Units[i].data().available) { %>
-                        <tr>
-                          <td><%= (Units[i].data().city + " street: " + Units[i].data().street
-                            + " number: " + Units[i].data().house_number)  %></td>
-                          <td><%= Units[i].data().price %></td>
-                          <td><%= Units[i].data().rooms_num %></td>
-                          <td><button class="modalButton">More Details</button> </td>
-                        </tr>
-                        <!-- per unit modal -->
-                        <div class="modal">
-                          <!-- Modal content -->
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <span class="close">&times;</span>
-                                <h2>More details</h2>
-                              </div>
-                              <div class="modal-body">
-                                  <img src= "<%= Units[i].data().image %>">  <br>
-                                  <label>address :<%= (Units[i].data().city + " street: " + Units[i].data().street
-                                    + " number: " + Units[i].data().house_number)  %></label><br>
-                                  <label>price per month: <%= Units[i].data().price %></label><br>
-                                  <label>number of rooms: <%= Units[i].data().rooms_num %></label><br>
-                                  <label>rent range(in months): <%= Units[i].data().min_rent_time %> - <%= Units[i].data().max_rent_time %> </label><br>
-                                  <label> description: <%= Units[i].data().description%></label><br>
-                                  <h3> contact info</h3>
-                                  <label> name: <%= refAttr(Units[i].data().user_id).username%></label><br>
-                                  <label> phone: <%= Units[i].data().phone%></label><br>
-                                  <label> email: <%= refAttr(Units[i].data().user_id).email%></label><br>
-                                  <form method="post" action="/homepage_student/order">
-                                      <input type="text" name="unitID" value="<%=Units[i].id%>" style="display: none;visibility: hidden;">
-                                      <input type="submit" class="button" value="Order">
-                                  </form>
-                                  <h3>Reviews about the renter:</h3>
-                                    <ul>
-                                    <% for (var j=0 ;j < Reviews.length;j++) { %>
-                                        <% if(refAttr(Reviews[j].data().renter_id).id ==
-                                        refAttr(Units[i].data().user_id).id) { %>
-                                          <li>written by: <%=refAttr(Reviews[j].data().student_id).username%> <br>
-                                            about:<%=refAttr(Reviews[j].data().renter_id).username%> <br>
-                                            <% time.setSeconds(Reviews[j].data().timestamp._seconds)%>
-                                            at:<%=time %><br>
-                                            body:<%=Reviews[j].data().body%><br>
-                                      <%  } %>
-                                    <% } %>
-                                      </li>
-                                    </ul>
-                              </div>
-                            </div>
-                        </div>
-                  <%  } %>
-                  <% } %>
-              </div>
-            </div>
-        </div>
-        <!-- The delete reviews Modal -->
-        <div class="modal">
-          <!-- Modal content -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Delete Reviews</h2>
-              </div>
-              <div class="modal-body">
-                <ul>
-
-                </ul>
-              </div>
-            </div>
-        </div>
-        <div class="modal">
-          <!-- Modal content -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Housing Units</h2>
-              </div>
-              <div class="modal-body">
-                <ul>
-
-                </ul>
-              </div>
-            </div>
-        </div>
-        <div class="modal">
-          <!-- Modal content -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Housing Units</h2>
-              </div>
-              <div class="modal-body">
-                <ul>
 
 
-                </ul>
-              </div>
-            </div>
-        </div>
         <%- include("./partials/firebase.ejs") %>
         <script type="text/javascript" src="../firebase/signout.js"></script>
         <script type="text/javascript" src="../utility/modal.js"></script>
         <script type="text/javascript" src="../utility/user.js"></script>
+        <script type="text/javascript" src="../pageScripts/renter.js"></script>
         <!--<script> getRId(){return auth.currentUser.uid}</script> -->
           <script>
             auth.onAuthStateChanged(function(user) {
               /* sends a hidden user ID element to an html value
               to identify with the server side. */
               if (user && auth.currentUser )
-                  document.getElementById("SendRId").value=auth.currentUser.uid
-            })
+                  var Rid=document.getElementsByClassName("SendRId")
+                  Array.prototype.forEach.call(Rid,((id) => {
+                    id.value=auth.currentUser.uid
+                  }) //closes the inner function
+                ) //closes the call function
+            }) //closes the script
           </script>
       </body>

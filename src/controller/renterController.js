@@ -13,9 +13,33 @@ module.exports = function(app,admin) {
     }
     
     app.get("/homepage_renter",(req, res) => {
-        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews"),getLibrary("Orders")]).then(data =>
+        res.render("homepage_renter")
+    })
+
+    app.post("/homepage_renter/manage",body_url,(req, res) => {
+        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
         {
-            res.render("homepage_renter",{"Units" :data[0],"Users" : data[1],"Reviews" :data[2]})
+            res.render("manageHousingUnits",{"Units" :data[0],"Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
+        })
+    })
+
+    app.post("/homepage_renter/user_reviews",body_url,(req, res) => {
+        Promise.all([getLibrary("Users"),getLibrary("Reviews")]).then(data =>
+        {
+            res.render("user_reviews",{"Users" : data[0],"Reviews" :data[1], "user_id": req.body.user_id})
+        })
+    })
+    app.post("/homepage_renter/your_orders",body_url,(req, res) => {
+        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
+        {
+            res.render("your_orders",{"Units" : data[0], "Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
+        })
+    })
+
+    app.post("/homepage_renter/statistics",body_url,(req, res) => {
+        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
+        {
+            res.render("your_orders",{"Units" : data[0], "Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
         })
     })
 
