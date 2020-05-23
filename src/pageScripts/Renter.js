@@ -1,7 +1,9 @@
 window.onload=function(){
     document.getElementById("addHousingForm").reset
 }
+
 document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
+
     // handle second (inner) form for payment.
     e.preventDefault()
     let form=document.getElementById("addHousingForm").elements
@@ -10,6 +12,7 @@ document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
         let element=form.item(i)
         housing_data[element.name]=element.value
     }
+  
     if(fileList[0].name == undefined) {
         alert("Cannot upload a housing unit without at least one photo!")
         location.reload()
@@ -44,6 +47,7 @@ function sendJSON(url,data) {
 
 var fileList= "none"
 const fileSelector = document.getElementById("house_img")
+
 fileSelector.addEventListener("change", (event) => {
     //add listener to the image upload selector.
     fileList = event.target.files
@@ -71,6 +75,7 @@ async function uploadImage(imgnum,address) {
             },
             function() { //upload complete part.
                 resolve(tasks[imgnum].snapshot.ref.getDownloadURL().then(function(downloadURL) {
+
                     console.log("File available at: ", downloadURL)
                     return downloadURL
                 }))
