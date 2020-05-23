@@ -32,8 +32,7 @@ module.exports = function(app,admin) {
         req.body.timestamp = admin.firestore.Timestamp.fromDate(new Date())
         req.body.student_id=database.collection("Users").doc(req.body.student_id)
         req.body.unit_id = database.collection("Units").doc(req.body.unit_id)
-        console.log(req.unit_id)
-        console.log(req.body)
+        req.body.accepted= false //add a field if the order is accepted or not for the renter to change if it is.
         database.collection("Orders").add(req.body).then(() =>{
             //BUG! does not redirect properly..
             res.render("transaction",{"message" :"order: " +  req.body.transaction_id + " received successfully!"} )

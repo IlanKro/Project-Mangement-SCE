@@ -125,15 +125,16 @@
                             <li>available:<%=JSON.stringify(Units[i].data().available)%><br> <!-- for future: make it a V -->
                               belongs to: <%=refAttr(Units[i].data().user_id).username%> <br>
                               currently renting: <%=refAttr(Units[i].data().student).username%>  <br>
-                              image: <%=JSON.stringify(Units[i].data().image)%><br>
-                              city: <%=JSON.stringify(Units[i].data().city)%><br>
-                              street: <%=JSON.stringify(Units[i].data().street)%><br>
-                              house number:<%=JSON.stringify(Units[i].data().house_number) %><br>
-                              rooms_num:<%=JSON.stringify(Units[i].data().rooms_num)%><br>
-                              price per month:<%=JSON.stringify(Units[i].data().price)%><br>
-                              phone:<%=JSON.stringify(Units[i].data().phone)%><br>
-                              time_limit (in months):<%=JSON.stringify(Units[i].data().min_rent_time + " to "
-                              + Units[i].data().max_rent_time)%><br>
+                              image: <img alt="housing unit image"
+                               src=<%= Units[i].data().images["0"] %> width="50" height="50"><br>
+                              city: <%=Units[i].data().city%><br>
+                              street: <%=Units[i].data().street%><br>
+                              house number:<%=Units[i].data().house_number %><br>
+                              rooms_num:<%=Units[i].data().rooms_num%><br>
+                              price per month:<%=Units[i].data().price%><br>
+                              phone:<%=Units[i].data().phone%><br>
+                              time_limit (in months):<%=Units[i].data().min_rent_time + " to "
+                              + Units[i].data().max_rent_time %><br>
                             </li>
                      <% } %>
                 </ul>
