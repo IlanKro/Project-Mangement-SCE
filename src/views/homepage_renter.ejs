@@ -9,26 +9,25 @@
     </head>
     <body>
          <%- include("./partials/logout.ejs") %>
-         <% function refAttr(ref)
-          {
-            if (ref == null) {
-              return {username: "None"} //put here all the attributes you want to cover
-            }
-            // ref path is divided by a "/ and contains the collection name and the unique id
-            let database=locals[ref.path.split("/")[0]]
-            for (var i=0;i<database.length;i++) {
-              if (database[i].id == ref.path.split("/")[1] ) { //if found the specific id (which is unique)
-                 return database[i].data()
-               }
-             }
-         }%>
          <h1>SCE Room</h1>
          <h2 id="welcome">Welcome</h2>
         <button class="modalButton">Post housing unit</button><br>
-        <button class="modalButton">Your housing units</button><br>
-        <button class="modalButton">Watch Reviews</button><br>
-        <button class="modalButton">View housing units orders</button><br>
-        <button class="modalButton">View statistics</button><br>
+        <form method="post" action="/homepage_renter/manage">
+          <input  class="SendRId" type="text" name="user_id" value=RetriveUId()" style="display: none;visibility: hidden;">
+          <button type="submit" class="button">Your housing units</button><br>
+        </form>
+        <form method="post" action="/homepage_renter/user_reviews">
+          <input  class="SendRId" type="text" name="user_id" value=RetriveUId()" style="display: none;visibility: hidden;">
+          <button type="submit" class="button">Watch Reviews about me</button><br>
+        </form>
+        <form method="post" action="/homepage_renter/your_orders">
+          <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
+          <button type="submit" class="button">View housing units orders</button><br>
+        </form>
+        <form method="post" action="/homepage_renter/statistics">
+            <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
+            <button type="submit" class="button">View statistics</button><br>
+        </form>
 
         <!-- The authorizing Modal -->
         <div class="modal">
@@ -40,7 +39,7 @@
               </div>
               <div class="modal-body">
                 <ul>
-                  <form method="post" action="/homepage_renter/post_housing_unit">
+                  <form id="addHousingForm" method="post" action="/homepage_renter/post_housing_unit">
                     <label for="city">city</label>
                     <input placeholder="city" type="text" name="city" required><br><br>
                     <label for="street">street</label>
@@ -60,7 +59,7 @@
                     <textarea rows="10" cols="50" placeholder="description" type="text" name="description"></textarea><br><br>
                     <label for="img">Add housing unit photo</label>
                     <input id="house_img" type="file" name="image" accept="image/*"><br><br>
-                    <input  id="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
+                    <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
                     <input class= "button" type="submit" value="Post">
                   </form>
                 </ul>
@@ -68,76 +67,24 @@
             </div>
         </div>
 
-        <!-- The banning Modal -->
-        <div class="modal">
-          <!-- Modal content -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>ban/unban menu</h2>
-              </div>
-              <div class="modal-body">
-                <ul>
-
-                </ul>
-              </div>
-            </div>
-        </div>
-        <!-- The delete reviews Modal -->
-        <div class="modal">
-          <!-- Modal content -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Delete Reviews</h2>
-              </div>
-              <div class="modal-body">
-                <ul>
-
-                </ul>
-              </div>
-            </div>
-        </div>
-        <div class="modal">
-          <!-- Modal content -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Housing Units</h2>
-              </div>
-              <div class="modal-body">
-                <ul>
-
-                </ul>
-              </div>
-            </div>
-        </div>
-        <div class="modal">
-          <!-- Modal content -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Housing Units</h2>
-              </div>
-              <div class="modal-body">
-                <ul>
 
 
-                </ul>
-              </div>
-            </div>
-        </div>
         <%- include("./partials/firebase.ejs") %>
         <script type="text/javascript" src="../firebase/signout.js"></script>
         <script type="text/javascript" src="../utility/modal.js"></script>
         <script type="text/javascript" src="../utility/user.js"></script>
+        <script type="text/javascript" src="../pageScripts/renter.js"></script>
         <!--<script> getRId(){return auth.currentUser.uid}</script> -->
           <script>
             auth.onAuthStateChanged(function(user) {
               /* sends a hidden user ID element to an html value
               to identify with the server side. */
               if (user && auth.currentUser )
-                  document.getElementById("SendRId").value=auth.currentUser.uid
-            })
+                  var Rid=document.getElementsByClassName("SendRId")
+                  Array.prototype.forEach.call(Rid,((id) => {
+                    id.value=auth.currentUser.uid
+                  }) //closes the inner function
+                ) //closes the call function
+            }) //closes the script
           </script>
       </body>
