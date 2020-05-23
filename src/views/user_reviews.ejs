@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>reviews about me</title>
+      <link rel="stylesheet" type="text/css" href="../css/main.css">
+      <meta charset="UTF-8">
+      <link rel="icon" href="SCE%20ROOM.png">
+  </head>
+  <body>
+    <% function refAttr(ref)
+     {
+       if (ref == null) {
+         return {username: "None"} //put here all the attributes you want to cover
+       }
+       // ref path is divided by a "/ and contains the collection name and the unique id
+       let database=locals[ref.path.split("/")[0]]
+       for (var i=0;i<database.length;i++) {
+         if (database[i].id == ref.path.split("/")[1] ) { //if found the specific id (which is unique)
+            return database[i].data()
+          }
+        }
+    }%>
+
+    <h1> Users Reviews: </h1>
+    <button class="button" onclick="goBack()">Back</button>
+    <% let time = new Date(1970, 0, 1) // Epoch %>
+
+    <% if (Reviews.length==0) {%>
+        <h2><%= "No reviews to display"%></h2>
+    <% } %>
+    <ul>
+        <% for (var i=0 ;i < Reviews.length;i++) { %>
+            <% if (refAttr(Reviews[i].data().renter_id).uid ==
+            user_id){ %>
+            <li>written by: <%= refAttr(Reviews[i].data().student_id).username%> <br>
+                about:<%= refAttr(Reviews[i].data().renter_id).username%> <br>
+                <% time.setSeconds(Reviews[i].data().timestamp._seconds)%>
+                at:<%= time %><br>
+                body:<%= Reviews[i].data().body%><br>
+          </li>
+          <% } %>
+        <% } %>
+    </ul>
+    <button class="button" onclick="goBack()">Back</button>
+    <script>
+    function goBack() {
+      window.history.back()
+    }
+    </script>
+    <%- include("./partials/firebase.ejs") %>
+    <script type="text/javascript" src="../utility/user.js"></script>
+  </body>
+</html>

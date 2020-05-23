@@ -4,17 +4,11 @@ function userType(val) {
     let bank = document.getElementById("bank_account")
     if (val == "renter") {
         img_upload.style.display = "none"
-        bank.style.display = "block"
-        //TODO: check how to implement those 4 lines for required input based on
-        //radioboxes
-        //document.getElementsbyId("student_image").required= false
-        //document.getElementsbyId("bank").requred= true
+        bank.style.display = "block" 
     }
     if (val == "student") {
         img_upload.style.display = "block"
         bank.style.display = "none"
-        //document.getElementsbyId("student_image").required =false
-        //document.getElementsbyId("bank").required=false
     }
 }
 
