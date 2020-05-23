@@ -38,31 +38,31 @@
                 <h2>Post housing Unit</h2>
               </div>
               <div class="modal-body">
-                <ul>
+
                   <form id="addHousingForm" method="post" action="/homepage_renter/post_housing_unit">
-                    <label for="city">city</label>
-                    <input placeholder="city" type="text" name="city" required><br><br>
-                    <label for="street">street</label>
-                    <input placeholder="street" type="text"  name="street" required><br><br>
-                    <label for="house_number">house_number</label>
-                    <input placeholder="house_number" type="text" name="house_number" required><br><br>
-                    <label for="price">price per month</label>
-                    <input placeholder="price" type="number" name="price" required><br><br>
-                    <label for="phone">contact number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="phone" required required><br><br>
-                    <label for="rooms_num">number of rooms</label>
-                    <input placeholder="number of rooms" type="number" name="rooms_num" required><br><br>
-                    <label for="rent range">rent months range (min/max)</label>
-                    <input min="0" placeholder="min" type="number" name="min_rent_time" value=0 required>&nbsp;
-                    <input min="1" placeholder="max" type="number" name="max_rent_time" value=1 required><br><br>
-                    <label for="description">description</label><br>
-                    <textarea rows="10" cols="50" placeholder="description" type="text" name="description"></textarea><br><br>
-                    <label for="img">Add housing unit photo</label>
-                    <input id="house_img" type="file" name="image" accept="image/*"><br><br>
-                    <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
-                    <input class= "button" type="submit" value="Post">
+                      <label for="city">city</label>
+                      <input placeholder="city" type="text" name="city" required><br><br>
+                      <label for="street">street</label>
+                      <input placeholder="street" type="text"  name="street" required><br><br>
+                      <label for="house_number">house_number</label>
+                      <input placeholder="house_number" type="text" name="house_number" required><br><br>
+                      <label for="price">price per month</label>
+                      <input min="0" placeholder="price" type="number" name="price" required><br><br>
+                      <label for="phone">contact number</label>
+                      <input type="tel" id="phone" name="phone" placeholder="phone" required><br><br>
+                      <label for="rooms_num">number of rooms</label>
+                      <input min="1" placeholder="number of rooms" type="number" name="rooms_num" required><br><br>
+                      <label for="rent range">rent months range (min/max)</label>
+                      <input min="0" placeholder="min" type="number" name="min_rent_time" value=0 required>&nbsp;
+                      <input min="1" placeholder="max" type="number" name="max_rent_time" value=1 required><br><br>
+                      <label for="description">description</label><br>
+                      <textarea rows="10" cols="50" placeholder="description" type="text" name="description"></textarea><br><br>
+                      <label for="img">Add housing unit photo
+                      <br>(if you want to add multiple photos select more with the ctrl key)</label>
+                      <input id="house_img" type="file" name="images" accept="image/*" multiple><br><br>
+                      <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
+                      <input id="postHouseButton" class= "button" type="submit" value="Post">
                   </form>
-                </ul>
               </div>
             </div>
         </div>

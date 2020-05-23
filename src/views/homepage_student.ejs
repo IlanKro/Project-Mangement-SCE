@@ -91,7 +91,8 @@
                         <h2>More details</h2>
                       </div>
                       <div class="modal-body">
-                          <img src= "<%= Units[i].data().image %>">  <br>
+                        <img alt="housing unit image"
+                         src=<%= Units[i].data().images[0] %> width="100" height="100">  <br>
                           <label>address :<%= (Units[i].data().city + " street: " + Units[i].data().street
                             + " number: " + Units[i].data().house_number)  %></label><br>
                           <label>price per month: <%= Units[i].data().price %></label><br>
@@ -106,6 +107,10 @@
                               <input type="text" name="unitID" value="<%=Units[i].id%>" style="display: none;visibility: hidden;">
                               <input type="submit" class="button" value="Order">
                           </form>
+                          <h3>Additional images:</h3>
+                          <% for (var j=1 ;j<Units[i].data().images.length;j++) { %>
+                            <img alt="more housing unit image" src= <%= Units[i].data().images[j] %> width="200" height="200">                              
+                        <% } %>
                           <h3>Reviews about the renter:</h3>
                             <ul>
                             <% for (var j=0 ;j < Reviews.length;j++) { %>
