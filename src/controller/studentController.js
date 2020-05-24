@@ -16,7 +16,6 @@ module.exports = function(app,admin) {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews")]).then(data =>
         {
             res.render("homepage_student",{"Units" :data[0],"Users" : data[1],"Reviews" :data[2]})
-            firebase.analytics().logEvent("first_visit")
         })
     })
 
