@@ -53,5 +53,4 @@ module.exports = function(app,admin) {
             res.render("message_page",{"message" : error} )
         })
     })
-
 }
