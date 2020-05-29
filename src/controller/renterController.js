@@ -74,7 +74,27 @@ module.exports = function(app,admin) {
             res.render("message_page",{"message" : error}) //should work with the back button.
         })
     })
+    app.post("/homepage_renter/edit",body_url, (req,res) => {
+        database.collection("Units").doc(req.body.unitID).get().then(unit =>
+        {
+            res.render("edit",{"unit": unit})
+        }).catch((err) => {
+            console.log(err)
+            res.render("message_page",{"message": err})
+        })
+    })
+    app.post("/homepage_renter/edit_housing_unit",body_json, (req,res) => {
+        let unit= req.body.unitID
+        delete req.body.unitID //don't want the id to be part of the database.
+        console.log(req.body)
+        database.collection("Units").doc(unit).update(req.body).then((success)=> {
+            res.send("update complete!")
+        }).catch((err) => {
+            console.log(err)
+            res.send(err)
+        })
+    })
 
-    "/homepage_renter/delete"
+
 
 }
