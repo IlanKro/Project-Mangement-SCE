@@ -4,10 +4,68 @@
         <title>homepage</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
         <link rel="stylesheet" type="text/css" href="../css/modal.css">
+        <link rel="stylesheet" type="text/css" href="../css/table.css">
         <meta charset="UTF-8">
         <link rel="icon" href="SCE%20ROOM.png">
     </head>
     <body>
+      <% function refAttr(ref)
+       {
+         if (ref == null) {
+           return {username: "None"} //put here all the attributes you want to cover
+         }
+         // ref path is divided by a "/ and contains the collection name and the unique id
+         let database=locals[ref.path.split("/")[0]]
+         for (var i=0;i<database.length;i++) {
+           if (database[i].id == ref.path.split("/")[1] ) { //if found the specific id (which is unique)
+              return database[i].data()
+            }
+          }
+      }%>
+      <% let time = new Date(1970, 0, 1) // Epoch %>
+      <table id="ordersTable">
+        <tr>
+          <th>Address</th>
+          <th>Requester</th>
+          <th>Date Range</th>
+          <th>Time</th>
+          <th>Price</th>
+          <th>...</th>
+        </tr>
+        <% for (var i=0 ;i < Orders.length;i++) { %>
+          <!-- the next "if" means: if order's unit is of the user -->
+            <% let unit=refAttr(Orders[i].data().unit_id) %>
+            <% if(unit.user_id._path.segments[1] == user_id && unit.available ) { %>
+              <tr>
+                <td><%= (unit.city + " street: " + unit.street
+                   + " number: " + unit.house_number)  %></td>
+                <td><%= refAttr(Orders[i].data().student_id).username %></td>
+                <td><%= Orders[i].data().min_month %>/<%= Orders[i].data().min_year%> until
+                <%= Orders[i].data().max_month %>/<%= Orders[i].data().max_year%></td>
+                <%time.setSeconds(Orders[i].data().timestamp._seconds)%>
+                <td><%=time  %></td>
+                <td><%=Orders[i].data().totalPrice  %></td>
+                <td>
+                  <form method="post" action="/homepage_renter/accept_order">
+                    <input value=<%= Orders[i].data().student_id._path.segments[1] %> name="student_id" style="display: none;visibility: hidden;">
+                    <input value=<%= Orders[i].data().unit_id._path.segments[1] %> name="unit_id"  style="display: none;visibility: hidden;">
+                    <input value=<%=Orders[i].id %> name="order_id"  style="display: none;visibility: hidden;">
+                    <input type="submit" class="button" value="Accept">
+                  </form>
+                  <form method="post" action="/homepage_renter/reject_order">
+                    <input value=<%=Orders[i].id %> name="order_id"  style="display: none;visibility: hidden;">
+                    <input type="submit" class="button" value="Reject">
+                  </form>
+                </td>
+              </tr>
+            <% } %>
+      <% } %>
+      <button class="button" onclick="goBack()">Back</button>
+      <script>
+          function goBack() {
+              window.history.back()
+          }
+      </script>
       <%- include("./partials/firebase.ejs") %>
       <script type="text/javascript" src="../utility/user.js"></script>
     </body>

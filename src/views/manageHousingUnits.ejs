@@ -78,8 +78,15 @@
               </div>
         <%  } %>
         <% } %>
+      <button class="button" onclick="goBack()">Back</button>
+
       <%- include("./partials/firebase.ejs") %>
       <script type="text/javascript" src="../Utility/modal.js"></script>
       <script type="text/javascript" src="../Utility/user.js"></script>
+      <script>
+          function goBack() {
+            window.history.back()
+          }
+      </script>
     </body>
 </html>
