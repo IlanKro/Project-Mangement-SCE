@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>edit</title>
+        <link rel="stylesheet" type="text/css" href="../css/main.css">
+        <link rel="stylesheet" type="text/css" href="../css/modal.css">
+        <link rel="stylesheet" type="text/css" href="../css/table.css">
+        <meta charset="UTF-8">
+        <link rel="icon" href="SCE%20ROOM.png">
+    </head>
+    <body>
+      <h2 id="welcome"> welcome </h2>
+      <% function refAttr(ref)
+       {
+         if (ref == null) {
+           return {username: "None"} //put here all the attributes you want to cover
+         }
+         // ref path is divided by a "/ and contains the collection name and the unique id
+         let database=locals[ref.path.split("/")[0]]
+         for (var i=0;i<database.length;i++) {
+           if (database[i].id == ref.path.split("/")[1] ) { //if found the specific id (which is unique)
+              return database[i].data()
+            }
+          }
+      }%>
+      <form id="editHousingForm">
+          <label for="city">city</label>
+          <input placeholder="city" type="text" name="city" value= "<%=unit.data().city%>" required><br><br>
+          <label for="street">street</label>
+          <input placeholder="street" type="text"  name="street" value=<%=unit.data().street%> required><br><br>
+          <label for="house_number">house_number</label>
+          <input placeholder="house_number" type="text" name="house_number" value=<%=unit.data().house_number%> required><br><br>
+          <label for="price">price per month</label>
+          <input min="0" placeholder="price" type="number" name="price"  value=<%=unit.data().price%> required><br><br>
+          <label for="phone">contact number</label>
+          <input type="tel" id="phone" name="phone" placeholder="phone" value=<%=unit.data().phone%>  required><br><br>
+          <label for="rooms_num">number of rooms</label>
+          <input min="1" placeholder="number of rooms" type="number" name="rooms_num" value=<%=unit.data().rooms_num%> required><br><br>
+          <label for="rent range">rent months range (min/max)</label>
+          <input min="0" placeholder="min" type="number" name="min_rent_time" value=<%=unit.data().min_rent_time%> required>&nbsp;
+          <input min="1" placeholder="max" type="number" name="max_rent_time" value=<%=unit.data().max_rent_time%> required><br><br>
+          <label for="description">description</label><br>
+          <textarea rows="10" cols="50" type="text" name="description"><%=unit.data().description%></textarea><br><br>
+          <label for="img">Add additional photo(s)
+          <br>(if you want to add multiple photos select more with the ctrl key)</label>
+          <input id="house_img" type="file" name="images" accept="image/*" multiple><br><br>
+          <% for (var i=0 ;i<unit.data().images.length;i++) { %>
+            <!-- sending the image urls as hidden parameter -->
+                <input value= <%= unit.data().images[i] %> name=<%= "image" + i %> style="display: none;visibility: hidden;">
+            </div>
+        <% } %>
+          <input value= <%= unit.data().images.length %> name=images_num style="display: none;visibility: hidden;">
+          <input type="text" name="unitID" value="<%=unit.id%>" style="display: none;visibility: hidden;">
+          <input id="editHouseButton" class= "button" type="submit" value="Edit">
+      </form>
+      <button class="modalButton">View/Delete photos</button><br>
+      <!-- The authorizing Modal -->
+      <div id="deleteImageModal" class="modal">
+        <!-- Modal content -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="close">&times;</span>
+              <h2>View/Delete photos</h2>
+            </div>
+            <div class="modal-body">
+                <form id="deleteImage">
+                  <% for (var i=0 ;i<unit.data().images.length;i++) { %>
+                    <div>
+                        <img alt="more housing unit image" src= <%= unit.data().images[i] %> width="200" height="200">
+                        <!-- sending the image number in the image array -->
+                        <input type="checkbox" class="chkbox" name=<%= i %>>
+                    </div>
+                <% } %>
+                <button onclick=closeModal() class="button" type="sumbit">Select</button>
+                </form>
+            </div>
+          </div>
+      </div>
+      <button class="button" onclick="goBack()">Back</button>
+      <script>
+      function goBack() {
+        window.history.back()
+      }
+      </script>
+      <%- include("./partials/firebase.ejs") %>
+      <script type="text/javascript" src="../Utility/modal.js"></script>
+      <script type="text/javascript" src="../pageScripts/edit.js"></script>
+      <script type="text/javascript" src="../Utility/user.js"></script>
+      <script>
+        function closeModal() {
+            document.getElementById("deleteImageModal").style.display = "none"
+        }
+      </script>
+    </body>
+</html>
