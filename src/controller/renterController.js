@@ -19,6 +19,9 @@ module.exports = function(app,admin) {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
         {
             res.render("manageHousingUnits",{"Units" :data[0],"Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
+        }).catch((err) => {
+            console.log(err)
+            res.render("message_page",{"message": err})
         })
     })
 
@@ -26,12 +29,18 @@ module.exports = function(app,admin) {
         Promise.all([getLibrary("Users"),getLibrary("Reviews")]).then(data =>
         {
             res.render("user_reviews",{"Users" : data[0],"Reviews" :data[1], "user_id": req.body.user_id})
+        }).catch((err) => {
+            console.log(err)
+            res.render("message_page",{"message": err})
         })
     })
     app.post("/homepage_renter/your_orders",body_url,(req, res) => {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
         {
             res.render("your_orders",{"Units" : data[0], "Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
+        }).catch((err) => {
+            console.log(err)
+            res.render("message_page",{"message": err})
         })
     })
 
@@ -39,6 +48,9 @@ module.exports = function(app,admin) {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
         {
             res.render("your_orders",{"Units" : data[0], "Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
+        }).catch((err) => {
+            console.log(err)
+            res.render("message_page",{"message": err})
         })
     })
 
@@ -53,5 +65,16 @@ module.exports = function(app,admin) {
             res.send(error.message)
         })
     })
+
+    app.post("/homepage_renter/delete",body_url, (req,res) => {
+        database.collection("Units").doc(req.body.unitID).delete().then(function() {
+            res.redirect("/homepage_renter") //can't redirect to the same page since then I will need more data.
+            //and nobody deletes so many housing units in a row.
+        }).catch(function(error) {
+            res.render("message_page",{"message" : error}) //should work with the back button.
+        })
+    })
+
+    "/homepage_renter/delete"
 
 }
