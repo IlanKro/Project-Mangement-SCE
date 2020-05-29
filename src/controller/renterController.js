@@ -94,7 +94,61 @@ module.exports = function(app,admin) {
             res.send(err)
         })
     })
+  
+  //Edit unit actions:
+
+    app.post("/homepage_renter/edit",body_url, (req,res) => {
+        database.collection("Units").doc(req.body.unitID).get().then(unit =>
+        {
+            res.render("edit",{"unit": unit})
+        }).catch((err) => {
+            console.log(err)
+            res.render("message_page",{"message": err})
+        })
+    })
+    app.post("/homepage_renter/edit_housing_unit",body_json, (req,res) => {
+        let unit= req.body.unitID
+        delete req.body.unitID //don't want the id to be part of the database.
+        console.log(req.body)
+        database.collection("Units").doc(unit).update(req.body).then((success)=> {
+            res.send("update complete!")
+        }).catch((err) => {
+            console.log(err)
+            res.send(err)
+        })
+    })
+  
+  //Order control:
+
+    app.post("/homepage_renter/accept_order",body_url, (req,res) => {
+        console.log(req.body)
+        database.collection("Units").doc(req.body.unit_id).update({
+            "available" : false, //no longer available
+            "student" : database.collection("Users").doc(req.body.student_id) //create reference
+        }).then ((success) => {
+            //database.collection("Units").doc(req.body.order_id)
+            database.collection("Orders").doc(req.body.order_id).update({
+                "accepted": true
+            }).then((success) =>{
+                res.render("message_page",{"message": "accepted"})
+            })
+        }).catch((err) => {
+            console.log(err)
+            res.render("message_page",{"message": err})
+        })
 
 
+    })
+
+    app.post("/homepage_renter/reject_order",body_url, (req,res) => {
+        console.log(req.body.order_id)
+        database.collection("Orders").doc(req.body.order_id).delete().then(function() {
+            res.render("message_page",{"message": " order rejected!"}) //can't redirect to the same page since then I will need more data.
+            //and nobody deletes so many housing units in a row.
+        }).catch(function(error) {
+            res.render("message_page",{"message" : error}) //should work with the back button.
+        })
+
+    })
 
 }
