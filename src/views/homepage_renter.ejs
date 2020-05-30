@@ -12,6 +12,7 @@
         <h1>SCE Room</h1>
         <h2 id="welcome">Welcome</h2>
         <button class="modalButton">Post housing unit</button><br>
+        <button class="modalButton">Add Attraction</button><br>
         <form method="post" action="/homepage_renter/manage">
           <input  class="SendRId" type="text" name="user_id" value=RetriveUId()" style="display: none;visibility: hidden;">
           <button type="submit" class="button">Your housing units</button><br>
@@ -56,22 +57,59 @@
                       <input min="1" placeholder="max" type="number" name="max_rent_time" value=1 required><br><br>
                       <label for="description">description</label><br>
                       <textarea rows="10" cols="50" placeholder="description" type="text" name="description"></textarea><br><br>
-                      <label for="img">Add housing unit photo(s)
-                      <br>(if you want to add multiple photos select more with the ctrl key)</label>
-                      <input id="house_img" type="file" name="images" accept="image/*" multiple><br><br>
+                      <label for="img">Add housing unit photo(s)</label>
+                      <input id="house_img" type="file" name="images" accept="image/*" multiple><br>
+                      <label><br>if you want to add multiple photos select more with the ctrl key</label>
+                      <div>
+                          <label for= "attraction"> select attractions to add</label><br>
+                          <select name="attractions" multiple>
+                          <% for(var i=0;i<Attractions.length;i++) { %>
+                            <option class="attr_options" type="text" name= <%= "Attraction" + i %>
+                             value="<%=Attractions[i].id%>">
+                             <%=Attractions[i].data().attraction_name%></option>
+                          <%}%>                      
+                      </div><br>
+
                       <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
                       <input id="postHouseButton" class= "button" type="submit" value="Post">
                   </form>
               </div>
             </div>
         </div>
-
-
+        <!-- The add attractions Modal -->
+        <div class="modal">
+          <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Add Attraction</h2>
+              </div>
+              <div class="modal-body">
+                  <form id="addAttraction" method="post" action="/homepage_renter/add_attraction">
+                      <label for="name">attraction name</label>
+                      <input placeholder="attraction_name" type="text" name="attraction_name" required><br><br>
+                      <label for="discounts">bonus discounts</label><br>
+                      <textarea name="discounts" rows="5" cols="50" placeholder="discounts" type="text"></textarea><br><br>
+                      <label for="img">Add attraction unit photo(s)
+                      <br>(if you want to add multiple photos select more with the ctrl key)</label>
+                      <input id="attr_img" type="file" name="images" accept="image/*" multiple><br><br>
+                      <% for(var i=0;i<Attractions.length;i++) { %>
+                        <!-- passing the attraction names as hidden parameter -->
+                      <% let name= Attractions[i].data().attraction_name %>
+                        <input type="text" name= <%= "Attraction" + i %>
+                         value="<%=name%>"  style="display: none;visibility: hidden;">
+                      <%}%>
+                      <input name="attr_num" type="text" value=<%= Attractions.length %> style="display: none;visibility: hidden;">
+                      <input id="addAttractionButton" class= "button" type="submit" value="Add">
+                  </form>
+              </div>
+            </div>
+        </div>
 
         <%- include("./partials/firebase.ejs") %>
         <script type="text/javascript" src="../firebase/signout.js"></script>
-        <script type="text/javascript" src="../utility/modal.js"></script>
-        <script type="text/javascript" src="../utility/user.js"></script>
+        <script type="text/javascript" src="../Utility/modal.js"></script>
+        <script type="text/javascript" src="../Utility/user.js"></script>
         <script type="text/javascript" src="../pageScripts/renter.js"></script>
         <!--<script> getRId(){return auth.currentUser.uid}</script> -->
           <script>
