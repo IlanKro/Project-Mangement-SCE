@@ -36,7 +36,7 @@
                 about:<%= refAttr(Reviews[i].data().renter_id).username%> <br>
                 <% time.setSeconds(Reviews[i].data().timestamp._seconds)%>
                 at:<%= time %><br>
-                body:<%= Reviews[i].data().body%><br>
+                body:<%= Reviews[i].data().review_body %><br>
           </li>
           <% } %>
         <% } %>

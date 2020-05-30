@@ -10,20 +10,26 @@ document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
         let element=form.item(i)
         housing_data[element.name]=element.value
     }
+    //attraction handlling part.
     let attractions=document.getElementsByClassName("attr_options")
     housing_data["attractions"] = []
-    console.log(attractions)
+    if(attractions.length==0) {
+        alert("You must select at least one attraction")
+        location.reload()
+        return false
+    }
     for(let i=0;i<attractions.length;i++ ) {
         if(attractions[i].selected) {
             housing_data["attractions"].push(attractions[i].value)
         }
     }
-    console.log(housing_data["attractions"])
+
     if(fileList[0].name == undefined) {
         alert("Cannot upload a housing unit without at least one photo!")
         location.reload()
         return false
     }
+
     document.getElementById("postHouseButton").disabled= true //disables the button so they wait for the upload to finish.
     document.getElementById("postHouseButton").value = "Posting..."
     let image_uploads= []
@@ -31,7 +37,9 @@ document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
         image_uploads[imgnum]=uploadImage(imgnum,housing_data["city"]+housing_data["street"]+ housing_data["house_number"])
     })
 
+
     Promise.all(image_uploads).then((uploads)=> {
+        console.log(uploads)
         housing_data["images"]=uploads //set images as the download link urls.
         sendJSON("/homepage_renter/post_housing_unit",
             housing_data,document.getElementById("postHouseButton"),"Post")
@@ -117,7 +125,7 @@ document.querySelector("#addAttraction").addEventListener("submit", (e) => {
     let image_uploads= []
     if (fileListAttr[0].name != undefined) {
         Array.prototype.forEach.call(fileListAttr,(image,imgnum) => {
-            image_uploads[imgnum]=uploadImage(imgnum,attr_data["attraction_name"])
+            image_uploads[imgnum]=uploadImage2(imgnum,attr_data["attraction_name"])
         })
     }
 
@@ -140,7 +148,7 @@ fileSelectorAttr.addEventListener("change", (event) => {
 
 
 var tasks2=[]
-async function uploadImage(imgnum,attr_name) {
+async function uploadImage2(imgnum,attr_name) {
     //uploads an image with the address name.
     //returns a promise with the download url.
     filename= "attraction_photos/" + attr_name.toString() + "/" + imgnum + fileListAttr[imgnum].name // the / creates a new folder.

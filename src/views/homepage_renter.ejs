@@ -13,6 +13,7 @@
         <h2 id="welcome">Welcome</h2>
         <button class="modalButton">Post housing unit</button><br>
         <button class="modalButton">Add Attraction</button><br>
+
         <form method="post" action="/homepage_renter/manage">
           <input  class="SendRId" type="text" name="user_id" value=RetriveUId()" style="display: none;visibility: hidden;">
           <button type="submit" class="button">Your housing units</button><br>
@@ -30,7 +31,7 @@
             <button type="submit" class="button">View statistics</button><br>
         </form>
 
-        <!-- The authorizing Modal -->
+        <!-- The post housing unit Modal -->
         <div class="modal">
           <!-- Modal content -->
             <div class="modal-content">
@@ -60,21 +61,21 @@
                       <label for="img">Add housing unit photo(s)</label>
                       <input id="house_img" type="file" name="images" accept="image/*" multiple><br>
                       <label><br>if you want to add multiple photos select more with the ctrl key</label>
-                      <div>
-                          <label for= "attraction"> select attractions to add</label><br>
-                          <select name="attractions" multiple>
-                          <% for(var i=0;i<Attractions.length;i++) { %>
-                            <option class="attr_options" type="text" name= <%= "Attraction" + i %>
+                      <label for= "attraction"> select attractions to add</label><br>
+                      <select name="attractions" multiple><br><br>
+                      <% for(var i=0;i<Attractions.length;i++) { %>
+                      <option class="attr_options" type="text" name= <%= "Attraction" + i %>
                              value="<%=Attractions[i].id%>">
                              <%=Attractions[i].data().attraction_name%></option>
-                          <%}%>                      
-                      </div><br>
+                      <%}%>
+
                       <input  class="SendRId" type="text" name="user_id" value=RetriveUId() style="display: none;visibility: hidden;">
                       <input id="postHouseButton" class= "button" type="submit" value="Post">
                   </form>
               </div>
             </div>
         </div>
+
         <!-- The add attractions Modal -->
         <div class="modal">
           <!-- Modal content -->

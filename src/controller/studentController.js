@@ -13,9 +13,9 @@ module.exports = function(app,admin) {
     }
 
     app.get("/homepage_student",(req, res) => {
-        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews")]).then(data =>
+        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews"),getLibrary("Attractions")]).then(data =>
         {
-            res.render("homepage_student",{"Units" :data[0],"Users" : data[1],"Reviews" :data[2]})
+            res.render("homepage_student",{"Units" :data[0],"Users" : data[1],"Reviews" :data[2], "Attractions" : data[3]})
         })
     })
 
