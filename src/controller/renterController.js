@@ -95,7 +95,7 @@ module.exports = function(app,admin) {
         })
     })
   
-  //Edit unit actions:
+    //Edit unit actions:
 
     app.post("/homepage_renter/edit",body_url, (req,res) => {
         database.collection("Units").doc(req.body.unitID).get().then(unit =>
@@ -118,7 +118,7 @@ module.exports = function(app,admin) {
         })
     })
   
-  //Order control:
+    //Order control:
 
     app.post("/homepage_renter/accept_order",body_url, (req,res) => {
         console.log(req.body)
