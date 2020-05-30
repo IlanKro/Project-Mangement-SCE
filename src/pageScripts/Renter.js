@@ -29,7 +29,6 @@ document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
         location.reload()
         return false
     }
-
     document.getElementById("postHouseButton").disabled= true //disables the button so they wait for the upload to finish.
     document.getElementById("postHouseButton").value = "Posting..."
     let image_uploads= []
@@ -149,6 +148,7 @@ fileSelectorAttr.addEventListener("change", (event) => {
 
 var tasks2=[]
 async function uploadImage2(imgnum,attr_name) {
+
     //uploads an image with the address name.
     //returns a promise with the download url.
     filename= "attraction_photos/" + attr_name.toString() + "/" + imgnum + fileListAttr[imgnum].name // the / creates a new folder.
