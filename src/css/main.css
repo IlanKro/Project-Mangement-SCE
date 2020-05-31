@@ -55,6 +55,18 @@
   border-left: 1px solid lightgreen;
 }
 
+.button:disabled{
+  font: bold 15px Arial;
+  text-decoration: none;
+  background-color: green;
+  color: grey;
+  padding: 10px 20px 10px 20px;
+  border-top: 1px solid lightgreen;
+  border-right: 1px solid lightgreen;
+  border-bottom: 1px solid lightgreen;
+  border-left: 1px solid lightgreen;
+}
+
 .logoutLblPos{
 
    position:fixed;
