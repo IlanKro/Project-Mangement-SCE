@@ -1,13 +1,41 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>homepage</title>
+        <title>statistics</title>
         <link rel="stylesheet" type="text/css" href="../css/main.css">
         <link rel="stylesheet" type="text/css" href="../css/modal.css">
         <meta charset="UTF-8">
         <link rel="icon" href="SCE%20ROOM.png">
     </head>
     <body>
+      <div id="piechart"></div>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript">
+        // Load google charts
+        google.charts.load('current', {'packages':['corechart']})
+        google.charts.setOnLoadCallback(drawChart)
+        
+        // Set the chart values and draw the chart
+        function drawChart() {
+          var roomsPC = [['Rooms','Count']]
+          roomsPC.push(['5',5])
+          roomsPC.push(['3',3])
+          var data = google.visualization.arrayToDataTable(roomsPC)
+        
+          // Adding a title and setting the width and height of the chart
+          var options = {'title':'Orders By Room Count', 'width':1100, 'height':800};
+        
+          // Display the chart inside the <div> element with id="piechart"
+          var chart = new google.visualization.PieChart(document.getElementById('piechart'))
+          chart.draw(data, options)
+        }
+      </script>
+      <button class="button" onclick="goBack()">Back</button>
+      <script>
+          function goBack() {
+              window.history.back()
+          }
+      </script>
       <%- include("./partials/firebase.ejs") %>
       <script type="text/javascript" src="../utility/user.js"></script>
     </body>

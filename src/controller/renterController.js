@@ -49,7 +49,7 @@ module.exports = function(app,admin) {
     app.post("/homepage_renter/statistics",body_url,(req, res) => {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
         {
-            res.render("your_orders",{"Units" : data[0], "Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
+            res.render("statistics",{"Units" : data[0], "Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
         }).catch((err) => {
             console.log(err)
             res.render("message_page",{"message": err})
@@ -101,7 +101,7 @@ module.exports = function(app,admin) {
         })
     })
   
-  //Edit unit actions:
+    //Edit unit actions:
 
     app.post("/homepage_renter/edit",body_url, (req,res) => {
         database.collection("Units").doc(req.body.unitID).get().then(unit =>
