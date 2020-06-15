@@ -18,7 +18,7 @@ app.use("/css",express.static("css"))
 app.use(express.static("./") )
 //homepage:
 app.get("/",(req, res) => {
-    res.render("index",{title: "hello"})
+    res.render("index",{title: "SCE room"})
 })
 // render page not found.
 app.get("/404",(req, res) => {

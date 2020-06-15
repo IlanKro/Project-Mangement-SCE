@@ -4,13 +4,16 @@ const body_json=body_parser.json()
 /* this controls pages that have to do with admin */
 
 module.exports = function(app,admin) {
+
     const database= admin.firestore()
     async function getLibrary(library) {
-        /* async function to get complete library, returns promise with the library */
+    /* async function to get complete library, returns promise with the library */
         return database.collection(library).get().then(doc => {
             return doc.docs
         })
     }
+
+
 
     app.get("/homepage_admin",(req, res) => {
         /* homepage, loads all the relevant libraries into the page */
