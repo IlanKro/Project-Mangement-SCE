@@ -4,7 +4,7 @@ function userType(val) {
     let bank = document.getElementById("bank_account")
     if (val == "renter") {
         img_upload.style.display = "none"
-        bank.style.display = "block" 
+        bank.style.display = "block"
     }
     if (val == "student") {
         img_upload.style.display = "block"
@@ -40,11 +40,7 @@ const signupForm = document.querySelector("#SignupForm")
 signupForm.addEventListener("submit", (e) => {
     e.preventDefault()
     let form=document.getElementById("SignupForm").elements
-    let signup_data= {}
-    for(let i=0;i<form.length-1;i++){
-        let element=form.item(i)
-        signup_data[element.name]=element.value
-    }
+    let signup_data= formJSONify(form)  
     // check password strength in case the new user presses the signup button.
     if(!passwordStrength(signup_data["pass"])) {
         alert("your password is too weak")

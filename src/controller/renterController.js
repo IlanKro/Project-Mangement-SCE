@@ -37,6 +37,7 @@ module.exports = function(app,admin) {
             res.render("message_page",{"message": err})
         })
     })
+
     app.post("/homepage_renter/your_orders",body_url,(req, res) => {
         Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
         {
@@ -79,15 +80,6 @@ module.exports = function(app,admin) {
             //and nobody deletes so many housing units in a row.
         }).catch(function(error) {
             res.render("message_page",{"message" : error}) //should work with the back button.
-        })
-    })
-    app.post("/homepage_renter/edit",body_url, (req,res) => {
-        database.collection("Units").doc(req.body.unitID).get().then(unit =>
-        {
-            res.render("edit",{"unit": unit})
-        }).catch((err) => {
-            console.log(err)
-            res.render("message_page",{"message": err})
         })
     })  
     //Edit unit actions:

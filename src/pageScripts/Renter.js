@@ -5,11 +5,7 @@ document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
     // handle second (inner) form for payment.
     e.preventDefault()
     let form=document.getElementById("addHousingForm").elements
-    let housing_data= {}
-    for(let i=0;i<form.length-1;i++){
-        let element=form.item(i)
-        housing_data[element.name]=element.value
-    }
+    let housing_data= formJSONify(form)
     //attraction handlling part.
     let attractions=document.getElementsByClassName("attr_options")
     housing_data["attractions"] = []
@@ -104,11 +100,7 @@ document.querySelector("#addAttraction").addEventListener("submit", (e) => {
     // handle second (inner) form for payment.
     e.preventDefault()
     let form=document.getElementById("addAttraction").elements
-    let attr_data= {}
-    for(let i=0;i<form.length-1;i++){
-        let element=form.item(i)
-        attr_data[element.name]=element.value
-    }
+    let attr_data= formJSONify(form)    
     //check if name already exists.
     for(let i=0; i<attr_data["attr_num"]; i++) {
         if (attr_data["Attraction" + i] == attr_data["attraction_name"] ) {

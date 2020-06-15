@@ -1,13 +1,10 @@
+
 const bookForm = document.querySelector("#transactionForm")
 bookForm.addEventListener("submit", (e) => {
     // handle second (inner) form for payment.
     e.preventDefault()
     let form=document.getElementById("transactionForm").elements
-    let transaction_data= {}
-    for(let i=0;i<form.length-1;i++){
-        let element=form.item(i)
-        transaction_data[element.name]=element.value
-    }
+    let transaction_data= formJSONify(form)          
     transaction_data["total_price"]=document.getElementById("totPrice").value
 
     if (!valid_credit_card(transaction_data["CreditCardNumber"])) {
