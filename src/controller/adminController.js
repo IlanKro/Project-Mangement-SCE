@@ -5,16 +5,7 @@ getLibraries= require("./getLibrary")
 /* this controls pages that have to do with admin */
 module.exports = function(app,admin) {
     const database= admin.firestore()
-    function ChangeUserState(req,res,state,message) {
-        admin.auth().updateUser(req.body.uid, {disabled: state})
-            .then(function(userRecord) {
-                res.render("message_page",{"message" : userRecord.email + message} )
-            })
-            .catch(function(error) {
-                console.log("Error fetching user data:", error)
-                res.render("message_page",{"message" : error} )
-            })
-    }
+
     app.get("/homepage_admin",(req, res) => {
         /* homepage, loads all the relevant libraries into the page */
         Promise.all(getLibraries(admin,["Units","Users","Reviews"])).then(data =>
@@ -24,12 +15,12 @@ module.exports = function(app,admin) {
     })
     app.post("/homepage_admin/ban",body_url, (req,res) => {
         /* disables a user */
-        ChangeUserState(req,res,true," banned!")
+        ChangeUserState(admin,req,res,true," banned!")
     })
 
     app.post("/homepage_admin/enable",body_url, (req,res) => {
         /* enables a user */
-        ChangeUserState(req,res,false," activated!")
+        ChangeUserState(admin,req,res,false," activated!")
     })
     app.post("/homepage_admin/rmv_review",body_url, (req,res) => {
         /* removes a review from database*/
@@ -39,4 +30,18 @@ module.exports = function(app,admin) {
             res.render("message_page",{"message" : error} )
         })
     })
+}
+
+// change the stae of a user: enabled/disabled, true for disabled, false for enabled.
+//req should have the user id, res is the respounce, state is the state to change to,
+//and the message is which message to display for the user
+function ChangeUserState(admin,req,res,state,message) {
+    admin.auth().updateUser(req.body.uid, {disabled: state})
+        .then(function(userRecord) {
+            res.render("message_page",{"message" : userRecord.email + message} )
+        })
+        .catch(function(error) {
+            console.log("Error fetching user data:", error)
+            res.render("message_page",{"message" : error} )
+        })
 }
