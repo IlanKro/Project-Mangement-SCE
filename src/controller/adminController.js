@@ -1,15 +1,10 @@
 const body_parser=require("body-parser")
 const body_url=body_parser.urlencoded({extended: "true"})
 const body_json=body_parser.json()
+getLibraries= require("./getLibrary")
 /* this controls pages that have to do with admin */
 module.exports = function(app,admin) {
     const database= admin.firestore()
-    async function getLibrary(library) {
-    /* async function to get complete library, returns promise with the library */
-        return database.collection(library).get().then(doc => {
-            return doc.docs
-        })
-    }
     function ChangeUserState(req,res,state,message) {
         admin.auth().updateUser(req.body.uid, {disabled: state})
             .then(function(userRecord) {
@@ -20,10 +15,9 @@ module.exports = function(app,admin) {
                 res.render("message_page",{"message" : error} )
             })
     }
-
     app.get("/homepage_admin",(req, res) => {
         /* homepage, loads all the relevant libraries into the page */
-        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews")]).then(data =>
+        Promise.all(getLibraries(admin,["Units","Users","Reviews"])).then(data =>
         {
             res.render("homepage_admin",{"Units" :data[0],"Users" : data[1],"Reviews" :data[2]})
         })

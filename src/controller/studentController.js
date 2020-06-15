@@ -1,24 +1,16 @@
 const body_parser=require("body-parser")
 const body_url=body_parser.urlencoded({extended: "true"})
 const body_json=body_parser.json()
-
+getLibraries= require("./getLibrary")
 /* this controls pages that have to do with student */
 module.exports = function(app,admin) {
     const database= admin.firestore()
-    async function getLibrary(library) {
-        /* async function to get complete library, returns promise with the library */
-        return database.collection(library).get().then(doc => {
-            return doc.docs
-        })
-    }
-
     app.get("/homepage_student",(req, res) => {
-        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Reviews"),getLibrary("Attractions")]).then(data =>
+        Promise.all(getLibraries(admin,["Units","Users","Reviews","Attractions"])).then(data =>
         {
             res.render("homepage_student",{"Units" :data[0],"Users" : data[1],"Reviews" :data[2], "Attractions" : data[3]})
         })
     })
-
     app.post("/homepage_student/order",body_url,(req, res) => {
         database.collection("Units").doc(req.body.unitID).get().then((unit) => {
             res.render("booking",{unit: unit})
@@ -27,7 +19,6 @@ module.exports = function(app,admin) {
         })
 
     })
-
     app.post("/booking",body_url,(req, res) => {
         req.body.timestamp = admin.firestore.Timestamp.fromDate(new Date())
         req.body.student_id=database.collection("Users").doc(req.body.student_id)
@@ -40,7 +31,6 @@ module.exports = function(app,admin) {
             res.render("transaction",{"message" : error} )
         })
     })
-
     app.post("/homepage_student/write_review",body_url,(req, res) => {
 
         req.body.timestamp = admin.firestore.Timestamp.fromDate(new Date())

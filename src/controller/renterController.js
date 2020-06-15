@@ -1,25 +1,19 @@
 const body_parser=require("body-parser")
 const body_url=body_parser.urlencoded({extended: "true"})
 const body_json=body_parser.json()
+getLibraries= require("./getLibrary")
 
 /* this controls pages that have to do with renter */
 module.exports = function(app,admin) {
     const database= admin.firestore()
-    async function getLibrary(library) {
-        /* async function to get complete library, returns promise with the library */
-        return database.collection(library).get().then(doc => {
-            return doc.docs
-        })
-    }
-
     app.get("/homepage_renter",(req, res) => {
-        getLibrary("Attractions").then((data) => {
-            res.render("homepage_renter",{"Attractions": data})
+        Promise.all(getLibraries(admin,["Attractions"])).then((data) => {
+            res.render("homepage_renter",{"Attractions": data[0]})
         })
     })
 
     app.post("/homepage_renter/manage",body_url,(req, res) => {
-        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
+        Promise.all(getLibraries(admin,["Units","Users","Orders"])).then(data =>
         {
             res.render("manageHousingUnits",{"Units" :data[0],"Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
         }).catch((err) => {
@@ -29,7 +23,7 @@ module.exports = function(app,admin) {
     })
 
     app.post("/homepage_renter/user_reviews",body_url,(req, res) => {
-        Promise.all([getLibrary("Users"),getLibrary("Reviews")]).then(data =>
+        Promise.all(getLibraries(admin,["Users","Reviews"])).then(data =>
         {
             res.render("user_reviews",{"Users" : data[0],"Reviews" :data[1], "user_id": req.body.user_id})
         }).catch((err) => {
@@ -39,7 +33,7 @@ module.exports = function(app,admin) {
     })
 
     app.post("/homepage_renter/your_orders",body_url,(req, res) => {
-        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
+        Promise.all(getLibraries(admin,["Units","Users","Orders"])).then(data =>
         {
             res.render("your_orders",{"Units" : data[0], "Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
         }).catch((err) => {
@@ -49,7 +43,7 @@ module.exports = function(app,admin) {
     })
 
     app.post("/homepage_renter/statistics",body_url,(req, res) => {
-        Promise.all([getLibrary("Units"),getLibrary("Users"),getLibrary("Orders")]).then(data =>
+        Promise.all(getLibraries(admin,["Units","Users","Orders"])).then(data =>
         {
             res.render("statistics",{"Units" : data[0], "Users" : data[1],"Orders" :data[2], "user_id": req.body.user_id})
         }).catch((err) => {
@@ -81,7 +75,7 @@ module.exports = function(app,admin) {
         }).catch(function(error) {
             res.render("message_page",{"message" : error}) //should work with the back button.
         })
-    })  
+    })
     //Edit unit actions:
     app.post("/homepage_renter/edit",body_url, (req,res) => {
         database.collection("Units").doc(req.body.unitID).get().then(unit =>
