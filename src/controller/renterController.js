@@ -6,12 +6,19 @@ getLibraries= require("./getLibrary")
 /* this controls pages that have to do with renter */
 module.exports = function(app,admin) {
     const database= admin.firestore()
+    renterHomepageRedirects(app,admin,database)
+    renterHomepageActions(app,admin,database)
+    housingUnitsActions(app,admin,database)
+    orderControl(app,admin,database) 
+}
+
+//redirects from homepage
+function renterHomepageRedirects(app,admin,database) {
     app.get("/homepage_renter",(req, res) => {
         Promise.all(getLibraries(admin,["Attractions"])).then((data) => {
             res.render("homepage_renter",{"Attractions": data[0]})
         })
     })
-
     app.post("/homepage_renter/manage",body_url,(req, res) => {
         Promise.all(getLibraries(admin,["Units","Users","Orders"])).then(data =>
         {
@@ -21,7 +28,6 @@ module.exports = function(app,admin) {
             res.render("message_page",{"message": err})
         })
     })
-
     app.post("/homepage_renter/user_reviews",body_url,(req, res) => {
         Promise.all(getLibraries(admin,["Users","Reviews"])).then(data =>
         {
@@ -31,7 +37,6 @@ module.exports = function(app,admin) {
             res.render("message_page",{"message": err})
         })
     })
-
     app.post("/homepage_renter/your_orders",body_url,(req, res) => {
         Promise.all(getLibraries(admin,["Units","Users","Orders"])).then(data =>
         {
@@ -41,7 +46,6 @@ module.exports = function(app,admin) {
             res.render("message_page",{"message": err})
         })
     })
-
     app.post("/homepage_renter/statistics",body_url,(req, res) => {
         Promise.all(getLibraries(admin,["Units","Users","Orders"])).then(data =>
         {
@@ -51,6 +55,10 @@ module.exports = function(app,admin) {
             res.render("message_page",{"message": err})
         })
     })
+}
+
+//actions done on homepage
+function renterHomepageActions(app,admin,database) {
 
     app.post("/homepage_renter/post_housing_unit",body_json, (req,res) => {
         req.body.available= true //availeable to rent
@@ -62,12 +70,24 @@ module.exports = function(app,admin) {
 
         database.collection("Units").add(req.body).then(() => {
             res.send("The housing unit at: " + req.body.street + " "
-            + req.body.house_number + " " + req.body.city + " posted successfully!")
+              + req.body.house_number + " " + req.body.city + " posted successfully!")
         }).catch((error) => {
             res.send(error.message)
         })
     })
 
+    app.post("/homepage_renter/add_attraction",body_json, (req,res) => {
+        database.collection("Attractions").add(req.body).then(function() {
+            res.send("Attraction added successfully!") //can't redirect to the same page since then I will need more data.
+            //and nobody deletes so many housing units in a row.
+        }).catch(function(error) {
+            res.send(error) //should work with the back button.
+        })
+
+    })
+}
+
+function housingUnitsActions(app,admin,database) {
     app.post("/homepage_renter/delete",body_url, (req,res) => {
         database.collection("Units").doc(req.body.unitID).delete().then(function() {
             res.redirect("/homepage_renter") //can't redirect to the same page since then I will need more data.
@@ -96,7 +116,9 @@ module.exports = function(app,admin) {
             res.send(err)
         })
     })
+}
 
+function orderControl(app,admin,database) {
     app.post("/homepage_renter/accept_order",body_url, (req,res) => {
         database.collection("Units").doc(req.body.unit_id).update({
             "available" : false, //no longer available
@@ -120,16 +142,6 @@ module.exports = function(app,admin) {
             //and nobody deletes so many housing units in a row.
         }).catch(function(error) {
             res.render("message_page",{"message" : error}) //should work with the back button.
-        })
-
-    })
-
-    app.post("/homepage_renter/add_attraction",body_json, (req,res) => {
-        database.collection("Attractions").add(req.body).then(function() {
-            res.send("Attraction added successfully!") //can't redirect to the same page since then I will need more data.
-            //and nobody deletes so many housing units in a row.
-        }).catch(function(error) {
-            res.send(error) //should work with the back button.
         })
 
     })

@@ -5,7 +5,10 @@ getLibraries= require("./getLibrary")
 /* this controls pages that have to do with admin */
 module.exports = function(app,admin) {
     const database= admin.firestore()
+    adminHomepage(app,admin,database)
+}
 
+function adminHomepage(app,admin,database) {
     app.get("/homepage_admin",(req, res) => {
         /* homepage, loads all the relevant libraries into the page */
         Promise.all(getLibraries(admin,["Units","Users","Reviews"])).then(data =>

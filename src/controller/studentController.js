@@ -5,6 +5,12 @@ getLibraries= require("./getLibrary")
 /* this controls pages that have to do with student */
 module.exports = function(app,admin) {
     const database= admin.firestore()
+    studentHomepage(app,admin,database)
+    booking(app,admin,database)
+}
+
+//homepage logic
+function studentHomepage(app,admin,database) {
     app.get("/homepage_student",(req, res) => {
         Promise.all(getLibraries(admin,["Units","Users","Reviews","Attractions"])).then(data =>
         {
@@ -29,8 +35,6 @@ module.exports = function(app,admin) {
             res.render("message_page",{"message" : error} )
         })
     })
-
-    booking(app,admin,database)
 }
 
 // put it into another function cause it's not part of the homepage.
