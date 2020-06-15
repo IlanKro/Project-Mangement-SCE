@@ -6,6 +6,14 @@ function formJSONify(form) {
     return json
 }
 
+function uploads(directory,files,identifier) {
+    image_uploads=[]
+    Array.prototype.forEach.call(files,(image,imgnum) => {
+        image_uploads[imgnum]=uploadImage(directory,files,imgnum,identifier)
+    })
+    return image_uploads
+}
+
 var tasks=[]
 async function uploadImage(directory,files,imgnum,identifier) {
     //uploads an image with the identifier.

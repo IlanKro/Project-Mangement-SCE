@@ -33,11 +33,8 @@ document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
     }
     document.getElementById("postHouseButton").disabled= true //disables the button so they wait for the upload to finish.
     document.getElementById("postHouseButton").value = "Posting..."
-    let image_uploads= []
-    Array.prototype.forEach.call(fileList,(image,imgnum) => {
-        let address=housing_data["city"]+housing_data["street"]+ housing_data["house_number"]
-        image_uploads[imgnum]=uploadImage("housing_units_photos/",fileList,imgnum,adress)
-    })
+    let address=housing_data["city"]+housing_data["street"]+ housing_data["house_number"]
+    let image_uploads= uploads("housing_units_photos/",fileList,address)
 
     Promise.all(image_uploads).then((uploads)=> {
         console.log(uploads)
