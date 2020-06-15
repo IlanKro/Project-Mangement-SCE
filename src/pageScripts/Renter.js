@@ -1,6 +1,12 @@
 window.onload=function(){
     document.getElementById("addHousingForm").reset
 }
+var fileList= "none"
+const fileSelector = document.getElementById("house_img")
+fileSelector.addEventListener("change", (event) => {
+    //add listener to the image upload selector.
+    fileList = event.target.files
+})
 document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
     // handle second (inner) form for payment.
     e.preventDefault()
@@ -29,9 +35,8 @@ document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
     document.getElementById("postHouseButton").value = "Posting..."
     let image_uploads= []
     Array.prototype.forEach.call(fileList,(image,imgnum) => {
-        image_uploads[imgnum]=uploadImage(imgnum,housing_data["city"]+housing_data["street"]+ housing_data["house_number"])
+        image_uploads[imgnum]=uploadImage("housing_units_photos/",fileList,imgnum,housing_data["city"]+housing_data["street"]+ housing_data["house_number"])
     })
-
 
     Promise.all(image_uploads).then((uploads)=> {
         console.log(uploads)
@@ -57,50 +62,19 @@ function sendJSON(url,data,element,elementName) {
     request.send(JSON.stringify(data))
 }
 
-var fileList= "none"
-const fileSelector = document.getElementById("house_img")
-fileSelector.addEventListener("change", (event) => {
+
+var fileListAttr= "none"
+const fileSelectorAttr = document.getElementById("attr_img")
+fileSelectorAttr.addEventListener("change", (event) => {
     //add listener to the image upload selector.
-    fileList = event.target.files
+    fileListAttr = event.target.files
 })
-var tasks=[]
-async function uploadImage(imgnum,address) {
-    //uploads an image with the address name.
-    //returns a promise with the download url.
-    filename= "housing_units_photos/" + address.toString() + "/" + imgnum + fileList[imgnum].name // the / creates a new folder.
-    if(fileList[imgnum].name == undefined)
-        return null
-    let ref= storage.ref(filename) //making the upload unique since emails are unique
-    tasks[imgnum]= ref.put(fileList[imgnum]) //this is the download task it needs to be activated to upload.
-    console.log(tasks[imgnum])
-    return new Promise((resolve, reject) => {
-        tasks[imgnum].on(
-            "state_changed",
-            function(snapshot) { //progress part.
-                const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100
-                console.log("Upload is " + progress + "% done")
-            },
-            function(error) { //error part
-                reject(error)
-                alert(error)
-            },
-            function() { //upload complete part.
-                resolve(tasks[imgnum].snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    console.log("File available at: ", downloadURL)
-                    return downloadURL
-                }))
-            }
-        )
-    })
-}
-
-
 // Attractions code:
 document.querySelector("#addAttraction").addEventListener("submit", (e) => {
     // handle second (inner) form for payment.
     e.preventDefault()
     let form=document.getElementById("addAttraction").elements
-    let attr_data= formJSONify(form)    
+    let attr_data= formJSONify(form)
     //check if name already exists.
     for(let i=0; i<attr_data["attr_num"]; i++) {
         if (attr_data["Attraction" + i] == attr_data["attraction_name"] ) {
@@ -116,7 +90,7 @@ document.querySelector("#addAttraction").addEventListener("submit", (e) => {
     let image_uploads= []
     if (fileListAttr[0].name != undefined) {
         Array.prototype.forEach.call(fileListAttr,(image,imgnum) => {
-            image_uploads[imgnum]=uploadImage2(imgnum,attr_data["attraction_name"])
+            image_uploads[imgnum]=uploadImage2("attraction_photos/",fileListAttr,imgnum,attr_data["attraction_name"])
         })
     }
 
@@ -127,44 +101,3 @@ document.querySelector("#addAttraction").addEventListener("submit", (e) => {
     })
 
 })
-
-
-//might refactor later into one function:
-var fileListAttr= "none"
-const fileSelectorAttr = document.getElementById("attr_img")
-fileSelectorAttr.addEventListener("change", (event) => {
-    //add listener to the image upload selector.
-    fileListAttr = event.target.files
-})
-
-
-var tasks2=[]
-async function uploadImage2(imgnum,attr_name) {
-
-    //uploads an image with the address name.
-    //returns a promise with the download url.
-    filename= "attraction_photos/" + attr_name.toString() + "/" + imgnum + fileListAttr[imgnum].name // the / creates a new folder.
-    if(fileListAttr[imgnum].name == undefined)
-        return null
-    let ref= storage.ref(filename) //making the upload unique since emails are unique
-    tasks2[imgnum]= ref.put(fileListAttr[imgnum]) //this is the download task it needs to be activated to upload.
-    return new Promise((resolve, reject) => {
-        tasks2[imgnum].on(
-            "state_changed",
-            function(snapshot) { //progress part.
-                const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100
-                console.log("Upload is " + progress + "% done")
-            },
-            function(error) { //error part
-                reject(error)
-                alert(error)
-            },
-            function() { //upload complete part.
-                resolve(tasks2[imgnum].snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    console.log("File available at: ", downloadURL)
-                    return downloadURL
-                }))
-            }
-        )
-    })
-}

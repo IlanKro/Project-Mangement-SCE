@@ -1,5 +1,5 @@
 module.exports = function(admin,libraries) {
-  // send an admin user and the libraries(array) you want to get from the database and get promises for the arrays.
+    // send an admin user and the libraries(array) you want to get from the database and get promises for the arrays.
     const database= admin.firestore()
     async function getLibrary(library) {
         /* async function to get complete library, returns promise with the library */

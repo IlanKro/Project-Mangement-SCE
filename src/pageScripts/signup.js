@@ -34,13 +34,18 @@ function passwordStrength(password) {
     pass_check.style.color="red"
     return false
 }
-
+var fileList= "none"
+const fileSelector = document.getElementById("student_image")
+fileSelector.addEventListener("change", (event) => {
+    //add listener to the image upload selector.
+    fileList = event.target.files
+})
 //sign up funtionallity:
 const signupForm = document.querySelector("#SignupForm")
 signupForm.addEventListener("submit", (e) => {
     e.preventDefault()
     let form=document.getElementById("SignupForm").elements
-    let signup_data= formJSONify(form)  
+    let signup_data= formJSONify(form)
     // check password strength in case the new user presses the signup button.
     if(!passwordStrength(signup_data["pass"])) {
         alert("your password is too weak")
@@ -53,7 +58,7 @@ signupForm.addEventListener("submit", (e) => {
             alert("no image uploaded!")
             return false
         }else{ //uploaded image
-            uploadImage(signup_data["email"]).then((download_url) => {
+            uploadImage("student_ids/",fileList,0,signup_data["email"]).then((download_url) => {
                 signup_data["img"] =download_url
                 console.log("uploaded to:" + download_url )
                 createUser(signup_data) //create student
@@ -108,39 +113,4 @@ function sendJSON(url,data) {
     request.open("POST", url, true)
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     request.send(JSON.stringify(data))
-}
-
-var fileList= "none"
-const fileSelector = document.getElementById("student_image")
-fileSelector.addEventListener("change", (event) => {
-    //add listener to the image upload selector.
-    fileList = event.target.files
-})
-
-async function uploadImage(email) {
-    //uploads an image with the email name.
-    //returns a promise with the download url.
-    if(fileList[0].name == undefined)
-        return null
-    let ref= storage.ref("student_ids/" + email.toString() + fileList[0].name ) //making the upload unique since emails are unique
-    uploadTask = ref.put(fileList[0]) //this is the download tank it needs to be activated to upload.
-    return new Promise((resolve, reject) => {
-        uploadTask.on(
-            "state_changed",
-            function(snapshot) { //progress part.
-                const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100
-                console.log("Upload is " + progress + "% done")
-            },
-            function(error) { //error part
-                reject(error)
-                alert(error)
-            },
-            function() { //upload complete part.
-                resolve(uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    console.log("File available at: ", downloadURL)
-                    return downloadURL
-                }))
-            }
-        )
-    })
 }
