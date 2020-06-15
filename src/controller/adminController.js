@@ -22,7 +22,6 @@ module.exports = function(app,admin) {
             res.render("homepage_admin",{"Units" :data[0],"Users" : data[1],"Reviews" :data[2]})
         })
     })
-
     app.post("/homepage_admin/ban",body_url, (req,res) => {
         /* disables a user */
         ChangeUserState(req,res,true," banned!")

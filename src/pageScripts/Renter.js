@@ -35,7 +35,8 @@ document.querySelector("#addHousingForm").addEventListener("submit", (e) => {
     document.getElementById("postHouseButton").value = "Posting..."
     let image_uploads= []
     Array.prototype.forEach.call(fileList,(image,imgnum) => {
-        image_uploads[imgnum]=uploadImage("housing_units_photos/",fileList,imgnum,housing_data["city"]+housing_data["street"]+ housing_data["house_number"])
+        let address=housing_data["city"]+housing_data["street"]+ housing_data["house_number"]
+        image_uploads[imgnum]=uploadImage("housing_units_photos/",fileList,imgnum,adress)
     })
 
     Promise.all(image_uploads).then((uploads)=> {
