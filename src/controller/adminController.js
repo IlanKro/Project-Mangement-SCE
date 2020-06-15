@@ -2,9 +2,7 @@ const body_parser=require("body-parser")
 const body_url=body_parser.urlencoded({extended: "true"})
 const body_json=body_parser.json()
 /* this controls pages that have to do with admin */
-
 module.exports = function(app,admin) {
-
     const database= admin.firestore()
     async function getLibrary(library) {
     /* async function to get complete library, returns promise with the library */
@@ -12,8 +10,16 @@ module.exports = function(app,admin) {
             return doc.docs
         })
     }
-
-
+    function ChangeUserState(req,res,state,message) {
+        admin.auth().updateUser(req.body.uid, {disabled: state})
+            .then(function(userRecord) {
+                res.render("message_page",{"message" : userRecord.email + message} )
+            })
+            .catch(function(error) {
+                console.log("Error fetching user data:", error)
+                res.render("message_page",{"message" : error} )
+            })
+    }
 
     app.get("/homepage_admin",(req, res) => {
         /* homepage, loads all the relevant libraries into the page */
@@ -25,25 +31,12 @@ module.exports = function(app,admin) {
 
     app.post("/homepage_admin/ban",body_url, (req,res) => {
         /* disables a user */
-        admin.auth().updateUser(req.body.uid, {disabled: true})
-            .then(function(userRecord) {
-                res.render("message_page",{"message" : userRecord.email + " banned!"} )
-            })
-            .catch(function(error) {
-                console.log("Error fetching user data:", error)
-                res.render("message_page",{"message" : error} )
-            })
+        ChangeUserState(req,res,true," banned!")
     })
+
     app.post("/homepage_admin/enable",body_url, (req,res) => {
         /* enables a user */
-        admin.auth().updateUser(req.body.uid, {disabled: false})
-            .then(function(userRecord) {
-                res.render("message_page",{"message" : userRecord.email + " activated!"} )
-            })
-            .catch(function(error) {
-                console.log("Error fetching user data:", error)
-                res.render("message_page",{"message" : error} )
-            })
+        ChangeUserState(req,res,false," activated!")
     })
     app.post("/homepage_admin/rmv_review",body_url, (req,res) => {
         /* removes a review from database*/
