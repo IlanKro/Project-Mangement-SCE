@@ -15,12 +15,12 @@ module.exports = function(app,admin) {
     })
     app.post("/homepage_admin/ban",body_url, (req,res) => {
         /* disables a user */
-        ChangeUserState(admin,req,res,true," banned!")
+        ChangeUserState(admin,req,res,true)
     })
 
     app.post("/homepage_admin/enable",body_url, (req,res) => {
         /* enables a user */
-        ChangeUserState(admin,req,res,false," activated!")
+        ChangeUserState(admin,req,res,false)
     })
     app.post("/homepage_admin/rmv_review",body_url, (req,res) => {
         /* removes a review from database*/
@@ -32,11 +32,12 @@ module.exports = function(app,admin) {
     })
 }
 
-// change the stae of a user: enabled/disabled, true for disabled, false for enabled.
-//req should have the user id, res is the respounce, state is the state to change to,
-//and the message is which message to display for the user
-function ChangeUserState(admin,req,res,state,message) {
-    admin.auth().updateUser(req.body.uid, {disabled: state})
+// change the state of a user: enabled/disabled, true for disabled, false for enabled.
+//req should have the user id, res is the respounce, disable is to disable the user or enable it.
+function ChangeUserState(admin,req,res,disable) {
+    let message=""
+    message= disable? " banned!":" activated!"
+    admin.auth().updateUser(req.body.uid, {disabled: disable})
         .then(function(userRecord) {
             res.render("message_page",{"message" : userRecord.email + message} )
         })
