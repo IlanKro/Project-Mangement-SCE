@@ -17,8 +17,24 @@ module.exports = function(app,admin) {
         }).catch((error) => {
             res.render("message_page",{"message" : error} )
         })
-
     })
+    app.post("/homepage_student/write_review",body_url,(req, res) => {
+        req.body.timestamp = admin.firestore.Timestamp.fromDate(new Date())
+        req.body.renter_id=database.collection("Users").doc(req.body.renter_id)
+        req.body.student_id=database.collection("Users").doc(req.body.student_id)
+        console.log(req.body)
+        database.collection("Reviews").add(req.body).then(() =>{
+            res.render("message_page",{"message" : "review received successfully!"} )
+        }).catch((error) => {
+            res.render("message_page",{"message" : error} )
+        })
+    })
+
+    booking(app,admin,database)
+}
+
+// put it into another function cause it's not part of the homepage.
+function booking(app,admin,database) {
     app.post("/booking",body_url,(req, res) => {
         req.body.timestamp = admin.firestore.Timestamp.fromDate(new Date())
         req.body.student_id=database.collection("Users").doc(req.body.student_id)
@@ -29,18 +45,6 @@ module.exports = function(app,admin) {
             res.render("transaction",{"message" :"order: " +  req.body.transaction_id + " received successfully!"} )
         }).catch((error) => {
             res.render("transaction",{"message" : error} )
-        })
-    })
-    app.post("/homepage_student/write_review",body_url,(req, res) => {
-
-        req.body.timestamp = admin.firestore.Timestamp.fromDate(new Date())
-        req.body.renter_id=database.collection("Users").doc(req.body.renter_id)
-        req.body.student_id=database.collection("Users").doc(req.body.student_id)
-        console.log(req.body)
-        database.collection("Reviews").add(req.body).then(() =>{
-            res.render("message_page",{"message" : "review received successfully!"} )
-        }).catch((error) => {
-            res.render("message_page",{"message" : error} )
         })
     })
 }
