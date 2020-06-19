@@ -25,12 +25,23 @@ function onSortItemClick(index){
     }
 }
 
+function shouldSwitch(order,column_num,i,type,rows) {
+    /* Get the two elements you want to compare,
+    one from current row and one from the next: */
+    let x = rows[i].getElementsByTagName("TD")[column_num]
+    let y = rows[i + 1].getElementsByTagName("TD")[column_num]
+    // Check if the two rows should switch place:
+    let val1 = type == "number" ? parseInt(x.innerHTML.toLowerCase()) : x.innerHTML.toLowerCase()
+    let val2 = type == "number" ? parseInt(y.innerHTML.toLowerCase()) : y.innerHTML.toLowerCase()
+    return (order == "asc" && val1 > val2) || (order == "des" && val1 < val2)
+}
+
 function sortTable(column_num,type,order) {
     /* params: column number: column to sort,type: the data type to sort, order decending or ascending
     (using the short term "asc" or dec") */
-    var table, rows, switching, i, x, y,val1, val2
-    table = document.getElementById("unitsTable")
-    switching = true
+    let rows
+    let table = document.getElementById("unitsTable")
+    let switching = true
     /* Make a loop that will continue until
     no switching has been done: */
     while (switching) {
@@ -39,15 +50,8 @@ function sortTable(column_num,type,order) {
         rows = table.rows
         /* Loop through all table rows (except the
       first, which contains table headers): */
-        for (i = 1; i < (rows.length - 1); i++) {
-            /* Get the two elements you want to compare,
-        one from current row and one from the next: */
-            x = rows[i].getElementsByTagName("TD")[column_num]
-            y = rows[i + 1].getElementsByTagName("TD")[column_num]
-            // Check if the two rows should switch place:
-            val1 = type == "number" ? parseInt(x.innerHTML.toLowerCase()) : x.innerHTML.toLowerCase()
-            val2 = type == "number" ? parseInt(y.innerHTML.toLowerCase()) : y.innerHTML.toLowerCase()
-            if ((order == "asc" && val1 > val2) || (order == "des" && val1 < val2)) {
+        for (var i = 1; i < (rows.length - 1); i++) {
+            if (shouldSwitch(order,column_num,i,type,rows)) {
                 // If so, mark as a switch and break the loop:
                 rows[i].parentNode.insertBefore(rows[i + 1], rows[i])
                 switching = true
