@@ -1,6 +1,6 @@
 function onSortItemClick(index){
     /* chooses which index the table sort will use 0-5 each one has different functionality,
-    even indexes are ascending order odd indexes are decending order  */    
+    even indexes are ascending order odd indexes are decending order  */
     switch (index) {
     case 0:
         sortTable("0","string","asc")
@@ -28,7 +28,7 @@ function onSortItemClick(index){
 function sortTable(column_num,type,order) {
     /* params: column number: column to sort,type: the data type to sort, order decending or ascending
     (using the short term "asc" or dec") */
-    var table, rows, switching, i, x, y, shouldSwitch, val1, val2
+    var table, rows, switching, i, x, y,val1, val2
     table = document.getElementById("unitsTable")
     switching = true
     /* Make a loop that will continue until
@@ -40,8 +40,6 @@ function sortTable(column_num,type,order) {
         /* Loop through all table rows (except the
       first, which contains table headers): */
         for (i = 1; i < (rows.length - 1); i++) {
-        // Start by saying there should be no switching:
-            shouldSwitch = false
             /* Get the two elements you want to compare,
         one from current row and one from the next: */
             x = rows[i].getElementsByTagName("TD")[column_num]
@@ -49,21 +47,12 @@ function sortTable(column_num,type,order) {
             // Check if the two rows should switch place:
             val1 = type == "number" ? parseInt(x.innerHTML.toLowerCase()) : x.innerHTML.toLowerCase()
             val2 = type == "number" ? parseInt(y.innerHTML.toLowerCase()) : y.innerHTML.toLowerCase()
-            if (order == "asc" && val1 > val2) {
+            if ((order == "asc" && val1 > val2) || (order == "des" && val1 < val2)) {
                 // If so, mark as a switch and break the loop:
-                shouldSwitch = true
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i])
+                switching = true
                 break
             }
-            else if (order == "des" && val1 < val2) {
-                shouldSwitch = true
-                break
-            }
-        }
-        if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-          and mark that a switch has been done: */
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i])
-            switching = true
         }
     }
     Index = -1
